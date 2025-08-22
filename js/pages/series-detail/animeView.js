@@ -192,7 +192,7 @@ export async function renderEpisodesListView(seriesData, seriesSlug) {
     `;
 
   container.innerHTML = episodesViewHtml;
-  document.title = `BigSolo – Épisodes de ${seriesData.title}`;
+  document.title = `Les Poroïniens – Épisodes de ${seriesData.title}`;
   renderReadingActions(seriesData, seriesSlug);
 
   const episodeListContainer = qs(".episode-list-container");
@@ -332,7 +332,7 @@ export async function renderEpisodePlayerView(
     `;
 
   container.innerHTML = playerViewHtml;
-  document.title = `BigSolo – ${seriesData.title} - Épisode ${currentEpisode.indice_ep}`;
+  document.title = `Les Poroïniens – ${seriesData.title} - Épisode ${currentEpisode.indice_ep}`;
   saveReadingProgress(seriesSlug, episodeNumber);
 
   // ↓↓↓ LA CORRECTION EST ICI ↓↓↓

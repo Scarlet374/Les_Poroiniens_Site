@@ -1,6 +1,6 @@
 // js/utils/interactions.js
 
-const ACTION_QUEUE_KEY = "bigsolo_action_queue";
+const ACTION_QUEUE_KEY = "LesPoroiniens_action_queue";
 
 // --- DÉBUT DE LA LOGIQUE DE DÉTECTION DE NAVIGATION ---
 

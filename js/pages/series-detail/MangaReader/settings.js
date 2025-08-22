@@ -12,13 +12,13 @@ function truncateText(text, maxLength) {
 
 export function saveSettings() {
   localStorage.setItem(
-    "bigsolo_reader_settings_v5",
+    "les_poroiniens_reader_settings_v5",
     JSON.stringify(state.settings)
   );
 }
 
 export function loadSettings() {
-  const saved = localStorage.getItem("bigsolo_reader_settings_v5");
+  const saved = localStorage.getItem("les_poroiniens_reader_settings_v5");
   if (saved) {
     try {
       Object.assign(state.settings, JSON.parse(saved));

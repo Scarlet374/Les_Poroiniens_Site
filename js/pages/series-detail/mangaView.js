@@ -280,7 +280,7 @@ export async function renderMangaView(seriesData, seriesSlug) {
   container.innerHTML = `${generateSeriesHeader(
     seriesData
   )}<div id="reading-actions-container"></div>${navTabsHtml}${chaptersSectionHtml}`;
-  document.title = `BigSolo – ${seriesData.title}`;
+  document.title = `Les Poroïniens – ${seriesData.title}`;
   currentSeriesStats = await fetchSeriesStats(seriesSlug);
   displayGroupedChapters(seriesData, seriesSlug);
   renderReadingActions(seriesData, seriesSlug);

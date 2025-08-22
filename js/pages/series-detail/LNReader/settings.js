@@ -3,11 +3,11 @@ import { qs } from "../../../utils/domUtils.js";
 import { state, dom, setThemeClass } from "./state.js";
 
 export function saveSettings() {
-  localStorage.setItem("bigsolo_ln_settings_v1", JSON.stringify(state.settings));
+  localStorage.setItem("les_poroiniens_ln_settings_v1", JSON.stringify(state.settings));
 }
 
 export function loadSettings() {
-  const raw = localStorage.getItem("bigsolo_ln_settings_v1");
+  const raw = localStorage.getItem("les_poroiniens_ln_settings_v1");
   if (!raw) return;
   try { Object.assign(state.settings, JSON.parse(raw)); }
   catch (e) { console.warn("LN prefs parse:", e); }
