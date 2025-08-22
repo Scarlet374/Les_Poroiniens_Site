@@ -1,17 +1,17 @@
-name = "bigsolo-functions"
-compatibility_date = "2025-07-13"
+name = "les-poroiniens-functions"
+compatibility_date = "2025-08-22"
 
 [[kv_namespaces]]
 binding = "IMG_CHEST_CACHE"
-id = "24632818ff5d495e8ec68eb26dd49136"
+id = "f2e590071fcb42419beaf126408af9b4"
 
 [[kv_namespaces]]
 binding = "INTERACTIONS_LOG"
-id = "9bd6247311a141c58512bffb5e133311"
+id = "23ecbbac077642b0bebac89ccc79bc23"
 
 [[kv_namespaces]]
 binding = "INTERACTIONS_CACHE"
-id = "0653d72f16bb45adb5155e2ea69e5031"
+id = "5738ead5287d4c4e9fc1735835c2b266"
 
 [vars]
 ADMIN_USERNAME = ""
