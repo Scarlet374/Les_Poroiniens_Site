@@ -99,7 +99,7 @@ function renderCoversGallery(seriesData) {
     );
 
     pageTitleElement.textContent = `Galerie des Couvertures : ${seriesData.title}`;
-    document.title = `BigSolo – Couvertures : ${seriesData.title}`;
+    document.title = `Les Poroïniens – Couvertures : ${seriesData.title}`;
 
     galleryContainer.innerHTML = currentCoversData.map((coverDetail, index) => `
         <div class="cover-item" data-index="${index}">
@@ -143,7 +143,7 @@ export async function initSeriesCoversPage() {
             setupLightboxControls();
         } else {
             seriesCoversSectionGrid.innerHTML = `<p class="loading-message">Série "${seriesSlug}" non trouvée.</p>`;
-            document.title = `BigSolo – Série non trouvée`;
+            document.title = `Les Poroïniens – Série non trouvée`;
         }
     } catch (error) {
         console.error("🚨 Erreur lors de l'initialisation de la page des couvertures :", error);
