@@ -36,7 +36,7 @@ export async function onRequest(context) {
       const res = await fetch(apiUrl, {
         headers: {
           // 🔧 3) User-Agent : mets ton site/domaine
-          "User-Agent": "LesPoroïniens/1.0 (+https://ton-domaine.tld)",
+          "User-Agent": "LesPoroïniens/1.0 (+https://lesporoiniens.org)",
           Accept: "application/json",
         },
       });

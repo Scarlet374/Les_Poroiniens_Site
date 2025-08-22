@@ -32,7 +32,7 @@ export async function onRequest(context) {
     const res = await fetch(`https://imgchest.com/p/${id}`, {
       headers: {
         // 🔧 Mets ton UA
-        "User-Agent": "LesPoroïniens/1.0 (+https://ton-domaine.tld)",
+        "User-Agent": "LesPoroïniens/1.0 (+https://https://lesporoiniens.org)",
       },
     });
     if (!res.ok) {
