@@ -14,13 +14,13 @@ function slugify(text) {
 }
 
 function generateMetaTags(meta) {
-  const title = meta.title || "BigSolo";
+  const title = meta.title || "Les Poroïniens";
   const description =
     meta.description ||
-    "Retrouvez toutes les sorties de Big_herooooo en un seul et unique endroit !";
+    "Retrouvez toutes les sorties des Poroïniens en un seul et unique endroit !";
   const imageUrl =
     meta.image || new URL("/img/banner.jpg", meta.url).toString();
-  const url = meta.url || "https://bigsolo.org";
+  const url = meta.url || "https://lesporoiniens.org";
 
   return `
     <title>${title}</title>
@@ -54,7 +54,7 @@ export async function onRequest(context) {
   // --- GESTION SPÉCIFIQUE DES URLS DE LA GALERIE ---
   if (pathname.startsWith("/galerie")) {
     const metaData = {
-      title: "Galerie - BigSolo",
+      title: "Galerie - Les Poroïniens",
       description:
         "Découvrez toutes les colorisations et fan-arts de la communauté !",
       htmlFile: "/galerie.html",
@@ -72,16 +72,16 @@ export async function onRequest(context) {
   // Gestion des pages statiques
   const staticPageMeta = {
     "/": {
-      title: "Accueil - BigSolo",
+      title: "Accueil - Les Poroïniens",
       description:
         "Retrouvez toutes les sorties de Big_herooooo en un seul et unique endroit !",
       htmlFile: "/index.html",
       image: "/img/banner.jpg",
     },
     "/presentation": {
-      title: "Questions & Réponses - BigSolo",
+      title: "Questions & Réponses - Les Poroïniens",
       description:
-        "Les réponses de BigSolo à vos questions sur son parcours dans le scantrad.",
+        "Les réponses des Poroïniens à vos questions sur son parcours dans le scantrad.",
       htmlFile: "/presentation.html",
     },
   };
@@ -159,7 +159,7 @@ export async function onRequest(context) {
       const chapterNumber = pathSegments[1];
       if (seriesData.chapters[chapterNumber]) {
         const metaData = {
-          title: `${seriesData.title} - Chapitre ${chapterNumber} | BigSolo`,
+          title: `${seriesData.title} - Chapitre ${chapterNumber} | Les Poroïniens`,
           description: `Lisez le chapitre ${chapterNumber} de ${seriesData.title}. ${seriesData.description}`,
           image: ogImageUrl,
         };
@@ -197,14 +197,14 @@ export async function onRequest(context) {
         // C'est une page de lecteur d'épisode
         const episodeNumber = pathSegments[2];
         metaData = {
-          title: `Épisode ${episodeNumber} de ${seriesData.title} - BigSolo`,
+          title: `Épisode ${episodeNumber} de ${seriesData.title} - Les Poroïniens`,
           description: `Regardez l'épisode ${episodeNumber} de l'anime ${seriesData.title}.`,
           image: animeInfo?.cover_an || ogImageUrl,
         };
       } else {
         // C'est la liste des épisodes
         metaData = {
-          title: `Épisodes de ${seriesData.title} - BigSolo`,
+          title: `Épisodes de ${seriesData.title} - Les Poroïniens`,
           description: `Liste de tous les épisodes de l'anime ${seriesData.title}.`,
           image: animeInfo?.cover_an || ogImageUrl,
         };
@@ -229,7 +229,7 @@ export async function onRequest(context) {
     // ROUTE 2: GALERIE DE COUVERTURES (ex: /nom-de-serie/cover)
     if (pathSegments.length > 1 && pathSegments[1] === "cover") {
       const metaData = {
-        title: `Couvertures de ${seriesData.title} - BigSolo`,
+        title: `Couvertures de ${seriesData.title} - Les Poroïniens`,
         description: `Découvrez toutes les couvertures de la série ${seriesData.title} !`,
         image: ogImageUrl,
       };
@@ -246,7 +246,7 @@ export async function onRequest(context) {
     // ROUTE 3: PAGE DE DÉTAIL DE LA SÉRIE (ex: /nom-de-serie)
     if (pathSegments.length === 1) {
       const metaData = {
-        title: `${seriesData.title} - BigSolo`,
+        title: `${seriesData.title} - Les Poroïniens`,
         description: seriesData.description,
         image: ogImageUrl,
       };
