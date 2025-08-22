@@ -6,21 +6,20 @@ export async function onRequest(context) {
   const headers = {
     "Content-Type": "application/json",
     "Access-Control-Allow-Origin": "*",
-    "X-Cache": "MISS", // Par défaut, on suppose un cache MISS
+    "X-Cache": "MISS",
   };
 
   if (!id) {
-    return new Response(
-      JSON.stringify({ error: "Le paramètre 'id' est manquant." }),
-      { status: 400, headers }
-    );
+    return new Response(JSON.stringify({ error: "Le paramètre 'id' est manquant." }), {
+      status: 400,
+      headers,
+    });
   }
 
-  // Clé unique pour le cache de ce chapitre
   const cacheKey = `imgchest_chapter_${id}`;
 
   try {
-    // 1. Tenter de lire depuis le cache KV
+    // 1) KV GET
     const cachedData = await env.IMG_CHEST_CACHE.get(cacheKey);
     if (cachedData) {
       console.log(`[IMG_CHEST_CHAPTER] Cache HIT → key "${cacheKey}"`);
@@ -29,64 +28,45 @@ export async function onRequest(context) {
     }
     console.log(`[IMG_CHEST_CHAPTER] Cache MISS → key "${cacheKey}"`);
 
-    // 2. Si non trouvé dans le cache, faire la requête à ImgChest
-    const responseText = await fetch(`https://imgchest.com/p/${id}`, {
+    // 2) fetch page ImgChest
+    const res = await fetch(`https://imgchest.com/p/${id}`, {
       headers: {
-        "User-Agent": "BigSolo-Site-Reader-Worker/1.1 (+https://bigsolo.org)",
+        // 🔧 Mets ton UA
+        "User-Agent": "LesPoroïniens/1.0 (+https://https://lesporoiniens.org)",
       },
-    }).then((res) => {
-      if (!res.ok)
-        throw new Error(
-          `Erreur HTTP ${res.status} lors de la récupération de la page ImgChest.`
-        );
-      return res.text();
     });
+    if (!res.ok) {
+      throw new Error(`Erreur HTTP ${res.status} lors de la récupération de la page ImgChest.`);
+    }
+    const responseText = await res.text();
 
-    // 3. Extraire les données de la page HTML
-    const match = responseText.match(
-      /<div id="app" data-page="([^"]+)"><\/div>/
-    );
+    // 3) extraire le JSON de la page
+    const match = responseText.match(/<div id="app" data-page="([^"]+)"><\/div>/);
     if (!match || !match[1]) {
-      throw new Error(
-        "Impossible de trouver les données de la page dans la réponse d'ImgChest."
-      );
+      throw new Error("Impossible de trouver les données de la page dans la réponse d'ImgChest.");
     }
 
-    // 4. Nettoyer et parser le JSON
     const jsonDataString = match[1].replaceAll("&quot;", '"');
     const pageData = JSON.parse(jsonDataString);
     const files = pageData?.props?.post?.files;
 
     if (!files || !Array.isArray(files)) {
-      throw new Error(
-        "Le format des données d'ImgChest a changé, la liste des fichiers est introuvable."
-      );
+      throw new Error("Le format des données d'ImgChest a changé, la liste des fichiers est introuvable.");
     }
 
     const payload = JSON.stringify(files);
 
-    // 5. Stocker le résultat dans le cache KV pour les prochaines requêtes
-    // Le TTL (Time To Live) est de 86400 secondes (24 heures)
-    await env.IMG_CHEST_CACHE.put(cacheKey, payload, {
-      expirationTtl: 2592000,
-    });
-    console.log(
-      `[IMG_CHEST_CHAPTER] KV PUT SUCCESS → Key "${cacheKey}" stored for 30 days`
-    );
+    // 4) KV PUT (30 jours)
+    await env.IMG_CHEST_CACHE.put(cacheKey, payload, { expirationTtl: 2592000 });
+    console.log(`[IMG_CHEST_CHAPTER] KV PUT SUCCESS → Key "${cacheKey}" stored for 30 days`);
 
     return new Response(payload, { headers });
   } catch (error) {
-    console.error(
-      `[IMG_CHEST_CHAPTER] Erreur du worker pour l'ID '${id}':`,
-      error.message
-    );
+    console.error(`[IMG_CHEST_CHAPTER] Erreur pour l'ID '${id}':`, error.message);
     const errorResponse = {
       error: "Impossible de récupérer les données du chapitre.",
       details: error.message,
     };
-    return new Response(JSON.stringify(errorResponse), {
-      status: 500,
-      headers,
-    });
+    return new Response(JSON.stringify(errorResponse), { status: 500, headers });
   }
 }
