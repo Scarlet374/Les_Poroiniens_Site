@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <script>
+      // Script anti-flash de thème
+      (function () {
+        try {
+          var theme = localStorage.getItem('mv-theme');
+          var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          var htmlEl = document.documentElement;
+          if (theme === 'dark' || (!theme && prefersDark)) {
+            htmlEl.classList.add('dark');
+            htmlEl.style.backgroundColor = '#15171a';
+          } else {
+            htmlEl.classList.remove('dark');
+            htmlEl.style.backgroundColor = '#f7f8fc';
+          }
+        } catch (e) { }
+      })();
+    </script>
+    <meta charset="UTF-8" />
+
+    <!-- Balises Meta dynamiques injectées par le middleware -->
+    <!-- DYNAMIC_OG_TAGS_PLACEHOLDER -->
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
+    <link rel="icon" type="image/png" href="/img/icon.png" /> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-Avb2QiuDEEvB4bZJYdft2mNjVShBftLdPG8FJ0V7irTLQ8Uo0qcPxh4Plq7G5tGm0rU+1SPhVotteLpBERwTkw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  
+    <!-- Styles principaux du site et du lecteur -->
+    <link rel="stylesheet" href="/css/style.css" /> 
+    <link rel="stylesheet" href="/css/layout.css" /> 
+    <link rel="stylesheet" href="/css/components/header.css" />
+    <link rel="stylesheet" href="/css/components/mobile-menu.css" />
+    <link rel="stylesheet" href="/css/components/reader.css" /> 
+    <link rel="stylesheet" href="/css/components/interactions.css" /> <!-- AJOUT DE CETTE LIGNE -->
+  
+    <script src="/js/theme-init.js"></script> 
+</head>
+<body id="readerpage">
+    <!-- Le header principal du site sera chargé ici par index.js -->
+    <header id="main-header"></header>
+    <div class="mobile-menu-overlay" id="main-mobile-menu-overlay"></div>
+  
+    <!-- Le lecteur sera injecté ici par le JavaScript -->
+    <main id="manga-reader-root"></main>
+  
+    <!-- Données du chapitre injectées par le middleware -->
+    <script id="reader-data-placeholder" type="application/json"><!-- READER_DATA_PLACEHOLDER --></script>
+  
+    <script src="/js/index.js" type="module"></script> 
+</body>
+</html>

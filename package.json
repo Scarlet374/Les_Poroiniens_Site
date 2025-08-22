@@ -1,0 +1,20 @@
+{
+  "name": "bigsolo-site",
+  "description": "Le site des Poroïniens pour les sorties des Poroïniens",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "generate-og": "node generate-og-images.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@resvg/resvg-js": "^2.6.2",
+    "satori": "^0.10.14",
+    "satori-html": "^0.3.2",
+    "workers-og": "^0.0.27"
+  }
+}
