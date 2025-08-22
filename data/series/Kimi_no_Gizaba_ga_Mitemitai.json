@@ -1,0 +1,33 @@
+{
+	"title": "Montre-moi tes dents de requin",
+	"description": "Un jour, Satsuki Yamato remarqua les dents acérées derrière le masque de Kiraragi Aisu. Alors qu'il s'approchait d'elle, il ne le savait pas encore mais il venait de tomber sur une fille aussi croquante que dangereusement mordante.\n\nUne comédie romantique qui donne envie de mordre dedans !",
+	"artist": "Sorato Shunsuke",
+	"author": "Sorato Shunsuke",
+	"cover": "https://cdn.imgchest.com/files/4jdcvemkpd4.png",
+	"manga_type": "Seinen",
+    "magazine": "Joker Magazine",
+	"release_year": 2025,
+	"tags": ["Comédie", "Romance", "Tranche de vie", "Vie scolaire"],
+	"alternative_titles": ["君の「ギザ歯」が見てみたい。", "Show Me Your Shark Teeth"],
+	"release_status": "En cours",
+	"covers_gallery": [
+	],
+	"chapters": {
+		"1": {
+			"title": "Toi et tes dents de requin",
+			"volume": "",
+			"last_updated": "1749505800",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/a846dpnlv7x"
+			}
+		},
+		"2": {
+			"title": "Les bruits que tu fais",
+			"volume": "",
+			"last_updated": "1751916406",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/dl7p8vpvkyo"
+			}
+		}
+	}
+}

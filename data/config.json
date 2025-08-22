@@ -1,0 +1,20 @@
+{
+  "ENV": "LOCAL_DEV",
+  "URL_GIT_CUBARI": "https://api.github.com/repos/Bigherooooo/Cubari/contents",
+  "URL_RAW_JSON_GITHUB": "raw/Bigherooooo/BigSolo-Site/refs/heads/master/data/series/",
+  "URL_API_IMGCHEST": "/api/imgchest-chapter-pages",
+  "LOCAL_SERIES_FILES": [
+    "Mane_Mane_Nichi_Nichi.json",
+    "Ippiki_Ookami_na_Onnanoko_ga_Kininaru_Hanashi.json",
+    "Akuyaku_Reijou_no_Oyome-sama.json",
+    "Kimi_no_Gizaba_ga_Mitemitai.json",
+    "Tenchou_to_Mujikakuna_Tennin.json",
+    "Girls_×_Vampire.json",
+    "5_no_Renai_Kanjou_(Doujinshi).json",
+    "Alt_Account_Trap.json",
+    "An_Invisible_Kiss.json",
+    "Shachou_to_Sake_to_Hoshi.json",
+    "Kaifuku_Jutsushi_no_Yarinaoshi.json",
+    "Karubi_momareru.json"
+  ]
+}

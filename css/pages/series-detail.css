@@ -1,0 +1,762 @@
+/* css/pages/series-detail.css */
+.series-detail-container {
+  background: var(--clr-bg-card);
+  border-radius: 14px;
+  padding: 2rem 2rem 1.7rem 2rem;
+}
+
+.detail-top-layout-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 1.5rem;
+}
+
+.detail-cover-wrapper {
+  height: 284px;
+  flex-shrink: 0;
+}
+
+.detail-cover {
+  height: 100%;
+  width: auto;
+  border-radius: 10px;
+}
+
+.detail-all-info-column {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.detail-primary-info-wrapper {
+  margin-bottom: 1rem;
+}
+
+.detail-primary-info-wrapper.no-bottom-margin {
+  margin-bottom: 0;
+}
+
+.detail-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--clr-text);
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+}
+
+.detail-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.8rem;
+}
+
+.detail-meta {
+  font-size: 1rem;
+  color: var(--clr-text-sub);
+  margin-top: 0;
+  line-height: 1.5;
+}
+
+.detail-artist-spacing {
+  margin-left: 2rem;
+}
+
+.detail-additional-metadata {
+  line-height: 1.6;
+  color: var(--clr-text-sub);
+  font-size: 0.95rem;
+}
+
+.detail-additional-metadata p {
+  margin-bottom: 0.4rem;
+}
+
+.anime-additional-metadata.no-top-margin {
+  margin-top: 0;
+}
+
+.anime-additional-metadata p {
+  margin-bottom: 0.35rem;
+}
+
+.anime-additional-metadata p:last-child {
+  margin-bottom: 0;
+}
+
+p.detail-description {
+  margin-top: 1rem;
+  font-size: 1rem;
+  color: var(--clr-text-sub);
+  line-height: 1.6;
+}
+
+.chapters-main-header,
+.episodes-main-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  margin-top: 2rem;
+}
+
+.chapters-main-header .section-title,
+.episodes-main-header .section-title {
+  margin-left: 0;
+  margin-bottom: 0;
+  display: block;
+}
+
+.chapters-main-header .section-title::after,
+.episodes-main-header .section-title::after {
+  left: 0;
+}
+
+.detail-secondary-info-wrapper.detail-secondary-desktop {
+  display: block;
+}
+
+.detail-secondary-info-wrapper.detail-secondary-mobile,
+.anime-secondary-info-mobile {
+  display: none;
+}
+
+.detail-chapter-item .chapter-side-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-shrink: 0;
+}
+
+.detail-chapter-views,
+.detail-chapter-likes,
+.detail-chapter-comments,
+.detail-episode-likes {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  font-size: 0.8rem;
+  color: var(--text-color-secondary, var(--clr-text-sub));
+  white-space: nowrap;
+}
+
+.detail-chapter-likes.liked,
+.detail-episode-likes.liked {
+  color: #ff4757;
+}
+
+.detail-chapter-views .fa-circle-notch,
+.detail-chapter-views .fa-spinner {
+  font-size: 0.9em;
+}
+
+.detail-chapter-views .fa-eye,
+.detail-chapter-views .fa-eye-slash,
+.detail-chapter-views .fa-exclamation-circle,
+.detail-chapter-likes .fa-heart,
+.detail-chapter-comments .fa-comment,
+.detail-episode-likes .fa-heart {
+  margin-right: 0.2em;
+}
+
+.detail-navigation-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  border-bottom: 1px solid rgba(var(--clr-text-rgb), 0.1);
+}
+
+.detail-nav-button {
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  background-color: transparent;
+  color: var(--clr-text-sub);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: color 0.3s ease, border-color 0.3s ease;
+  text-decoration: none;
+}
+
+.detail-nav-button:hover {
+  color: var(--clr-primary);
+  border-bottom-color: var(--clr-primary);
+}
+
+.detail-nav-button.active {
+  color: var(--clr-primary);
+  border-bottom: 3px solid var(--clr-primary);
+}
+
+.episode-list-container {
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  background-color: var(--clr-bg-card);
+  border: 1px solid rgba(var(--clr-text-rgb), 0.1);
+  overflow: hidden;
+}
+
+.detail-episode-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid rgba(var(--clr-text-rgb), 0.05);
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease,
+    border-color 0.2s ease;
+  text-decoration: none;
+}
+
+.detail-episode-item:last-child {
+  border-bottom: none;
+}
+
+body.dark .detail-episode-item {
+  background-color: var(--clr-bg-card);
+}
+
+.detail-episode-item:hover {
+  background-color: rgba(var(--clr-primary-rgb), 0.1) !important;
+}
+
+.detail-episode-item:hover .episode-main-info {
+  transform: translateX(5px);
+}
+
+.episode-main-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  overflow: hidden;
+  flex-grow: 1;
+  margin-right: 0.5rem;
+}
+
+.detail-episode-number {
+  font-weight: 600;
+  color: var(--clr-primary);
+}
+
+.detail-episode-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--clr-text);
+}
+
+.episode-side-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-shrink: 0;
+}
+
+.detail-episode-date {
+  font-size: 0.85rem;
+  color: var(--clr-text-sub);
+  flex-shrink: 0;
+}
+
+.episode-player-page {
+  padding: 0;
+  background: none;
+  box-shadow: none;
+}
+
+.player-header {
+  margin-bottom: 1.5rem;
+}
+
+.player-series-title {
+  font-size: 1.2rem;
+  color: var(--clr-primary);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.player-series-title:hover {
+  opacity: 0.7;
+}
+
+.player-episode-main-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.player-layout-grid {
+  display: grid;
+  grid-template-columns: 350px 1fr;
+  gap: 2rem;
+}
+
+.video-player-wrapper {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  background-color: #000;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.video-player-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.episode-navigation {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1.5rem;
+}
+
+.episode-nav-button {
+  background: var(--clr-bg-card);
+  border: 1px solid rgba(var(--clr-text-rgb), 0.15);
+  padding: 0.7rem 1.5rem;
+  border-radius: 8px;
+  text-decoration: none;
+  color: var(--clr-text);
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.episode-nav-button:hover {
+  background: rgba(var(--clr-text-rgb), 0.05);
+  transform: translateY(-2px);
+}
+
+.episode-nav-button.disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.player-sidebar {
+  background: var(--clr-bg-card);
+  border-radius: 14px;
+  padding: .5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-title {
+  font-weight: 700;
+  padding: .5rem;
+  margin-bottom: .5rem;
+  border-bottom: 1px solid rgba(var(--clr-text-rgb), 0.1);
+  font-size: 1.5rem;
+  padding-top: .25rem;
+}
+
+.player-episode-list-wrapper {
+  overflow-y: auto;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.player-episode-item {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.7rem 1rem;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+  justify-content: space-between;
+}
+
+.player-episode-item:hover {
+  background-color: rgba(var(--clr-primary-rgb), 0.08);
+}
+
+.player-episode-item.active {
+  background-color: rgba(var(--clr-primary-rgb), 0.15);
+  pointer-events: none;
+}
+
+.player-episode-number {
+  font-weight: 600;
+  color: var(--clr-text);
+  flex-shrink: 0;
+}
+
+.player-episode-title {
+  font-size: 0.9rem;
+  color: var(--clr-text-sub);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex-grow: 1;
+}
+
+.player-episode-likes {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  font-size: 0.8rem;
+  color: var(--clr-text-sub);
+  white-space: nowrap;
+  flex-shrink: 0;
+  cursor: pointer;
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.player-episode-likes .fa-heart {
+  margin-right: 0.2em;
+}
+
+.player-episode-likes.liked {
+  color: #ff4757;
+}
+
+.player-episode-item.active .player-episode-likes {
+  cursor: default;
+  pointer-events: auto;
+  /* Réactive les clics UNIQUEMENT sur cet élément */
+}
+
+.player-episode-item:not(.active) .player-episode-likes:hover {
+  background-color: rgba(var(--clr-text-rgb), 0.1);
+}
+
+.player-episode-item.active .player-episode-number,
+.player-episode-item.active .player-episode-title {
+  color: var(--clr-primary);
+}
+
+.anime-additional-metadata {
+  line-height: 1.6;
+  color: var(--clr-text-sub);
+  font-size: 0.95rem;
+  margin-top: 1rem;
+}
+
+.anime-additional-metadata.no-top-margin {
+  margin-top: 0;
+}
+
+.anime-additional-metadata p {
+  margin-bottom: 0.35rem;
+}
+
+.anime-additional-metadata p:last-child {
+  margin-bottom: 0;
+}
+
+.anime-bottom-content {
+  margin-top: 1.5rem;
+}
+
+.inline-songs-container {
+  margin-top: 0rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+.inline-song-button {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.4rem 1rem;
+  background-color: rgba(var(--clr-primary-rgb), 0.08);
+  border: 1px solid rgba(var(--clr-primary-rgb), 0.2);
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.inline-song-button:hover {
+  background-color: rgba(var(--clr-primary-rgb), 0.15);
+  border-color: rgba(var(--clr-primary-rgb), 0.4);
+  transform: translateY(-2px);
+}
+
+.inline-song-icon {
+  font-size: 1.2rem;
+  color: #ff0000;
+}
+
+.inline-song-info-desktop {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.3;
+}
+
+.inline-song-info-mobile {
+  display: none;
+}
+
+.inline-song-type {
+  font-weight: 700;
+  font-size: 0.8rem;
+  color: var(--clr-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.inline-song-title {
+  font-weight: 600;
+  color: var(--clr-text);
+  font-size: 0.95rem;
+}
+
+.inline-song-artist {
+  font-size: 0.7rem;
+  color: var(--clr-text-sub);
+}
+
+#reading-actions-container {
+  margin-top: 1.5rem;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.reading-action-button {
+  padding: 0.8rem 1.8rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 700;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  transition: all 0.2s ease-in-out;
+  border: 2px solid transparent;
+}
+
+.reading-action-button.continue {
+  background-color: rgba(var(--clr-primary-rgb), 0.15);
+  color: var(--clr-text);
+  border-color: var(--clr-primary);
+}
+
+.reading-action-button.continue:hover {
+  background-color: rgba(var(--clr-primary-rgb), 0.25);
+}
+
+.reading-action-button.start {
+  background-color: transparent;
+  color: var(--clr-primary);
+  border-color: var(--clr-primary);
+}
+
+.reading-action-button.start:hover {
+  background-color: rgba(var(--clr-primary-rgb), 0.1);
+}
+
+.reading-action-button.disabled {
+  background-color: rgba(var(--clr-text-rgb), 0.2);
+  color: rgba(var(--clr-text-rgb), 0.6);
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+@media (max-width: 992px) {
+  .player-layout-grid {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .player-sidebar {
+    order: 2;
+    margin-top: 1.5rem;
+    max-height: 300px;
+  }
+
+  .player-main-content {
+    order: 1;
+  }
+
+  .episode-navigation {
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 0.8rem;
+  }
+
+  .episode-nav-button {
+    flex-grow: 1;
+    justify-content: center;
+  }
+
+  .episode-nav-button.last-button {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .series-detail-container {
+    padding: 1.2rem;
+  }
+
+  .detail-top-layout-wrapper {
+    gap: 0.8rem;
+  }
+
+  .detail-cover-wrapper {
+    height: 144px;
+  }
+
+  .detail-cover {
+    border-radius: 6px;
+  }
+
+  .detail-primary-info-wrapper {
+    margin-bottom: 0;
+  }
+
+  .detail-title {
+    font-size: 1.3rem;
+    margin-bottom: 0.3rem;
+    line-height: 1.25;
+  }
+
+  .detail-tags {
+    gap: 0.3rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .detail-meta {
+    font-size: 0.8rem;
+    margin-bottom: 0.3rem;
+    line-height: 1.4;
+  }
+
+  .detail-meta .detail-artist-spacing {
+    display: block;
+    margin-left: 0;
+  }
+
+  .detail-secondary-info-wrapper.detail-secondary-desktop,
+  .anime-view .anime-additional-metadata,
+  .anime-view .anime-bottom-content {
+    display: none;
+  }
+
+  .detail-secondary-info-wrapper.detail-secondary-mobile,
+  .anime-secondary-info-mobile {
+    display: block;
+    margin-top: 0.8rem;
+  }
+
+  .anime-secondary-info-mobile .detail-meta {
+    margin-bottom: 0.4rem;
+  }
+
+  .anime-secondary-info-mobile .inline-songs-container {
+    margin-top: 0.8rem;
+  }
+
+  .series-detail-container>.detail-description {
+    display: block;
+    font-size: 0.8rem;
+    line-height: 1.5;
+    margin-top: 0.8rem;
+  }
+
+  .inline-song-info-desktop {
+    display: none;
+  }
+
+  .inline-song-info-mobile {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .inline-songs-container {
+    flex-direction: row;
+    gap: 0.5rem;
+    margin-top: 0.8rem;
+  }
+
+  .inline-song-button {
+    padding: 0.3rem 0.6rem;
+    gap: 0.4rem;
+  }
+
+  .inline-song-icon {
+    font-size: 0.9rem;
+  }
+
+  .inline-song-info-mobile .inline-song-type {
+    font-size: 0.75rem;
+  }
+
+  .inline-song-info-mobile .inline-song-title {
+    font-size: 0.75rem;
+    max-width: 135px;
+  }
+
+  .detail-navigation-tabs {
+    gap: 0;
+    justify-content: space-around;
+  }
+
+  .detail-nav-button {
+    font-size: 0.9rem;
+    padding: 0.7rem 0.5rem;
+  }
+
+  .detail-episode-item {
+    padding: 0.7rem;
+    padding-left: .8rem;
+    font-size: 0.8rem;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .player-header {
+    text-align: center;
+  }
+
+  .player-episode-main-title {
+    font-size: 1.2rem;
+  }
+
+  .detail-meta-flex-line {
+    display: flex;
+    align-items: baseline;
+  }
+
+  .detail-meta-flex-prefix {
+    flex: 0 0 140px;
+  }
+
+  #reading-actions-container {
+    flex-wrap: nowrap;
+  }
+
+  .reading-action-button {
+    flex-grow: 1;
+    width: auto;
+    padding: 0.7rem 1rem;
+    font-size: 0.7rem;
+  }
+
+  .detail-chapter-item .chapter-side-info,
+  .episode-side-info {
+    width: 100%;
+  }
+
+  .detail-episode-date {
+    font-size: 0.75rem;
+    margin-left: auto;
+  }
+}

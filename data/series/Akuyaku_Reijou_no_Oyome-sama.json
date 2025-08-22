@@ -1,0 +1,26 @@
+{
+	"title": "La Fiancée de la Vilaine",
+	"description": "Un jour, Karina, jeune noble préparée depuis toujours à devenir reine, voit ses fiançailles brutalement rompues par son fiancé, le prince. Celui-ci l’exile dans le Grand Nord, préférant désormais la compagnie de sa sœur, Aurora. Exilée dans ces contrées glacées où rôdent des monstres, Karina part un soir explorer l’origine d’un étrange bruit… pour y faire une rencontre qui va bouleverser son destin.\n\nEntre vengeance et passion dévorante, une fantasy romantique où s’entrelacent la soif de revanche d’une noble déchue et le désir d’amour d’une mystérieuse jeune fille.",
+	"artist": "Kawano Akiko",
+	"author": "Kawano Akiko",
+	"cover": "https://cdn.imgchest.com/files/7bwckp8apg7.jpg",
+	"manga_type": "",
+    "magazine": "Comic Seasons",
+	"release_year": 2024,
+	"tags": ["Yuri", "Romance","Drame", "Fantastique", "Fille monstres", "Monstres", "Vilaine"],
+	"alternative_titles": ["Akuyaku Reijou no Oyome-sama", "The Villainess' Bride"],
+	"release_status": "En cours",
+	"covers_gallery": [
+		{ "url_hq": "https://cdn.imgchest.com/files/7bwckp8apg7.jpg", "url_lq": "https://cdn.imgchest.com/files/7bwckp8apg7.jpg", "volume": "1" }
+	],
+	"chapters": {
+		"1": {
+			"title": "",
+			"volume": "",
+			"last_updated": "1751916406",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/lqyemak6k7d"
+			}
+		}
+	}
+}

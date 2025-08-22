@@ -1,0 +1,31 @@
+{
+	"title": "Une histoire sur une fille solitaire qui a retenu mon attention",
+	"description": "Pas de synopsis.",
+	"artist": "Ash/かーぼん",
+	"author": "Ash/かーぼん",
+	"cover": "https://cdn.imgchest.com/files/4nec8q28gj4.png",
+	"manga_type": "Shonen",
+	"magazine": "Twitter",
+	"release_year": 2024,
+	"tags": [
+		"Oneshot",
+		"Web Comic",
+		"Romance"
+	],
+	"alternative_titles": [
+		"一匹狼な女の子が気になる話",
+		"A Story About a Lone Wolf Girl Who Caught My Attention"
+	],
+	"release_status": "Fini",
+	"os": true,
+	"chapters": {
+		"0": {
+			"title": "Une histoire sur une fille solitaire qui a retenu mon attention",
+			"volume": "",
+			"last_updated": "1751916406",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/ne7bq5jjj75"
+			}
+		}
+	}
+}

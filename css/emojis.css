@@ -1,0 +1,46 @@
+.custom-emoji {
+  display: inline-block;
+  width: 1.2em;
+  height: 1.2em;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin-left: 0.3em;
+  vertical-align: -0.15em;
+}
+
+.custom-emoji.emoji-ptn {
+  background-image: url('../img/emojis/ptn.png'); 
+}
+
+.custom-emoji.emoji-blush {
+  background-image: url('../img/emojis/blush.png'); 
+}
+
+.custom-emoji.emoji-bocchibruh {
+  background-image: url('../img/emojis/bocchibruh.png'); 
+}
+
+.custom-emoji.emoji-george {
+  background-image: url('../img/emojis/george.png'); 
+}
+
+.custom-emoji.emoji-hype {
+  background-image: url('../img/emojis/hype.png'); 
+}
+
+.custom-emoji.emoji-kaorukoeating {
+  background-image: url('../img/emojis/kaorukoeating.png'); 
+}
+
+.custom-emoji.emoji-shrug {
+  background-image: url('../img/emojis/shrug.png'); 
+}
+
+.custom-emoji.emoji-stonk {
+  background-image: url('../img/emojis/stonk.png'); 
+}
+
+.presentation-section .section-title .custom-emoji {
+  vertical-align: middle;
+}

@@ -1,0 +1,399 @@
+/*********************************************************
+ * LN Reader — thème-aware + layout robuste (Flexbox)
+ * S'aligne automatiquement sur le thème clair/sombre global.
+ *********************************************************/
+
+/* ---------------------- */
+/*  Variables de thème    */
+/* ---------------------- */
+
+/* LIGHT par défaut (hérite de tes tokens si présents) */
+:root {
+  --ln-accent: var(--accent, #10e0c1);
+
+  /* Surfaces & textes — essaie d'utiliser tes tokens si dispos */
+  --ln-surface:     var(--surface-1, #ffffff);
+  --ln-surface-2:   var(--surface-2, #f3f4f6);
+  --ln-border:      var(--border-color, rgba(0,0,0,.08));
+  --ln-text:        var(--text-color, #0b0f14);
+  --ln-muted:       var(--muted-color, #384152);
+  --ln-shadow:      0 6px 20px rgba(0,0,0,.10);
+
+  /* Rayons & espacements */
+  --ln-radius:      18px;
+  --ln-gap:         24px;
+  --ln-pad:         18px;
+
+  /* Largeurs */
+  --ln-sidebar-w:   320px;
+  --ln-article-max: 820px;
+}
+
+/* DARK — si ton site applique .dark / .theme-dark / [data-theme="dark"] */
+:root.dark,
+html.dark,
+body.dark,
+:root.theme-dark,
+html.theme-dark,
+body.theme-dark,
+[data-theme="dark"] {
+  --ln-surface:   var(--soft, #1b1c1e);
+  --ln-surface-2: #111315;
+  --ln-border:    rgba(255,255,255,.08);
+  --ln-text:      #e8eaed;
+  --ln-muted:     #b5bcc9;
+  --ln-shadow:    0 6px 20px rgba(0,0,0,.25);
+}
+
+/* Sécurité : réactive le scroll global en mode LN */
+html.ln-mode, body.ln-mode {
+  overflow: auto !important;
+  height: auto !important;
+}
+
+/* Sécurité : le conteneur racine prend toute la largeur */
+#manga-reader-root,
+#reader-root {
+  width: 100% !important;
+  max-width: 100% !important;
+  display: block !important;
+  color: var(--ln-text);
+}
+
+/* ---------------------- */
+/*  Layout principal      */
+/* ---------------------- */
+
+#ln-reader.ln-reader {
+  position: relative;
+  display: flex;                 /* Flex robuste */
+  align-items: flex-start;
+  gap: var(--ln-gap);
+  max-width: 1400px;
+  width: 100%;
+  margin: 24px auto;
+  padding: 0 16px;
+  box-sizing: border-box;
+}
+
+/* Sidebar masquée */
+#ln-reader.sidebar-collapsed .ln-sidebar {
+  display: none;
+}
+
+/* ---------------------- */
+/*  Sidebar (Options)     */
+/* ---------------------- */
+
+.ln-sidebar {
+  flex: 0 0 var(--ln-sidebar-w);
+  max-width: var(--ln-sidebar-w);
+  width: var(--ln-sidebar-w);
+  position: sticky;
+  top: calc(var(--header-height, 72px) + 12px);
+  align-self: flex-start;
+  background: var(--ln-surface);
+  border: 1px solid var(--ln-border);
+  border-radius: var(--ln-radius);
+  padding: var(--ln-pad);
+  box-shadow: var(--ln-shadow);
+  color: var(--ln-text);
+}
+
+.ln-controls {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+.ln-controls h3 {
+  margin: 0 0 8px;
+  font-weight: 800;
+  letter-spacing: .2px;
+  color: var(--ln-accent);
+  text-shadow: 0 0 10px color-mix(in oklab, var(--ln-accent) 20%, transparent);
+}
+
+/* Groupes (label + champ) */
+.ln-controls label {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  font-weight: 700;
+  color: var(--ln-text);
+}
+
+/* Select & “pills” d’affichage de valeur */
+.ln-controls select,
+.ln-controls .pill {
+  height: 38px;
+  border-radius: 12px;
+  border: 1px solid var(--ln-border);
+  background: var(--ln-surface-2);
+  color: var(--ln-text);
+  padding: 0 12px;
+  outline: none;
+  transition: border-color .15s ease, background .15s ease, box-shadow .15s ease;
+}
+.ln-controls select:hover,
+.ln-controls .pill:hover { background: color-mix(in oklab, var(--ln-surface-2) 85%, #fff 15%); }
+.ln-controls select:focus {
+  border-color: var(--ln-accent);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--ln-accent) 30%, transparent);
+}
+
+/* Rangées de boutons (A-, A+, etc.) */
+.ln-row {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn {
+  height: 36px;
+  padding: 0 12px;
+  border-radius: 12px;
+  border: 1px solid var(--ln-border);
+  background: var(--ln-surface-2);
+  color: var(--ln-text);
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform .06s ease, background .15s ease, border-color .15s ease, box-shadow .15s ease;
+}
+.btn:hover { background: color-mix(in oklab, var(--ln-surface-2) 80%, #fff 20%); }
+.btn:active { transform: translateY(1px); }
+.btn-ghost { background: transparent; }
+
+#ln-font-size-val,
+#ln-leading-val,
+#ln-tracking-val {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  padding: 0 12px;
+  border-radius: 12px;
+  background: var(--ln-surface-2);
+  border: 1px solid var(--ln-border);
+  color: var(--ln-text);
+}
+
+/* Alignement select */
+#ln-align { width: 100%; }
+
+/* Bouton (pliage de la sidebar) */
+#reader-sidebar-toggle.ln-toggle {
+  position: absolute;
+  top: 18px;
+  left: var(--ln-sidebar-w);
+  transform: translateX(-50%);
+  z-index: 5;
+
+  width: 28px; height: 28px;
+  display: grid; place-items: center;
+
+  border-radius: 10px;
+  border: 1px solid var(--ln-border);
+  background: color-mix(in oklab, var(--ln-surface) 70%, #000 30%);
+  color: var(--ln-text);
+  backdrop-filter: blur(3px);
+  cursor: pointer;
+  transition: left .2s ease, background .15s ease;
+}
+#reader-sidebar-toggle.ln-toggle:hover {
+  background: color-mix(in oklab, var(--ln-surface) 60%, #000 40%);
+}
+#ln-reader.sidebar-collapsed #reader-sidebar-toggle { left: 0; }
+
+/* ---------------------- */
+/*  Zone de lecture       */
+/* ---------------------- */
+
+.ln-stage {
+  flex: 1 1 auto;              /* prend tout l’espace restant */
+  min-width: 0;                /* évite l’écrasement */
+  display: flex;
+  justify-content: center;     /* centre l’article */
+}
+
+/* Article centré, largeur lisible */
+.ln-article {
+  max-width: var(--ln-article-max);
+  width: min(100%, var(--ln-article-max));
+  margin: 0 auto;
+  background: var(--ln-surface);
+  border: 1px solid var(--ln-border);
+  border-radius: var(--ln-radius);
+  padding: 28px;
+  box-shadow: var(--ln-shadow);
+  box-sizing: border-box;
+
+  /* Variables pilotées par le JS */
+  font-family: var(--ln-font-family, system-ui, sans-serif);
+  font-size:   var(--ln-font-size, 20px);
+  line-height: var(--ln-leading, 1.8);
+  letter-spacing: var(--ln-tracking, 0px);
+  color: var(--ln-text);
+}
+
+/* Typo du contenu */
+.ln-article h1, .ln-article h2, .ln-article h3 {
+  margin: 1em 0 .5em;
+  font-weight: 800;
+  color: var(--ln-text);
+}
+.ln-article p        { margin: .9em 0; color: var(--ln-text); }
+.ln-article em       { font-style: italic; }
+.ln-article strong   { font-weight: 800; }
+.ln-article a        { color: var(--ln-accent); text-decoration: underline; }
+.ln-article hr       { border: none; height: 1px; background: var(--ln-border); margin: 1.4em 0; }
+
+/* Images intégrées (illustrations) */
+.ln-content img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 16px auto;
+  border-radius: 12px;
+  box-shadow: var(--ln-shadow);
+}
+
+/* Évite "une lettre par ligne" si un style global force la casse */
+.ln-content { word-break: normal; overflow-wrap: anywhere; }
+
+/* ---------------------- */
+/*  Responsive            */
+/* ---------------------- */
+
+@media (max-width: 980px) {
+  #ln-reader.ln-reader { flex-direction: column; gap: 16px; }
+  .ln-sidebar,
+  #reader-sidebar-toggle {
+    position: static;
+    width: 100%;
+    max-width: none;
+    left: auto;
+    transform: none;
+  }
+  .ln-sidebar { order: 0; }
+  .ln-stage   { order: 1; }
+}
+
+/* ---------------------- */
+/*  PAGINATION            */
+/* ---------------------- */
+
+/* Barre de pagination */
+.ln-pager {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 4px 0 18px;
+}
+
+.ln-pager-select {
+  min-width: clamp(220px, 40vw, 560px);
+  height: 40px;
+  padding: 0 12px;
+  border-radius: 12px;
+  border: 1px solid var(--ln-border);
+  background: var(--ln-surface);
+  color: var(--ln-text);
+}
+
+.ln-pager .btn.ln-nav[disabled] {
+  opacity: .5;
+  cursor: not-allowed;
+}
+
+/* Titre de chapitre + divider coloré */
+.ln-chapter-heading {
+  margin: 0 0 10px;
+  font-weight: 800;
+  font-size: clamp(20px, 3.2vw, 34px);
+  color: var(--ln-text);
+}
+
+.ln-divider {
+  border: none;
+  height: 2px;
+  background: linear-gradient(to right, var(--ln-accent), transparent 40%);
+  margin: 0 0 10px;
+}
+
+/* La colonne de lecture empile pager + article et centre tout */
+.ln-stage {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;     /* << */
+  align-items: center;        /* << */
+  justify-content: flex-start;
+}
+
+/* Barre de pagination (déjà ajoutée avant) */
+.ln-pager {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 6px 0 18px;
+}
+
+.ln-pager-select {
+  min-width: clamp(220px, 40vw, 560px);
+  height: 40px;
+  padding: 0 12px;
+  border-radius: 12px;
+  border: 1px solid var(--ln-border);
+  background: var(--ln-surface);
+  color: var(--ln-text);
+}
+
+
+/* Bouton "Revenir en haut" */
+.ln-back-to-top{
+  position: fixed;
+  right: 24px;
+  bottom: calc(24px + env(safe-area-inset-bottom));
+  z-index: 50;
+
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+
+  border-radius: 999px;
+  border: 1px solid var(--ln-border);
+  background: color-mix(in oklab, var(--ln-surface) 70%, #000 30%);
+  color: var(--ln-text);
+  box-shadow: var(--ln-shadow);
+
+  opacity: 0;
+  transform: translateY(10px) scale(.9);
+  pointer-events: none;
+  transition: opacity .2s ease, transform .2s ease, background .15s ease, border-color .15s ease;
+}
+.ln-back-to-top.visible{
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+.ln-back-to-top:hover{
+  background: color-mix(in oklab, var(--ln-surface) 60%, #000 40%);
+}
+.ln-back-to-top:focus-visible{
+  outline: 3px solid color-mix(in oklab, var(--ln-accent) 40%, transparent);
+  outline-offset: 2px;
+}
+.ln-back-to-top-icon{
+  font-size: 18px;
+  line-height: 1;
+}
+
+/* Optionnel : ajuster sur petits écrans */
+@media (max-width: 600px){
+  .ln-back-to-top{ right: 16px; bottom: calc(16px + env(safe-area-inset-bottom)); }
+}

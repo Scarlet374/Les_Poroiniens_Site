@@ -1,0 +1,133 @@
+html {
+  background-color: #f7f8fc !important;
+  color: #222831 !important;
+}
+
+html.dark {
+  background-color: #15171a !important;
+  color: #eceff4 !important;
+  color-scheme: dark;
+}
+
+:root {
+  --clr-bg-light: #f7f8fc;
+  --clr-bg-dark: #15171a;
+  --clr-bg-card-light: #ffffff;
+  --clr-bg-card-dark: #1e2024;
+  --clr-text-light: #222831;
+  --clr-text-dark: #eceff4;
+  --clr-text-sub-light: #69707d;
+  --clr-text-sub-dark: #cad0da;
+  --clr-primary-light: #0095AD;
+  --clr-primary-dark: #1ab6b9;
+  --clr-accent-light: #ff6b6b;
+  --clr-accent-dark: #ff7f7f;
+
+  /* Header specific colors */
+  --clr-header-logo-light: #000000;
+  --clr-header-logo-dark: #ffffff;
+  --clr-header-text-light: #495057; /* Dark Gray */
+  --clr-header-text-dark: #adb5bd; /* Light Gray */
+  --clr-header-text-hover-light: #000000;
+  --clr-header-text-hover-dark: #ffffff;
+  --clr-header-icon-light: #000000;
+  --clr-header-icon-dark: #ffffff;
+
+  --clr-bg: var(--clr-bg-light);
+  --clr-bg-card: var(--clr-bg-card-light);
+  --clr-text: var(--clr-text-light);
+  --clr-text-sub: var(--clr-text-sub-light);
+  --clr-primary: var(--clr-primary-light);
+  --clr-primary-rgb: 0, 149, 173;
+  --clr-accent: var(--clr-accent-light);
+  --clr-accent-rgb: 255, 107, 107;
+  --clr-text-rgb: 34, 40, 49;
+  --clr-bg-rgb-val: 247, 248, 252;
+
+  --clr-header-logo: var(--clr-header-logo-light);
+  --clr-header-text: var(--clr-header-text-light);
+  --clr-header-text-hover: var(--clr-header-text-hover-light);
+  --clr-header-icon: var(--clr-header-icon-light);
+
+  --series-fixed-cover-width-desktop: 180px;
+  --series-fixed-cover-width-mobile: 120px;
+  --mobile-carousel-card-aspect-ratio: 1.8;
+}
+
+html.dark:root,
+body.dark {
+  --clr-bg: var(--clr-bg-dark);
+  --clr-bg-card: var(--clr-bg-card-dark);
+  --clr-text: var(--clr-text-dark);
+  --clr-text-sub: var(--clr-text-sub-dark);
+  --clr-primary: var(--clr-primary-dark);
+  --clr-primary-rgb: 26, 182, 185;
+  --clr-accent: var(--clr-accent-dark);
+  --clr-accent-rgb: 255, 127, 127;
+  --clr-text-rgb: 236, 239, 244;
+  --clr-bg-rgb-val: 21, 23, 26;
+
+  --clr-header-logo: var(--clr-header-logo-dark);
+  --clr-header-text: var(--clr-header-text-dark);
+  --clr-header-text-hover: var(--clr-header-text-hover-dark);
+  --clr-header-icon: var(--clr-header-icon-dark);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 0.3s ease, opacity 0.3s ease, filter 0.3s ease;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Urbanist", system-ui, sans-serif;
+  background-color: var(--clr-bg);
+  color: var(--clr-text);
+  overflow-x: hidden;
+  line-height: 1.55;
+}
+
+/* --- AJOUT POUR LE LECTEUR --- */
+body#readerpage {
+  /* Empêche le scroll de la page principale quand le lecteur est ouvert */
+  overflow: hidden;
+}
+
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.chapter-card,
+.series-card,
+.section-title,
+.presentation-content,
+.profile-pic,
+.gallery-controls,
+.series-detail-container,
+.colo-card {
+  transform: translateY(20px);
+  opacity: 0;
+}
+
+img.lazy-load-gallery[src*="placeholder_preview.png"] {
+  opacity: 0.3;
+}
+
+img.lazy-load-gallery.image-loaded-fade-in {
+  opacity: 1;
+}
+
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+}

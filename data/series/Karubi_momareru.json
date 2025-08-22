@@ -1,0 +1,25 @@
+{
+	"title": "Les Galères de Karubi",
+	"description": "Pas de Synopsis.",
+	"artist": "Shiro Manta",
+	"author": "Akasaka Aka",
+	"cover": "https://file.garden/aKS5jUD-slfn6iFT/Cover%20Karubi.png",
+	"manga_type": "Shonen",
+    "magazine": "Shonen Magazine",
+	"release_year": 2025,
+	"tags": ["Comédie","Drame"],
+	"alternative_titles": ["かるび、もまれる", "Karubi's Screwed"],
+	"release_status": "En cours",
+	"covers_gallery": [
+		],
+	"chapters": {
+		"1": {
+			"title": "",
+			"volume": "",
+			"last_updated": "1755807960",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/9p4n8wk5l4n"
+			}
+		}
+	}
+}

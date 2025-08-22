@@ -1,0 +1,198 @@
+/* css/components/accordion.css */
+
+.chapters-accordion-container {
+  border: 1px solid rgba(var(--clr-text-rgb), 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+body.dark .chapters-accordion-container {
+  border-color: rgba(var(--clr-text-rgb), 0.1);
+}
+
+.volume-header {
+  background: rgba(var(--clr-primary-rgb), 0.03);
+  padding: 0.8rem 1.2rem;
+  border-bottom: 1px solid rgba(var(--clr-text-rgb), 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--clr-text);
+  transition: background 0.2s ease;
+}
+
+body.dark .volume-header {
+  background-color: rgba(var(--clr-primary-rgb), 0.05);
+  border-color: rgba(var(--clr-text-rgb), 0.1);
+}
+
+.volume-group:last-child .volume-header {
+  border-bottom: none;
+}
+
+.volume-header:hover {
+  background: rgba(var(--clr-primary-rgb), 0.08);
+}
+
+.volume-header h4 {
+  margin: 0;
+  flex-shrink: 0;
+}
+
+.volume-release-date {
+  color: var(--clr-text-sub);
+  font-weight: 600;
+}
+
+.volume-license-text {
+  font-size: 0.9em;
+  font-weight: 600;
+  color: var(--clr-text-sub);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.volume-license-link {
+  color: var(--clr-primary);
+  text-decoration: none;
+  white-space: nowrap;
+  font-weight: 600;
+}
+
+.volume-license-link:hover {
+  text-decoration: underline;
+  color: rgba(var(--clr-primary-rgb), 0.8);
+}
+
+.volume-arrow {
+  font-size: 0.9em;
+  flex-shrink: 0;
+  margin-left: 1rem;
+  transition: transform 0.3s ease;
+}
+
+.volume-arrow.rotated {
+  transform: rotate(180deg);
+}
+
+.volume-chapters-list {
+  background: var(--clr-bg-card);
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease-out;
+  display: flex;
+  flex-direction: column;
+}
+
+.detail-chapter-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+  border-bottom: 1px solid rgba(var(--clr-text-rgb), 0.05);
+  text-decoration: none;
+}
+
+body.dark .detail-chapter-item {
+  border-bottom-color: rgba(var(--clr-text-rgb), 0.08);
+}
+
+.licensed-chapter-item {
+  filter: blur(1.5px);
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.detail-chapter-item.licensed-chapter-item .detail-chapter-likes[data-like-count="0"],
+.detail-chapter-item.licensed-chapter-item .detail-chapter-comments[data-comment-count="0"] {
+  display: none;
+}
+
+.detail-chapter-item:hover:not(.licensed-chapter-item) {
+  background: rgba(var(--clr-primary-rgb), 0.08);
+}
+
+.detail-chapter-item:hover:not(.licensed-chapter-item) .chapter-main-info {
+  transform: translateX(5px);
+}
+
+.chapter-main-info {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+  gap: 0.5rem;
+  overflow: hidden;
+}
+
+.chapter-side-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.detail-chapter-number {
+  font-weight: 600;
+  color: var(--clr-primary);
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.detail-chapter-title {
+  flex-grow: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0;
+  color: var(--clr-text);
+}
+
+.detail-chapter-collab {
+  font-size: 0.8rem;
+  color: var(--clr-text-sub);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.detail-chapter-date {
+  color: var(--clr-text-sub);
+  font-size: 0.8rem;
+  flex-shrink: 0;
+  white-space: nowrap;
+  text-align: right;
+}
+
+/* --- Media Queries --- */
+@media (max-width: 768px) {
+    .volume-header {
+      padding: .7rem .8rem;
+      font-size: 1rem;
+    }
+  
+    .volume-license-text {
+      font-size: .8em;
+      display: block;
+    }
+  
+    .volume-chapters-list .detail-chapter-item {
+      padding: .6rem;
+      padding-left: .8rem;
+      font-size: .8rem;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .detail-chapter-collab,
+    .detail-chapter-date {
+      font-size: .75rem;
+    }
+
+    .detail-chapter-date {
+      margin-left: auto;
+    }
+}

@@ -1,0 +1,57 @@
+{
+	"title": "Girls × Vampire",
+	"description": "Pas de synopsis.",
+	"artist": "Mikami Teren",
+	"author": "Mikami Teren",
+	"cover": "https://cdn.imgchest.com/files/4apc5pnlda4.png",
+	"manga_type": "Seinen",
+    "magazine": "Twitter",
+	"release_year": 2025,
+	"tags": ["Comédie", "Romance", "Tranche de vie", "Yuri", "Vie scolaire", "Vampires"],
+	"alternative_titles": ["ガールズ×ヴァンパイア"],
+	"release_status": "En cours",
+	"covers_gallery": [
+	],
+	"chapters": {
+		"1": {
+			"title": "Les ordres de Ruruna",
+			"volume": "",
+			"last_updated": "1740945240",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/ljyq2vpeny2"
+			}
+		},
+		"2": {
+			"title": "La soif de Ruruna",
+			"volume": "",
+			"last_updated": "1741031640",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/pg73lraqj7r"
+			}
+		},
+		"3": {
+			"title": "Ruruna provoque sa chance",
+			"volume": "",
+			"last_updated": "1741032000",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/xny8m3nw57b"
+			}
+		},
+		"4": {
+			"title": "Ruruna a gaffé ?",
+			"volume": "",
+			"last_updated": "1742151600",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/a846dpnmo7x"
+			}
+		},
+		"5": {
+			"title": "Les règles",
+			"volume": "",
+			"last_updated": "1745179200",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/9p4n8noam4n"
+			}
+		}
+	}
+}

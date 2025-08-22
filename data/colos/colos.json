@@ -1,0 +1,68 @@
+[
+    {
+        "id": 1,
+        "author_id": "842003392368869376",
+        "chapitre": 1,
+        "page": 7,
+        "date": "2025-06-09 00:00:00",
+        "twitter": null,
+        "instagram": null,
+        "tiktok": null,
+        "reddit": null
+    },
+    {
+        "id": 2,
+        "author_id": "842003392368869376",
+        "chapitre": 1,
+        "page": 11,
+        "date": "2025-06-09 00:00:00",
+        "twitter": null,
+        "instagram": null,
+        "tiktok": null,
+        "reddit": null
+    },
+    {
+        "id": 3,
+        "author_id": "842003392368869376",
+        "chapitre": 1,
+        "page": 14,
+        "date": "2025-06-09 00:00:00",
+        "twitter": null,
+        "instagram": null,
+        "tiktok": null,
+        "reddit": null
+    },
+    {
+        "id": 4,
+        "author_id": "842003392368869376",
+        "chapitre": 2,
+        "page": 2,
+        "date": "2025-06-09 00:00:00",
+        "twitter": null,
+        "instagram": null,
+        "tiktok": null,
+        "reddit": null
+    },
+    {
+        "id": 5,
+        "author_id": "842003392368869376",
+        "chapitre": 2,
+        "page": 3,
+        "date": "2025-06-09 00:00:00",
+        "twitter": null,
+        "instagram": null,
+        "tiktok": null,
+        "reddit": null
+    },
+    {
+        "id": 6,
+        "author_id": "842003392368869376",
+        "chapitre": 2,
+        "page": 9,
+        "date": "2025-06-09 00:00:00",
+        "twitter": null,
+        "instagram": null,
+        "tiktok": null,
+        "reddit": null
+    }
+]

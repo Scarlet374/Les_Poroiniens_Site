@@ -1,0 +1,105 @@
+/* css/components/general.css */
+
+.section-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  display: inline-block;
+  position: relative;
+  color: var(--clr-text);
+}
+
+.section-title::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -8px;
+  width: 80px;
+  height: 4px;
+  background: var(--clr-primary);
+}
+
+.page-title {
+  text-align: left;
+  margin-bottom: 1.5rem;
+  display: block;
+}
+
+.tag,
+.detail-tag {
+  background: rgba(var(--clr-primary-rgb), 0.15);
+  color: var(--clr-primary);
+  padding: 0.2rem 0.6rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.tag.tag-more {
+  background: rgba(var(--clr-primary-rgb), 0.07);
+}
+
+.detail-tag {
+  padding: 0.3rem 0.8rem;
+  font-size: 0.85rem;
+}
+
+.sort-button {
+    background: rgba(var(--clr-primary-rgb), 0.2);
+    color: var(--clr-primary);
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: background .3s ease, transform .3s ease;
+}
+
+.sort-button:hover {
+    background: rgba(var(--clr-primary-rgb), 0.5);
+    color: var(--clr-text);
+    transform: translateY(-2px);
+}
+
+.sort-button i {
+    transition: transform 0.3s ease;
+}
+
+
+/* --- Media Queries --- */
+@media (max-width: 768px) {
+  .section-title {
+    font-size: 1.5rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .section-title::after {
+    width: 50px;
+    height: 3px;
+  }
+
+  .page-title {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .tag,
+  .detail-tag {
+    font-size: .65rem;
+    padding: .15rem .4rem;
+  }
+
+  .sort-button {
+    padding: .5rem .8rem;
+    font-size: .75rem;
+  }
+
+  .sort-button i {
+    font-size: 1.1rem;
+  }
+}

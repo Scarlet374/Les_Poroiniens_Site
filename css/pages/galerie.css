@@ -1,0 +1,315 @@
+.gallery-section {
+  padding-top: 1rem;
+}
+
+/* Ajout du style pour le compteur total */
+#colo-total-count {
+  font-size: 0.8em;
+  font-weight: 500;
+  color: var(--clr-text-sub);
+  margin-left: 0.5rem;
+}
+
+/* --- CORRECTION Z-INDEX --- */
+.gallery-controls {
+  position: relative; /* Établit un contexte d'empilement */
+  z-index: 10; /* Assure que les contrôles sont au-dessus de la grille */
+  margin-top: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.gallery-sort-filter {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.gallery-sort-filter label {
+  font-weight: 500;
+  color: var(--clr-text);
+}
+
+/* --- STYLES POUR LE MENU DÉROULANT CUSTOM --- */
+
+.custom-dropdown {
+  position: relative;
+  display: inline-block;
+  min-width: 220px;
+  font-family: inherit;
+}
+
+.custom-dropdown-toggle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0.6rem 1rem;
+  background-color: var(--clr-bg-card);
+  border: 1px solid rgba(var(--clr-text-rgb), 0.2);
+  border-radius: 8px;
+  color: var(--clr-text);
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.custom-dropdown-toggle:hover {
+  border-color: var(--clr-primary);
+}
+
+.custom-dropdown-toggle[aria-expanded="true"] {
+  border-color: var(--clr-primary);
+  box-shadow: 0 0 0 2px rgba(var(--clr-primary-rgb), 0.2);
+}
+
+#custom-filter-text {
+  flex-grow: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.custom-dropdown-toggle .dropdown-arrow {
+  margin-left: 0.5rem;
+  transition: transform 0.3s ease;
+}
+
+.custom-dropdown-toggle[aria-expanded="true"] .dropdown-arrow {
+  transform: rotate(180deg);
+}
+
+.custom-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  width: 100%;
+  min-width: 280px; /* Plus large pour le confort */
+  background-color: var(--clr-bg-card);
+  border: 1px solid rgba(var(--clr-text-rgb), 0.15);
+  border-radius: 8px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+  max-height: 500px; /* Votre modification */
+  overflow-y: auto;
+  opacity: 0;
+  transform: translateY(-10px);
+  visibility: hidden;
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+}
+
+.custom-dropdown-menu.show {
+  opacity: 1;
+  transform: translateY(0);
+  visibility: visible;
+}
+
+.custom-dropdown-option {
+  display: flex;
+  align-items: center;
+  padding: 0.7rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  user-select: none;
+}
+
+.custom-dropdown-option:hover {
+  background-color: rgba(var(--clr-primary-rgb), 0.08);
+}
+
+.custom-dropdown-option label {
+  /* Le label contient maintenant tout sauf la checkbox cachée */
+  display: flex;
+  align-items: center;
+  width: 100%;
+  cursor: pointer;
+
+  /* Ajout d'une position relative pour positionner l'icône de la checkbox */
+  position: relative;
+  padding-left: 28px; /* Espace pour l'icône */
+}
+
+/* --- STYLES CORRIGÉS POUR LA CHECKBOX AVEC FONT AWESOME --- */
+.custom-dropdown-option input[type="checkbox"] {
+  /* Cache la checkbox native tout en la gardant accessible */
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+/* Crée une icône personnalisée avant le contenu du label */
+.custom-dropdown-option label::before {
+  content: "\f0c8"; /* Code unicode pour fa-regular fa-square */
+  font-family: "Font Awesome 6 Free"; /* Utilise la police Font Awesome */
+  font-weight: 400; /* Poids pour les icônes 'regular' */
+  color: rgba(var(--clr-text-rgb), 0.4);
+
+  font-size: 18px;
+  line-height: 1;
+  text-align: center;
+  transition: color 0.2s ease;
+
+  /* Positionnement absolu à l'intérieur du label */
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+}
+
+/* Changer l'icône quand le SIBLING input est coché */
+.custom-dropdown-option input[type="checkbox"]:checked + label::before {
+  content: "\f14a"; /* Code unicode pour fa-solid fa-square-check */
+  font-weight: 900; /* Poids pour les icônes 'solid' */
+  color: var(
+    --clr-primary
+  ); /* Couleur principale du thème appliquée à l'icône */
+}
+/* --- FIN DES STYLES CHECKBOX --- */
+
+.custom-dropdown-option .artist-pfp {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 0.8rem;
+  flex-shrink: 0;
+}
+
+.custom-dropdown-option .artist-name {
+  flex-grow: 1;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.custom-dropdown-option .artist-count {
+  font-size: 0.85em;
+  color: var(--clr-text-sub);
+  margin-left: 0.5rem;
+  font-weight: 500;
+  background-color: rgba(var(--clr-text-rgb), 0.05);
+  padding: 0.1rem 0.4rem;
+  border-radius: 4px;
+}
+
+.dropdown-loader {
+  padding: 1rem;
+  text-align: center;
+  color: var(--clr-text-sub);
+}
+
+/* --- STYLES POUR LA BARRE DE SCROLL DU MENU --- */
+
+/* Pour Firefox */
+.custom-dropdown-menu {
+  scrollbar-width: thin;
+  scrollbar-color: var(--clr-text-sub) transparent;
+}
+
+/* Pour Chrome, Safari, Edge */
+.custom-dropdown-menu::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-dropdown-menu::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-dropdown-menu::-webkit-scrollbar-thumb {
+  background-color: rgba(var(--clr-text-rgb), 0.25);
+  border-radius: 10px;
+  border: 2px solid var(--clr-bg-card); /* Crée un effet de padding */
+}
+
+.custom-dropdown-menu::-webkit-scrollbar-thumb:hover {
+  background-color: var(--clr-primary);
+}
+
+/* --- STYLES RESPONSIVES POUR LE MENU DÉROULANT --- */
+
+@media (max-width: 768px) {
+  .custom-dropdown {
+    min-width: 180px; /* Réduit la largeur minimale du conteneur */
+  }
+
+  .custom-dropdown-toggle {
+    padding: 0.5rem 0.8rem;
+    font-size: 0.85rem;
+  }
+
+  .custom-dropdown-menu {
+    min-width: 240px; /* Ajuste la largeur du menu ouvert */
+    max-height: 400px; /* Votre modification */
+  }
+
+  .custom-dropdown-option {
+    padding: 0.6rem 0.8rem;
+  }
+
+  .custom-dropdown-option label {
+    padding-left: 26px; /* Ajuste l'espace pour l'icône mobile */
+  }
+
+  .custom-dropdown-option label::before {
+    margin: 0; /* Margin gérée par le padding du label */
+  }
+
+  .custom-dropdown-option .artist-pfp {
+    width: 28px;
+    height: 28px;
+    margin-right: 0.6rem;
+  }
+
+  .custom-dropdown-option .artist-name {
+    font-size: 0.9em;
+  }
+}
+
+/* Style spécifique pour le menu de tri */
+#custom-sort-filter .custom-dropdown-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0.7rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+#custom-sort-filter .custom-dropdown-option i {
+  width: 20px;
+  text-align: center;
+  color: var(--clr-text-sub);
+}
+
+#custom-sort-filter .custom-dropdown-option.active {
+  background-color: rgba(var(--clr-primary-rgb), 0.08);
+  color: var(--clr-primary);
+}
+
+#custom-sort-filter .custom-dropdown-option.active i {
+  color: var(--clr-primary);
+}
+
+#custom-sort-filter .custom-dropdown-option:hover {
+  background-color: rgba(var(--clr-primary-rgb), 0.08);
+}
+
+#custom-sort-filter .sort-name {
+  font-weight: 500;
+}
+
+/* Positionnement des contrôles */
+.gallery-sort-filter {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}

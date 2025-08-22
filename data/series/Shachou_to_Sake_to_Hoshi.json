@@ -1,0 +1,98 @@
+{
+	"title": "La présidente, l’alcool et les étoiles",
+	"description": "Reina Izutsu, 24 ans, vient de reprendre la direction de l’imprimerie familiale après la disparition soudaine de son père. Mais endosser ce rôle n’a rien d’évident… et ses employés en font les frais.\n\nKenichi Ishizumi, 37 ans, chef de service discret et loyal, s’inquiète pour elle. Un soir, il la croise par hasard dans un parc. Ivre et à bout de nerfs, Reina explose : “J’en peux plus ! J’arrête d’être présidente !” Sans même réaliser qu’elle parle à un de ses subordonnés, elle se livre entièrement…\n\nSous les étoiles, une promesse silencieuse naît. Kenichi décide de la soutenir, peu importe ce qu’il en coûte.\n\nUne comédie romantique douce-amère, entre patronne déboussolée et employé attentionné, à savourer avec un verre… et un cœur grand ouvert.",
+	"artist": "Zurikishi",
+	"author": "Zurikishi",
+	"cover": "https://file.garden/aKS5jUD-slfn6iFT/Cover%20Tome%201-.png",
+	"manga_type": "Seinen",
+    "magazine": "YanManga",
+	"release_year": 2025,
+	"tags": ["Comédie", "Romance", "Tranche de vie", "Employés de bureau"],
+	"alternative_titles": ["社長と酒と星","Boss, Booze, and Bright Stars"],
+	"release_status": "En cours",
+	"covers_gallery": [
+		{ "url_hq": "https://file.garden/aKS5jUD-slfn6iFT/Cover%20Tome%201-.png", "url_lq": "https://file.garden/aKS5jUD-slfn6iFT/Cover%20Tome%201-.png", "volume": "1" }
+	],
+	"chapters": {
+		"1": {
+			"title": "La présidente et le parc",
+			"volume": "1",
+			"last_updated": "1748124000",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/ljyq2vpeny2"
+			}
+		},
+		"2": {
+			"title": "La présidente et la balançoire",
+			"volume": "1",
+			"last_updated": "1748124000",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/pg73lraqj7r"
+			}
+		},
+		"3": {
+			"title": "La présidente et le panda",
+			"volume": "1",
+			"last_updated": "1748815200",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/xny8m3nw57b"
+			}
+		},
+		"4": {
+			"title": "La présidente et le bento",
+			"volume": "1",
+			"last_updated": "1748901600", 
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/a846dpnmo7x"
+			}
+		},
+		"5": {
+			"title": "La présidente et la beuverie à la maison",
+			"volume": "1",
+			"last_updated": "1749333600", 
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/9p4n8noam4n"
+			}
+		},
+		"6": {
+			"title": "La présidente et l'objet perdu",
+			"volume": "1",
+			"last_updated": "1750629600", 
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/9p4n8noam4n"
+			}
+		},
+		"7": {
+			"title": "La présidente et le mensonge",
+			"volume": "1",
+			"last_updated": "1753048800", 
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/9p4n8noam4n"
+			}
+		},
+		"8": {
+			"title": "La présidente et la patience",
+			"volume": "",
+			"last_updated": "1751148000",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/9p4n8noam4n"
+			}
+		},
+		"9": {
+			"title": "La présidente et l'appel",
+			"volume": "",
+			"last_updated": "1753048800",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/9p4n8noam4n"
+			}
+		},
+		"10": {
+			"title": "la présidente et le conseil",
+			"volume": "",
+			"last_updated": "1753048800", 
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/9p4n8noam4n"
+			}
+		}
+	}
+}

@@ -1,0 +1,178 @@
+{
+	"title": "Jour Après Jour",
+	"description": "Dans une certaine lycée se trouve un certain club et ses trois managers. Bien qu'anodins, des jours comme on n'en trouve nulle part ailleurs voient le jour ! Dessiné par Yamamoto Souichiro : une toute nouvelle histoire de jeunesse sur le thème du sport !",
+	"artist": "Yamamoto Souichirou",
+	"author": "Yamamoto Souichirou",
+	"cover": "https://cdn.imgchest.com/files/y8xcn5wdj94.png",
+	"manga_type": "Shonen",
+    "magazine": "Sunday Webry",
+	"release_year": 2024,
+	"tags": ["Comédie", "École", "Tranche de vie", "Sport"],
+	"alternative_titles": ["マネマネにちにち", "Mane Mane Nichi Nichi"],
+	"release_status": "En cours",
+	"covers_gallery": [
+		{ "url_hq": "https://cdn.imgchest.com/files/y8xcn5wdj94.png", "url_lq": "https://cdn.imgchest.com/files/y8xcn5wdj94.png", "volume": "1" }
+	],
+	"chapters": {
+		"1": {
+			"title": "Tape-fesse",
+			"volume": "1",
+			"last_updated": "1742329696",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/pg73lrq6z7r"
+			}
+		},
+		"2": {
+			"title": "Thé",
+			"volume": "1",
+			"last_updated": "1742329727",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/dl7p8vb66yo"
+			}
+		},
+		"3": {
+			"title": "Tournoi du meilleur motif",
+			"volume": "1",
+			"last_updated": "1742329964",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/wl7lo986p7x"
+			}
+		},
+		"4": {
+			"title": "Populaire",
+			"volume": "1",
+			"last_updated": "1742330208",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/ej7m8956byd"
+			}
+		},
+		"5": {
+			"title": "La tondeuse",
+			"volume": "1",
+			"last_updated": "1742329717",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/lqyemarw37d"
+			}
+		},
+		"6": {
+			"title": "Le livre porno",
+			"volume": "1",
+			"last_updated": "1742329993",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/qe4gwe3zr7j"
+			}
+		},
+		"7": {
+			"title": "Entraînement au swing",
+			"volume": "1",
+			"last_updated": "1742330105",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/m9yx3jb53yq"
+			}
+		},
+		"8": {
+			"title": "Le running",
+			"volume": "1",
+			"last_updated": "1742330073",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/na7k8og2q78"
+			}
+		},
+		"9": {
+			"title": "Les murs ont des oreilles",
+			"volume": "1",
+			"last_updated": "1742329852",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/vj4j89z5278"
+			}
+		},
+		"10": {
+			"title": "L'oubli",
+			"volume": "1",
+			"last_updated": "1742330089",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/5xy22djx9yl"
+			}
+		},
+		"11": {
+			"title": "Celle que je préfère",
+			"volume": "1",
+			"last_updated": "1742252400",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/dl7p8vol3yo"
+			}
+		},
+		"12": {
+			"title": "Onigiri",
+			"volume": "1",
+			"last_updated": "",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/bp45qpn2x45"
+			}
+		},
+		"13": {
+			"title": "Le chat",
+			"volume": "1",
+			"last_updated": "",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/n87wmdjxz4x"
+			}
+		},
+		"14": {
+			"title": "La motiv'",
+			"volume": "1",
+			"last_updated": "",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/dl7p8e6d6yo"
+			}
+		},
+		"15": {
+			"title": "Les abdos'",
+			"volume": "1",
+			"last_updated": "",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/m9yx3rq33yq"
+			}
+		},
+		"16": {
+			"title": "Les préparatifs",
+			"volume": "1",
+			"last_updated": "",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/92493w9324n"
+			}
+		},
+		"17": {
+			"title": "La motiv'",
+			"volume": "1",
+			"last_updated": "",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/dl7p8e6d6yo"
+			}
+		},
+		"18": {
+			"title": "La motiv'",
+			"volume": "1",
+			"last_updated": "",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/dl7p8e6d6yo"
+			}
+		},
+		"19": {
+			"title": "La motiv'",
+			"volume": "1",
+			"last_updated": "",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/dl7p8e6d6yo"
+			}
+		},
+		"20": {
+			"title": "La motiv'",
+			"volume": "1",
+			"last_updated": "",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/dl7p8e6d6yo"
+			}
+		}
+	}
+}

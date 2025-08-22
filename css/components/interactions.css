@@ -1,0 +1,226 @@
+/* css/components/interactions.css (Version Corrigée pour le Thème Clair/Sombre) */
+
+/* --- Section Interactions dans le lecteur --- */
+.chapter-interactions-container {
+  padding: 0;
+  margin-top: 0.5rem;
+}
+
+#reader-viewer-container + .chapter-interactions-container {
+  padding: 1.5rem 5%;
+  /* MODIFIÉ : Utilise la variable de thème globale */
+  background-color: var(--clr-bg-card);
+}
+
+.chapter-like-button {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  font-size: 1rem;
+  font-weight: 700;
+  border-radius: 8px;
+  /* MODIFIÉ : Bordure et fond basés sur le thème */
+  border: 2px solid rgba(var(--clr-text-rgb), 0.2);
+  background-color: rgba(var(--clr-text-rgb), 0.05);
+  color: var(--clr-text-sub);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-bottom: 1.5rem;
+}
+
+.chapter-like-button .fa-heart {
+  margin-right: 0.5rem;
+  color: inherit;
+}
+
+.chapter-like-button:hover {
+  border-color: var(--clr-text-sub);
+  background-color: rgba(var(--clr-text-rgb), 0.1);
+  color: var(--clr-text-sub);
+}
+
+.chapter-like-button.liked {
+  /* MODIFIÉ : Utilise la variable d'accentuation pour la cohérence */
+  border-color: var(--clr-accent);
+  background-color: rgba(var(--clr-accent-rgb), 0.1);
+  color: var(--clr-accent);
+}
+
+/* --- Section des commentaires --- */
+.comments-section {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.comments-section.spoiler-hidden::before {
+  content: "Afficher les commentaires (Risque de spoil)";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(89, 89, 89, 0.85);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-weight: 600;
+  /* MODIFIÉ : Utilise la variable de thème globale */
+  color: var(--clr-text);
+  cursor: pointer;
+  z-index: 2;
+  padding: 1rem;
+}
+
+.comments-section.spoiler-hidden .comments-section-header,
+.comments-section.spoiler-hidden .comment-form,
+.comments-section.spoiler-hidden .comment-list {
+  filter: blur(8px);
+  pointer-events: none;
+}
+
+.comments-section-header {
+  font-size: 1.1rem;
+  font-weight: 600;
+  /* MODIFIÉ : Utilise la variable de thème globale */
+  color: var(--clr-text-sub);
+  padding-bottom: 0.5rem;
+}
+
+.comment-form textarea {
+  width: 100%;
+  min-height: 80px;
+  max-height: 120px;
+  padding: 0.8rem;
+  border-radius: 6px;
+  /* MODIFIÉ : Bordure, fond et couleur basés sur le thème */
+  border: 1px solid rgba(var(--clr-text-rgb), 0.2);
+  background-color: rgba(var(--clr-text-rgb), 0.08);
+  color: var(--clr-text);
+  font-family: inherit;
+  font-size: 0.9rem;
+  resize: vertical;
+  margin-bottom: 0.5rem;
+}
+
+.comment-form-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.comment-form-actions button {
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.comment-form-actions button[type="submit"] {
+  /* MODIFIÉ : Utilise la variable de thème globale */
+  background-color: var(--clr-primary);
+  color: #fff; /* Le blanc reste approprié ici */
+}
+
+.comment-form-actions .chapter-like-button {
+  width: auto;
+  margin-bottom: 0;
+  padding: 0.6rem 1rem;
+  font-size: 0.9rem;
+}
+
+.comment-form button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.comment-form p.form-message {
+  font-size: 0.85rem;
+  /* MODIFIÉ : Utilise la variable de thème globale */
+  color: var(--clr-text-sub);
+  margin-top: 0.3rem;
+  text-align: left;
+}
+
+.comment-list {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.comment-item {
+  display: flex;
+  gap: 0.8rem;
+}
+
+.comment-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  /* MODIFIÉ : Utilise la variable de thème globale */
+  background-color: var(--clr-primary);
+  color: #fff; /* Le blanc reste approprié ici */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  flex-shrink: 0;
+  object-fit: cover;
+  /* MODIFIÉ : Bordure basée sur le thème */
+  border: 1px solid rgba(var(--clr-text-rgb), 0.1);
+}
+
+.comment-content {
+  flex-grow: 1;
+}
+
+.comment-header {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin-bottom: 0.2rem;
+}
+
+.comment-username {
+  font-weight: 700;
+  /* MODIFIÉ : Utilise la variable de thème globale */
+  color: var(--clr-text);
+}
+
+.comment-timestamp {
+  font-size: 0.75rem;
+  /* MODIFIÉ : Utilise la variable de thème globale */
+  color: var(--clr-text-sub);
+}
+
+.comment-text {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.comment-actions {
+  margin-top: 0.5rem;
+}
+
+.comment-like-button {
+  background: none;
+  border: none;
+  /* MODIFIÉ : Utilise la variable de thème globale */
+  color: var(--clr-text-sub);
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+.comment-like-button .fa-heart {
+  margin-right: 0.3rem;
+}
+
+.comment-like-button.liked {
+  /* MODIFIÉ : Utilise la variable d'accentuation pour la cohérence */
+  color: var(--clr-accent);
+}

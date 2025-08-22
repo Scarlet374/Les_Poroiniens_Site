@@ -1,0 +1,99 @@
+{
+	"title": "The Manager and the Oblivious Waitress",
+	"description": "Mitsu Kumano, une lycéenne qui travaille à temps partiel dans un café, est une jeune fille de 16 ans élégante et mature. Cependant, elle n'a « pas conscience » de tout ce qu'elle fait, y compris ses remarques attentionnées et son comportement audacieux. À cause de ça, Yuya Higurashi, le gérant de son lieu de travail, a le cœur qui bat la chamade tous les jours !",
+	"artist": "Aimai Mii",
+	"author": "Aimai Mii",
+	"cover": "https://cdn.imgchest.com/files/7mmc96mzq87.jpg",
+	"manga_type": "Seinen",
+    "magazine": "Pixiv",
+	"release_year": 2020,
+	"tags": ["Romance","Tranche de vie", "Web Comic"],
+	"alternative_titles": ["何かと無自覚な女子", "A Girl who is Unaware of Something"],
+	"release_status": "En cours",
+	"covers_gallery": [
+		{ "url_hq": "https://cdn.imgchest.com/files/ye3c2qlxwg4.jpg", "url_lq": "https://cdn.imgchest.com/files/ye3c2qlxwg4.jpg", "volume": "1" },
+		{ "url_hq": "https://cdn.imgchest.com/files/7mmc96mzq87.jpg", "url_lq": "https://cdn.imgchest.com/files/7mmc96mzq87.jpg", "volume": "2" }
+	],
+	"chapters": {
+		"1": {
+			"title": "",
+			"volume": "1",
+			"last_updated": "1701428400",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/agyvr2pxw78"
+			}
+		},
+		"2": {
+			"title": "",
+			"volume": "1",
+			"last_updated": "1701514800",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/dl7p8vpa8yo"
+			}
+		},
+		"3": {
+			"title": "",
+			"volume": "1",
+			"last_updated": "1701774000",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/vj4j89pe578"
+			}
+		},
+		"4": {
+			"title": "",
+			"volume": "1",
+			"last_updated": "1701860400",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/qb4znd2m34j"
+			}
+		},
+		"5": {
+			"title": "",
+			"volume": "1",
+			"last_updated": "1701946800",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/6eyrlvkakyp"
+			}
+		},
+		"6": {
+			"title": "",
+			"volume": "1",
+			"last_updated": "1702292400",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/qe4gwe9pr7j"
+			}
+		},
+		"7": {
+			"title": "",
+			"volume": "1",
+			"last_updated": "1702465200",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/dl7p8vp56yo"
+			}
+		},
+		"8": {
+			"title": "",
+			"volume": "1",
+			"last_updated": "1702551600",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/md7o89p5d4p"
+			}
+		},
+		"9": {
+			"title": "",
+			"volume": "1",
+			"last_updated": "1702724400",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/wl7lo9p5p7x"
+			}
+		},
+		"10": {
+			"title": "",
+			"volume": "1",
+			"last_updated": "1702897200",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/na7k8op5q78"
+			}
+		}
+	}
+}
