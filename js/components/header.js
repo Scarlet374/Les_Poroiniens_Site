@@ -86,7 +86,12 @@ function renderNavLinks(container, links, isMobile = false) {
 function getSubNavLinksForPage(pageId) {
   let baseLinks = [...(subNavLinksConfig[pageId] || [])];
 
-  if (pageId === "seriesdetailpage" || pageId === "seriescoverspage" || pageId === "readerpage") {
+  // ---- Cas des pages Série / Covers / Reader : on construit les liens contextuels
+  if (
+    pageId === "seriesdetailpage" ||
+    pageId === "seriescoverspage" ||
+    pageId === "readerpage"
+  ) {
     const seriesSlug = getCurrentSeriesSlugFromPath();
     if (seriesSlug) {
       const coversLink = {
@@ -108,39 +113,29 @@ function getSubNavLinksForPage(pageId) {
 
         if (currentView === "anime") {
           baseLinks = [
-            {
-              text: "Informations",
-              href: `#series-detail-section`,
-              id: "series-info",
-            },
-            {
-              text: "Épisodes",
-              href: `#chapters-list-section`,
-              id: "series-episodes",
-            },
+            { text: "Informations", href: `#series-detail-section`, id: "series-info" },
+            { text: "Épisodes",     href: `#chapters-list-section`, id: "series-episodes" },
           ];
         } else {
           baseLinks = [
-            {
-              text: "Informations",
-              href: `#series-detail-section`,
-              id: "series-info",
-            },
-            {
-              text: "Galerie des Couvertures",
-              href: `/${seriesSlug}/cover`,
-              id: "series-covers-gallery",
-            },
-            {
-              text: "Chapitres",
-              href: `#chapters-list-section`,
-              id: "series-chapters",
-            },
+            { text: "Informations",            href: `#series-detail-section`, id: "series-info" },
+            { text: "Galerie des Couvertures", href: `/${seriesSlug}/cover`,   id: "series-covers-gallery" },
+            { text: "Chapitres",               href: `#chapters-list-section`, id: "series-chapters" },
           ];
         }
       }
     }
   }
+
+  // ---- Filtre +18 : si le contenu adulte est désactivé, on retire Doujinshi / Pornwha
+  // (selon l'id ou, à défaut, le texte du lien)
+  if (typeof isAdultOn === "function" && !isAdultOn()) {
+    baseLinks = baseLinks.filter((l) => {
+      const id = (l.id || l.text || "").toLowerCase();
+      return id !== "doujinshi" && id !== "pornwha";
+    });
+  }
+
   return baseLinks;
 }
 
@@ -344,16 +339,59 @@ function setupMobileMenuInteractions() {
   }
 }
 
+const ADULT_KEY = "adult_on";
+
+export function isAdultOn() {
+  return localStorage.getItem(ADULT_KEY) === "1";
+}
+export function setAdultOn(v) {
+  localStorage.setItem(ADULT_KEY, v ? "1" : "0");
+  document.documentElement.classList.toggle("adult-on", !!v);
+}
+
 export function initHeader() {
+  // initialisations habituelles
   setupThemeToggle();
   populateDesktopNavigation();
   initAnchorLinks();
+
+  // garder la nav en phase si ta SPA déclenche un évènement de route
   document.body.addEventListener("routeChanged", () => {
-    console.log(
-      "Header a détecté un changement de route. Mise à jour de la navigation..."
-    );
     updateAllNavigation();
   });
+
+  // --- Bouton +18
+  const adultBtn = document.getElementById("adult-toggle");
+  if (adultBtn) {
+    const on = isAdultOn();
+
+    // état initial (classe racine + visuel du bouton + accessibilité)
+    document.documentElement.classList.toggle("adult-on", on);
+    adultBtn.classList.toggle("on", on);
+    adultBtn.setAttribute("aria-pressed", on ? "true" : "false");
+    adultBtn.title = on ? "Contenu +18 : affiché" : "Contenu +18 : masqué";
+
+    adultBtn.addEventListener("click", () => {
+      const next = !isAdultOn();
+
+      // persistance + classe racine
+      setAdultOn(next); // (si setAdultOn ne toggle pas la classe, on garde la ligne ci-dessous)
+      document.documentElement.classList.toggle("adult-on", next);
+
+      // état visuel + a11y
+      adultBtn.classList.toggle("on", next);
+      adultBtn.setAttribute("aria-pressed", next ? "true" : "false");
+      adultBtn.title = next ? "Contenu +18 : affiché" : "Contenu +18 : masqué";
+
+      // la navigation peut contenir des liens à masquer (doujinshi/pornwha)
+      updateAllNavigation();
+
+      // notifier les pages (ex: homepage fait un reload à la réception)
+      window.dispatchEvent(
+        new CustomEvent("adult-visibility-changed", { detail: { on: next } })
+      );
+    });
+  }
 }
 
 export { setupMobileMenuInteractions };

@@ -165,3 +165,28 @@
     font-size: 1.6rem;
   }
 }
+
+/* Bouton d’action standard, identique à tes autres icônes du header */
+.icon-btn {
+  display: inline-grid;
+  place-items: center;
+  width: 32px; height: 32px;
+  border-radius: 8px;
+  border: 1px solid var(--line, #2a2a2a);
+  background: var(--soft, #1c1d1f);
+  color: var(--text, #e8e8e8);
+  transition: background .15s ease, border-color .15s ease, color .15s ease, box-shadow .15s ease, transform .06s ease;
+}
+.icon-btn:hover { background: color-mix(in srgb, var(--soft) 85%, #fff 15%); }
+.icon-btn:active { transform: translateY(1px); }
+
+#adult-toggle .ico { display: none; }
+#adult-toggle.on .ico-18-on { display: block; }
+#adult-toggle:not(.on) .ico-18-off { display: block; }
+
+/* Accent quand actif (même logique que ton thème) */
+#adult-toggle.on {
+  color: var(--accent, #10e0c1);
+  border-color: color-mix(in srgb, var(--accent) 60%, var(--line) 40%);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 22%, transparent);
+}

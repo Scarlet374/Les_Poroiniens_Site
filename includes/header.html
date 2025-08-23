@@ -29,6 +29,26 @@
     <div id="nav-separator" class="nav-separator" style="display: inline-block;">|</div>
     <button id="theme-toggle" class="theme-toggle" aria-label="Changer de thème">
       <i class="fas fa-moon"></i>
+      <!-- … autres actions -->
+
     </button>
+
+    <!-- Bouton Adult (+18) -->
+    <button id="adult-toggle" class="icon-btn" aria-label="Contenu +18" aria-pressed="false" title="Contenu +18 : masqué">
+      <!-- ON = 18+ -->
+      <svg class="ico ico-18-on" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+        <circle cx="12" cy="12" r="10" fill="currentColor" opacity="0.12"></circle>
+        <text x="50%" y="50%" dominant-baseline="central" text-anchor="middle"
+              font-size="10" font-weight="800" fill="currentColor">18+</text>
+      </svg>
+      <!-- OFF = 18 barré -->
+      <svg class="ico ico-18-off" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+        <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.5"></circle>
+        <text x="50%" y="50%" dominant-baseline="central" text-anchor="middle"
+              font-size="10" font-weight="800" fill="currentColor">18</text>
+        <line x1="5" y1="19" x2="19" y2="5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></line>
+      </svg>
+    </button>
+
   </div>
 </div>

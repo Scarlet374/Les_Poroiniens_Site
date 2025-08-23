@@ -413,11 +413,21 @@ function isLightNovel(s)  { return !!(s && (s.light_novel === true || s.lightNov
 
 export async function initHomepage() {
   // 1) Conteneurs DOM
-  const seriesGridOngoing   = qs(".series-grid.on-going");
-  const seriesGridOneShot   = qs(".series-grid.one-shot");
-  const seriesGridDoujin    = qs(".series-grid.doujinshi");
-  const seriesGridPornwha   = qs(".series-grid.pornwha");
-  const seriesGridLightNovel= qs(".series-grid.light-novel");
+  const seriesGridOngoing    = qs(".series-grid.on-going");
+  const seriesGridOneShot    = qs(".series-grid.one-shot");
+  const seriesGridDoujin     = qs(".series-grid.doujinshi");
+  const seriesGridPornwha    = qs(".series-grid.pornwha");
+  const seriesGridLightNovel = qs(".series-grid.light-novel");
+
+  // +18: local flag
+  const ADULT_KEY = "adult_on";
+  const adultEnabled = () => localStorage.getItem(ADULT_KEY) === "1";
+
+  // Helper pour lire manga_type (série ou s.series)
+  const isPornographicSeries = (s) => {
+    const mt = (s?.series?.manga_type ?? s?.manga_type ?? "").toLowerCase();
+    return mt === "pornographique";
+  };
 
   // 2) Carrousel
   await initHeroCarousel();
@@ -434,6 +444,16 @@ export async function initHomepage() {
       return;
     }
 
+    const showAdult = adultEnabled();
+
+    // Cacher carrément les sections si OFF
+    if (!showAdult) {
+      const doujSec = document.getElementById("doujinshi-section");
+      const pornSec = document.getElementById("pornwha-section");
+      if (doujSec) doujSec.style.display = "none";
+      if (pornSec) pornSec.style.display = "none";
+    }
+
     // 4) Répartition (exclusion progressive pour éviter les doublons)
     const doujinList     = allSeries.filter(s => isDoujinshi(s));
     const pornwhaList    = allSeries.filter(s => isPornwha(s)    && !isDoujinshi(s));
@@ -448,26 +468,37 @@ export async function initHomepage() {
     const pornwhaSorted    = sortSeriesByNewest(pornwhaList);
     const lightNovelSorted = sortSeriesByNewest(lightNovelList);
 
+    // >>> Filtre +18
+    const doujinListF  = showAdult ? doujinSorted  : [];
+    const pornwhaListF = showAdult ? pornwhaSorted : [];
+    // LN “Pornographique” -> visibles uniquement si +18
+    const lightNovelListF = lightNovelSorted.filter(s => showAdult || !isPornographicSeries(s));
+
     // 5) Rendu
     if (seriesGridOngoing) {
       seriesGridOngoing.innerHTML = onGoingSorted.map(renderSeriesCard).join("");
-      qsa(".series-card .series-tags", seriesGridOngoing).forEach(c => limitVisibleTags(c, 3, "plusN"));
+      qsa(".series-card .series-tags", seriesGridOngoing)
+        .forEach(c => limitVisibleTags(c, 3, "plusN"));
     }
     if (seriesGridOneShot) {
       seriesGridOneShot.innerHTML = oneShotsSorted.map(renderSeriesCard).join("");
-      qsa(".series-card .series-tags", seriesGridOneShot).forEach(c => limitVisibleTags(c, 3, "plusN"));
+      qsa(".series-card .series-tags", seriesGridOneShot)
+        .forEach(c => limitVisibleTags(c, 3, "plusN"));
     }
     if (seriesGridDoujin) {
-      seriesGridDoujin.innerHTML = doujinSorted.map(renderSeriesCard).join("");
-      qsa(".series-card .series-tags", seriesGridDoujin).forEach(c => limitVisibleTags(c, 3, "plusN"));
+      seriesGridDoujin.innerHTML = doujinListF.map(renderSeriesCard).join("");
+      qsa(".series-card .series-tags", seriesGridDoujin)
+        .forEach(c => limitVisibleTags(c, 3, "plusN"));
     }
     if (seriesGridPornwha) {
-      seriesGridPornwha.innerHTML = pornwhaSorted.map(renderSeriesCard).join("");
-      qsa(".series-card .series-tags", seriesGridPornwha).forEach(c => limitVisibleTags(c, 3, "plusN"));
+      seriesGridPornwha.innerHTML = pornwhaListF.map(renderSeriesCard).join("");
+      qsa(".series-card .series-tags", seriesGridPornwha)
+        .forEach(c => limitVisibleTags(c, 3, "plusN"));
     }
     if (seriesGridLightNovel) {
-      seriesGridLightNovel.innerHTML = lightNovelSorted.map(renderSeriesCard).join("");
-      qsa(".series-card .series-tags", seriesGridLightNovel).forEach(c => limitVisibleTags(c, 3, "plusN"));
+      seriesGridLightNovel.innerHTML = lightNovelListF.map(renderSeriesCard).join("");
+      qsa(".series-card .series-tags", seriesGridLightNovel)
+        .forEach(c => limitVisibleTags(c, 3, "plusN"));
     }
 
     // 6) Click handlers
@@ -480,4 +511,7 @@ export async function initHomepage() {
     if (seriesGridPornwha)    seriesGridPornwha.innerHTML    = "<p>Erreur chargement pornwha.</p>";
     if (seriesGridLightNovel) seriesGridLightNovel.innerHTML = "<p>Erreur chargement light novel.</p>";
   }
+
+  // Recharger si l’utilisateur (dé)active le contenu +18 depuis le header
+  window.addEventListener("adult-visibility-changed", () => location.reload());
 }
