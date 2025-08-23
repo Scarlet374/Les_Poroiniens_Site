@@ -146,16 +146,30 @@ function generateSeriesHeader(seriesData) {
     `;
 }
 
-function generateNavTabs(seriesData, seriesSlug, activeTab) {
-  const hasEpisodes = seriesData.episodes && seriesData.episodes.length > 0;
-  if (!hasEpisodes) return '';
+function generateNavTabs(seriesData, seriesSlug, activeTab = "manga") {
+  const hasEpisodes =
+    Array.isArray(seriesData.episodes) && seriesData.episodes.length > 0;
+  if (!hasEpisodes) return "";
+
+  // Si c'est un LN, on affiche "Light novel" au lieu de "Manga"
+  const primaryLabel = seriesData.light_novel ? "Light novel" : "Manga";
+
+  // Sécurise la valeur d'activeTab
+  const current = activeTab === "anime" ? "anime" : "manga";
 
   return `
-      <div class="detail-navigation-tabs">
-        <a href="/${seriesSlug}" class="detail-nav-button ${activeTab === 'manga' ? 'active' : ''}">Manga</a>
-        <a href="/${seriesSlug}/episodes" class="detail-nav-button ${activeTab === 'anime' ? 'active' : ''}">Anime</a>
-      </div>
-    `;
+    <div class="detail-navigation-tabs">
+      <a href="/${seriesSlug}"
+         class="detail-nav-button ${current === "manga" ? "active" : ""}">
+        ${primaryLabel}
+      </a>
+      <a href="/${seriesSlug}/episodes"
+         class="detail-nav-button ${current === "anime" ? "active" : ""}">
+        Anime
+      </a>
+    </div>
+  `;
 }
+
 
 export { generateNavTabs, generateAnimeHeader, generateSeriesHeader };

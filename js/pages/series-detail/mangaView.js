@@ -36,43 +36,76 @@ function getReadingProgress(seriesSlug) {
     return null;
   }
 }
+
 function renderReadingActions(seriesData, seriesSlug) {
   const container = qs("#reading-actions-container");
   if (!container) return;
-  const chapters = Object.entries(seriesData.chapters || {})
-    .filter(([, chapData]) => chapData.groups && chapData.groups.LesPoroïniens)
+
+  // Chapitres lisibles = Manga (groups.LesPoroïniens) OU LN (file),
+  // en excluant les chapitres licenciés sans lien lisible.
+  const readableChapters = Object.entries(seriesData.chapters || {})
+    .filter(([_, chapData]) => {
+      const isLicensed =
+        chapData.licencied &&
+        chapData.licencied.length > 0 &&
+        (!chapData.groups || chapData.groups.LesPoroïniens === "");
+      if (isLicensed) return false;
+
+      const isManga = !!(chapData.groups && chapData.groups.LesPoroïniens);
+      const isLN    = !!chapData.file;
+      return isManga || isLN;
+    })
     .map(([chapNum]) => chapNum);
-  chapters.sort(
+
+  // tri numérique (supporte 1, 1.5, "1,5", etc.)
+  readableChapters.sort(
     (a, b) =>
       parseFloat(String(a).replace(",", ".")) -
       parseFloat(String(b).replace(",", "."))
   );
-  if (chapters.length === 0) {
+
+  if (readableChapters.length === 0) {
     container.innerHTML = "";
     return;
   }
+
   const lastReadChapter = getReadingProgress(seriesSlug);
-  const lastChapter = chapters[chapters.length - 1];
+  const lastChapter = readableChapters[readableChapters.length - 1];
+
   let nextChapter = null;
   if (lastReadChapter) {
-    const lastReadIndex = chapters.indexOf(lastReadChapter);
-    if (lastReadIndex !== -1 && lastReadIndex < chapters.length - 1) {
-      nextChapter = chapters[lastReadIndex + 1];
+    const lastIdx = readableChapters.indexOf(lastReadChapter);
+    if (lastIdx !== -1 && lastIdx < readableChapters.length - 1) {
+      nextChapter = readableChapters[lastIdx + 1];
     }
   }
+
   const lastChapterUrl = `/${seriesSlug}/${String(lastChapter)}`;
-  const nextChapterUrl = nextChapter
-    ? `/${seriesSlug}/${String(nextChapter)}`
-    : null;
+  const nextChapterUrl = nextChapter ? `/${seriesSlug}/${String(nextChapter)}` : null;
+
   let buttonsHtml = "";
+
+  // Bouton "Continuer"
   if (nextChapterUrl) {
-    buttonsHtml += `<a href="${nextChapterUrl}" class="reading-action-button continue"><i class="fas fa-play"></i> Continuer (Ch. ${nextChapter})</a>`;
+    buttonsHtml += `
+      <a href="${nextChapterUrl}" class="reading-action-button continue">
+        <i class="fas fa-play"></i> Continuer (Ch. ${nextChapter})
+      </a>`;
   } else if (lastReadChapter && lastReadChapter === lastChapter) {
-    buttonsHtml += `<span class="reading-action-button disabled"><i class="fas fa-check"></i> À jour</span>`;
+    buttonsHtml += `
+      <span class="reading-action-button disabled">
+        <i class="fas fa-check"></i> À jour
+      </span>`;
   }
+
+  // Bouton "Dernier Chapitre"
   if (!lastReadChapter || lastReadChapter !== lastChapter) {
-    buttonsHtml += `<a href="${lastChapterUrl}" class="reading-action-button start"><i class="fas fa-fast-forward"></i> Dernier Chapitre (Ch. ${lastChapter})</a>`;
+    buttonsHtml += `
+      <a href="${lastChapterUrl}" class="reading-action-button start">
+        <i class="fas fa-fast-forward"></i> Dernier Chapitre (Ch. ${lastChapter})
+      </a>`;
   }
+
   container.innerHTML = buttonsHtml;
 }
 
