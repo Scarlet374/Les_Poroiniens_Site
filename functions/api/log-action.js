@@ -23,7 +23,7 @@ export async function onRequest(context) {
     const logKey = `log:${seriesSlug}:${uniqueId}`;
 
     // On écrit directement les actions dans cette nouvelle clé unique, sans lire au préalable.
-    await env.INTERACTIONS_LOG.put(logKey, JSON.stringify(actions));
+    await env.INTERACTIONS_CACHE.put(logKey, JSON.stringify(actions));
 
     return new Response(
       JSON.stringify({ success: true, logged: actions.length }),
