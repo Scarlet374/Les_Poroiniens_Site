@@ -43,7 +43,7 @@ export function bindControls() {
   document.querySelectorAll("[data-font]").forEach(btn => {
     btn.addEventListener("click", () => {
       const dir = btn.getAttribute("data-font");
-      state.settings.fontSize = Math.min(36, Math.max(14, state.settings.fontSize + (dir === "+" ? 1 : -1)));
+      state.settings.fontSize = Math.min(36, Math.max(7, state.settings.fontSize + (dir === "+" ? 1 : -1)));
       apply(); saveSettings();
     });
   });
