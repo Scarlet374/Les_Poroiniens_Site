@@ -1,15 +1,12 @@
 export async function onRequest(context) {
   const { env } = context;
-
-  // 🔧 1) lis le username depuis l'env (à créer dans Pages → Settings → Environment variables)
-  const username = env.IMG_CHEST_USERNAME || "LesPoroïniens";
-  // 🔧 2) mets le username dans la clé de cache pour éviter tout mélange
-  const cacheKey = `imgchest_all_pages_${username}`;
-  const maxPages = 8;
+  const cacheKey = `imgchest_all_pages_combined`;
+  const username = "LesPoroïniens";
+  const maxPages = 10;
 
   console.log(`[IMG_CHEST] Incoming request → Checking KV key "${cacheKey}"`);
 
-  // 1. KV GET
+  // 🔍 1. Tenter de lire depuis le cache KV
   try {
     const cached = await env.IMG_CHEST_CACHE.get(cacheKey);
     if (cached) {
@@ -21,28 +18,32 @@ export async function onRequest(context) {
           "X-Cache": "HIT",
         },
       });
+    } else {
+      console.log(`[IMG_CHEST] Cache MISS → No value for key "${cacheKey}"`);
     }
   } catch (err) {
     console.error(`[IMG_CHEST] KV GET ERROR for key "${cacheKey}":`, err);
   }
 
-  // 2. Fetch des pages ImgChest
+  // 🛠 2. Si non trouvé, on va chercher les pages et les agréger
   let allPosts = [];
+
   for (let page = 1; page <= maxPages; page++) {
-    const apiUrl = `https://imgchest.com/api/posts?username=${encodeURIComponent(username)}&sort=new&page=${page}&status=0`;
+    const apiUrl = `https://imgchest.com/api/posts?username=${username}&sort=new&page=${page}&status=0`;
     console.log(`[IMG_CHEST] Fetching ImgChest page ${page} → ${apiUrl}`);
 
     try {
       const res = await fetch(apiUrl, {
         headers: {
-          // 🔧 3) User-Agent : mets ton site/domaine
-          "User-Agent": "LesPoroïniens/1.0 (+https://lesporoiniens.org)",
+          "User-Agent": "LesPoroïniens-PageFetcher/1.2",
           Accept: "application/json",
         },
       });
 
       if (!res.ok) {
-        console.warn(`[IMG_CHEST] Failed fetch (HTTP ${res.status}) → stopping`);
+        console.warn(
+          `[IMG_CHEST] Failed fetch (HTTP ${res.status}) → stopping`
+        );
         break;
       }
 
@@ -62,7 +63,9 @@ export async function onRequest(context) {
       allPosts.push(...simplified);
 
       if (json.data.length < 24) {
-        console.log(`[IMG_CHEST] Page ${page} had less than 24 posts → end of data.`);
+        console.log(
+          `[IMG_CHEST] Page ${page} had less than 24 posts → end of data.`
+        );
         break;
       }
     } catch (err) {
@@ -74,12 +77,15 @@ export async function onRequest(context) {
   const payload = JSON.stringify({ posts: allPosts });
   console.log(`[IMG_CHEST] Finished fetching ${allPosts.length} posts.`);
 
-  // 3. KV PUT
+  // 3. Stocker dans Cloudflare KV
   try {
     await env.IMG_CHEST_CACHE.put(cacheKey, payload, { expirationTtl: 3600 });
     console.log(`[IMG_CHEST] KV PUT SUCCESS → Key "${cacheKey}" stored for 1h`);
   } catch (e) {
-    console.error(`[IMG_CHEST] KV PUT ERROR → Could not store key "${cacheKey}":`, e);
+    console.error(
+      `[IMG_CHEST] KV PUT ERROR → Could not store key "${cacheKey}":`,
+      e
+    );
   }
 
   return new Response(payload, {
