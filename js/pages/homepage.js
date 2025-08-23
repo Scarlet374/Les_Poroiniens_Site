@@ -366,7 +366,46 @@ function makeSeriesCardsClickable() {
   });
 }
 
+// Renvoie le plus grand timestamp d'une série (chapitres ou fallback série)
+function getLastUpdateStamp(series) {
+  // Certains de tes JSON ont la série dans { series: {...} }, on couvre les deux cas
+  const s = series?.series || series;
+  const chapters = s?.chapters || {};
+  let ts = 0;
 
+  // 1) on regarde tous les chapitres
+  for (const k of Object.keys(chapters)) {
+    const ch = chapters[k] || {};
+    const candidates = [
+      ch.last_updated,    // ce que tu utilises le plus souvent
+      ch.lastUpdate,
+      ch.updated_at,
+      ch.date,
+      ch.time,
+      ch.timestamp
+    ];
+    for (const v of candidates) {
+      const n = Number(v);
+      if (Number.isFinite(n) && n > ts) ts = n;
+    }
+  }
+
+  // 2) fallback au niveau série si on n'a rien trouvé
+  const seriesLevelCandidates = [
+    s?.last_updated, s?.updated_at, s?.lastUpdate, s?.release_time
+  ];
+  for (const v of seriesLevelCandidates) {
+    const n = Number(v);
+    if (Number.isFinite(n) && n > ts) ts = n;
+  }
+
+  return ts || 0;
+}
+
+// Trie desc. (du plus récent au plus ancien)
+function sortSeriesByNewest(list) {
+  return [...list].sort((a, b) => getLastUpdateStamp(b) - getLastUpdateStamp(a));
+}
 
 function isDoujinshi(s)   { return !!(s && s.doujinshi === true); }
 function isPornwha(s)     { return !!(s && s.pornwha === true); }
@@ -402,25 +441,32 @@ export async function initHomepage() {
     const oneShots       = allSeries.filter(s => s && s.os === true  && !isDoujinshi(s) && !isPornwha(s) && !isLightNovel(s));
     const onGoingSeries  = allSeries.filter(s => s && s.os !== true  && !isDoujinshi(s) && !isPornwha(s) && !isLightNovel(s));
 
+    // 4.5) Tri par date de MAJ (chapitre le plus récent)
+    const onGoingSorted    = sortSeriesByNewest(onGoingSeries);
+    const oneShotsSorted   = sortSeriesByNewest(oneShots);
+    const doujinSorted     = sortSeriesByNewest(doujinList);
+    const pornwhaSorted    = sortSeriesByNewest(pornwhaList);
+    const lightNovelSorted = sortSeriesByNewest(lightNovelList);
+
     // 5) Rendu
     if (seriesGridOngoing) {
-      seriesGridOngoing.innerHTML = onGoingSeries.map(renderSeriesCard).join("");
+      seriesGridOngoing.innerHTML = onGoingSorted.map(renderSeriesCard).join("");
       qsa(".series-card .series-tags", seriesGridOngoing).forEach(c => limitVisibleTags(c, 3, "plusN"));
     }
     if (seriesGridOneShot) {
-      seriesGridOneShot.innerHTML = oneShots.map(renderSeriesCard).join("");
+      seriesGridOneShot.innerHTML = oneShotsSorted.map(renderSeriesCard).join("");
       qsa(".series-card .series-tags", seriesGridOneShot).forEach(c => limitVisibleTags(c, 3, "plusN"));
     }
     if (seriesGridDoujin) {
-      seriesGridDoujin.innerHTML = doujinList.map(renderSeriesCard).join("");
+      seriesGridDoujin.innerHTML = doujinSorted.map(renderSeriesCard).join("");
       qsa(".series-card .series-tags", seriesGridDoujin).forEach(c => limitVisibleTags(c, 3, "plusN"));
     }
     if (seriesGridPornwha) {
-      seriesGridPornwha.innerHTML = pornwhaList.map(renderSeriesCard).join("");
+      seriesGridPornwha.innerHTML = pornwhaSorted.map(renderSeriesCard).join("");
       qsa(".series-card .series-tags", seriesGridPornwha).forEach(c => limitVisibleTags(c, 3, "plusN"));
     }
     if (seriesGridLightNovel) {
-      seriesGridLightNovel.innerHTML = lightNovelList.map(renderSeriesCard).join("");
+      seriesGridLightNovel.innerHTML = lightNovelSorted.map(renderSeriesCard).join("");
       qsa(".series-card .series-tags", seriesGridLightNovel).forEach(c => limitVisibleTags(c, 3, "plusN"));
     }
 

@@ -1,118 +1,98 @@
-export async function onRequest({ env, request }) {
-  const raw = env.IMG_CHEST_USERNAME || "LesPoroïniens";
+export async function onRequest(context) {
+  const { env } = context;
+  const cacheKey = `imgchest_all_pages_combined`;
+  const username = "Big_herooooo";
+  const maxPages = 8;
 
-  // Variantes candidates (on garde l'original + versions "déaccentuées")
-  const ascii = raw.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-  const candidates = Array.from(new Set([
-    raw, ascii, raw.toLowerCase(), ascii.toLowerCase(),
-  ]));
+  console.log(`[IMG_CHEST] Incoming request → Checking KV key "${cacheKey}"`);
 
-  const H = {
-    Accept: "application/json",
-    // UA ASCII (certains proxies refusent les headers non-ASCII)
-    "User-Agent": "LesPoroiniens-Fetch/1.0 (+https://lesporoiniens.org)"
-  };
-
-  let chosen = null;
-  let firstOk = null;
-  let lastDebug = { candidate: null, status: null, body: null, url: null };
-
-  // 1) Teste la page 1 avec chaque variante
-  for (const name of candidates) {
-    const url = `https://imgchest.com/api/posts?username=${encodeURIComponent(name)}&sort=new&page=1&status=0`;
-    try {
-      const res = await fetch(url, { headers: H });
-      const text = await res.text(); // on prend le brut pour debug
-      lastDebug = {
-        candidate: name,
-        status: res.status,
-        url,
-        body: text.slice(0, 200) // 200 premiers chars pour inspection
-      };
-
-      if (!res.ok) continue;
-
-      let json;
-      try { json = JSON.parse(text); } catch { continue; }
-
-      if (Array.isArray(json?.data) && json.data.length > 0) {
-        chosen = name;
-        firstOk = json;
-        break;
-      }
-    } catch (e) {
-      lastDebug = { candidate: name, status: "fetch_error", url, body: String(e).slice(0,200) };
-    }
-  }
-
-  // 2) Si rien n'a marché → renvoyer le debug
-  if (!chosen) {
-    return new Response(JSON.stringify({ posts: [], debug: {
-      tested: candidates, last: lastDebug
-    }}), {
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-        "X-User-Selected": "none",
-        "X-Cache": "MISS"
-      },
-      status: 200
-    });
-  }
-
-  // 3) Essaie de servir depuis KV (clé dépendante de la variante qui marche)
-  const cacheKey = `imgchest_all_pages_${chosen}`;
+  // 🔍 1. Tenter de lire depuis le cache KV
   try {
     const cached = await env.IMG_CHEST_CACHE.get(cacheKey);
     if (cached) {
+      console.log(`[IMG_CHEST] Cache HIT → key "${cacheKey}"`);
       return new Response(cached, {
         headers: {
           "Content-Type": "application/json",
           "Access-Control-Allow-Origin": "*",
-          "X-User-Selected": chosen,
-          "X-Cache": "HIT"
-        }
+          "X-Cache": "HIT",
+        },
       });
+    } else {
+      console.log(`[IMG_CHEST] Cache MISS → No value for key "${cacheKey}"`);
     }
-  } catch {}
+  } catch (err) {
+    console.error(`[IMG_CHEST] KV GET ERROR for key "${cacheKey}":`, err);
+  }
 
-  // 4) Agrégation
-  const simplify = (json) => (json?.data || []).map(p => ({
-    id: p.slug || p.id,
-    views: p.views,
-    title: p.title,
-    nsfw: p.nsfw
-  }));
+  // 🛠 2. Si non trouvé, on va chercher les pages et les agréger
+  let allPosts = [];
 
-  let allPosts = simplify(firstOk);
-  const maxPages = 8;
+  for (let page = 1; page <= maxPages; page++) {
+    const apiUrl = `https://imgchest.com/api/posts?username=${username}&sort=new&page=${page}&status=0`;
+    console.log(`[IMG_CHEST] Fetching ImgChest page ${page} → ${apiUrl}`);
 
-  for (let page = 2; page <= maxPages; page++) {
-    const url = `https://imgchest.com/api/posts?username=${encodeURIComponent(chosen)}&sort=new&page=${page}&status=0`;
     try {
-      const res = await fetch(url, { headers: H });
-      if (!res.ok) break;
-      const j = await res.json();
-      const items = simplify(j);
-      if (!items.length) break;
-      allPosts.push(...items);
-      if (!j.data || j.data.length < 24) break; // fin de pagination
-    } catch { break; }
+      const res = await fetch(apiUrl, {
+        headers: {
+          "User-Agent": "LesPoroïniensSite-PageFetcher/1.2",
+          Accept: "application/json",
+        },
+      });
+
+      if (!res.ok) {
+        console.warn(
+          `[IMG_CHEST] Failed fetch (HTTP ${res.status}) → stopping`
+        );
+        break;
+      }
+
+      const json = await res.json();
+      if (!json.data || json.data.length === 0) {
+        console.log(`[IMG_CHEST] No more data on page ${page}, stopping.`);
+        break;
+      }
+
+      const simplified = json.data.map((post) => ({
+        id: post.slug || post.id,
+        views: post.views,
+        title: post.title,
+        nsfw: post.nsfw,
+      }));
+
+      allPosts.push(...simplified);
+
+      if (json.data.length < 24) {
+        console.log(
+          `[IMG_CHEST] Page ${page} had less than 24 posts → end of data.`
+        );
+        break;
+      }
+    } catch (err) {
+      console.error(`[IMG_CHEST] ERROR fetching page ${page}:`, err);
+      break;
+    }
   }
 
   const payload = JSON.stringify({ posts: allPosts });
+  console.log(`[IMG_CHEST] Finished fetching ${allPosts.length} posts.`);
 
-  // 5) Cache 1h uniquement si on a des résultats
-  if (allPosts.length) {
-    try { await env.IMG_CHEST_CACHE.put(cacheKey, payload, { expirationTtl: 3600 }); } catch {}
+  // 3. Stocker dans Cloudflare KV
+  try {
+    await env.IMG_CHEST_CACHE.put(cacheKey, payload, { expirationTtl: 3600 });
+    console.log(`[IMG_CHEST] KV PUT SUCCESS → Key "${cacheKey}" stored for 1h`);
+  } catch (e) {
+    console.error(
+      `[IMG_CHEST] KV PUT ERROR → Could not store key "${cacheKey}":`,
+      e
+    );
   }
 
   return new Response(payload, {
     headers: {
       "Content-Type": "application/json",
       "Access-Control-Allow-Origin": "*",
-      "X-User-Selected": chosen,
-      "X-Cache": "MISS"
-    }
+      "X-Cache": "MISS",
+    },
   });
 }
