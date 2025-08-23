@@ -2,7 +2,7 @@ export async function onRequest(context) {
   const { env } = context;
 
   // 🔧 1) lis le username depuis l'env (à créer dans Pages → Settings → Environment variables)
-  const username = env.IMG_CHEST_USERNAME || "votre_username_imgchest";
+  const username = env.IMG_CHEST_USERNAME || "LesPoroïniens";
   // 🔧 2) mets le username dans la clé de cache pour éviter tout mélange
   const cacheKey = `imgchest_all_pages_${username}`;
   const maxPages = 8;
