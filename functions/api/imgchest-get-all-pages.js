@@ -29,13 +29,15 @@ export async function onRequest(context) {
   let allPosts = [];
 
   for (let page = 1; page <= maxPages; page++) {
-    const apiUrl = `https://imgchest.com/api/posts?username=${username}&sort=new&page=${page}&status=0`;
+    // const apiUrl = `https://imgchest.com/api/posts?username=${username}&sort=new&page=${page}&status=0`;
+    const apiUrl = `https://imgchest.com/api/posts?username=${encodeURIComponent(username)}&sort=new&page=${page}&status=0`;
     console.log(`[IMG_CHEST] Fetching ImgChest page ${page} → ${apiUrl}`);
 
     try {
       const res = await fetch(apiUrl, {
         headers: {
-          "User-Agent": "LesPoroïniens-PageFetcher/1.2",
+          // "User-Agent": "LesPoroïniens-PageFetcher/1.2",
+          "User-Agent": "LesPoroiniens-PageFetcher/1.2",
           Accept: "application/json",
         },
       });
@@ -79,7 +81,9 @@ export async function onRequest(context) {
 
   // 3. Stocker dans Cloudflare KV
   try {
-    await env.IMG_CHEST_CACHE.put(cacheKey, payload, { expirationTtl: 3600 });
+    if (allPosts.length) {
+      await env.IMG_CHEST_CACHE.put(cacheKey, payload, { expirationTtl: 3600 });
+    }
     console.log(`[IMG_CHEST] KV PUT SUCCESS → Key "${cacheKey}" stored for 1h`);
   } catch (e) {
     console.error(
