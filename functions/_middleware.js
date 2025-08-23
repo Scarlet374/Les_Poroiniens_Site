@@ -74,7 +74,7 @@ export async function onRequest(context) {
     "/": {
       title: "Accueil - Les Poroïniens",
       description:
-        "Retrouvez toutes les sorties de Big_herooooo en un seul et unique endroit !",
+        "Retrouvez toutes les sorties des Poroïniens en un seul et unique endroit !",
       htmlFile: "/index.html",
       image: "/img/banner.jpg",
     },
