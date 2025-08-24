@@ -3,7 +3,7 @@
 	"description": "Un jour, Satsuki Yamato remarqua les dents acérées derrière le masque de Kiraragi Aisu. Alors qu'il s'approchait d'elle, il ne le savait pas encore mais il venait de tomber sur une fille aussi croquante que dangereusement mordante.\n\nUne comédie romantique qui donne envie de mordre dedans !",
 	"artist": "Sorato Shunsuke",
 	"author": "Sorato Shunsuke",
-	"cover": "https://cdn.imgchest.com/files/4jdcvemkpd4.png",
+	"cover": "https://file.garden/aKS5jUD-slfn6iFT/Cover-dent-de-requin-HD.webp",
 	"manga_type": "Seinen",
     "magazine": "Joker Magazine",
 	"release_year": 2025,
@@ -11,6 +11,7 @@
 	"alternative_titles": ["君の「ギザ歯」が見てみたい。", "Show Me Your Shark Teeth"],
 	"release_status": "En cours",
 	"covers_gallery": [
+		{ "url_hq": "https://file.garden/aKS5jUD-slfn6iFT/Cover%20dent%20de%20requin%20HD.png", "url_lq": "https://file.garden/aKS5jUD-slfn6iFT/Cover-dent-de-requin-HD.webp", "volume": "1" }
 	],
 	"chapters": {
 		"1": {

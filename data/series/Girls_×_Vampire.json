@@ -3,7 +3,7 @@
 	"description": "Pas de synopsis.",
 	"artist": "Mikami Teren",
 	"author": "Mikami Teren",
-	"cover": "https://cdn.imgchest.com/files/4apc5pnlda4.png",
+	"cover": "https://file.garden/aKS5jUD-slfn6iFT/Girl-x-Vampire-LQ.webp",
 	"manga_type": "Seinen",
     "magazine": "Twitter",
 	"release_year": 2025,
@@ -11,6 +11,7 @@
 	"alternative_titles": ["ガールズ×ヴァンパイア"],
 	"release_status": "En cours",
 	"covers_gallery": [
+		{ "url_hq": "https://file.garden/aKS5jUD-slfn6iFT/Girl%20x%20Vampire%20HD.png", "url_lq": "https://file.garden/aKS5jUD-slfn6iFT/Girl-x-Vampire-LQ.webp", "volume": "1" }
 	],
 	"chapters": {
 		"1": {

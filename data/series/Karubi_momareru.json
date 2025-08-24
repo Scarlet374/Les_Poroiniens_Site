@@ -3,7 +3,7 @@
 	"description": "＼Le travail, c’est merveilleux (?)／\n\nAvec une VTuber ultra-populaire, qui a déjà battu un record mondial d'audience, et une équipe d’auteurs ultra-prestigieuse… voici le début d'une comédie riche en calories !!!",
 	"artist": "Shiro Manta",
 	"author": "Akasaka Aka",
-	"cover": "https://file.garden/aKS5jUD-slfn6iFT/Cover%20Karubi.png",
+	"cover": "https://file.garden/aKS5jUD-slfn6iFT/Cover%20Karubi%20LQ.jpg",
 	"manga_type": "Shonen",
     "magazine": "Shonen Magazine",
 	"release_year": 2025,
@@ -11,7 +11,8 @@
 	"alternative_titles": ["かるび、もまれる", "Karubi's Screwed"],
 	"release_status": "En cours",
 	"covers_gallery": [
-		],
+		{ "url_hq": "https://file.garden/aKS5jUD-slfn6iFT/Cover%20Karubi.png", "url_lq": "https://file.garden/aKS5jUD-slfn6iFT/Cover%20Karubi%20LQ.jpg", "volume": "1" }
+	],
 	"chapters": {
 		"1": {
 			"title": "",

@@ -1,0 +1,89 @@
+{
+	"title": "Une gyaru déprimée un peu trop envahissante",
+	"description": "Pas de synopsis.",
+	"artist": "Yaki Tomato",
+	"author": "Yaki Tomato",
+	"cover": "https://file.garden/aKS5jUD-slfn6iFT/Une%20gyaru%20d%C3%A9prim%C3%A9e%20un%20peu%20trop%20envahissante%20-%20Cover%20LQ.jpg",
+	"manga_type": "Seinen",
+    "magazine": "Twitter",
+	"release_year": 2025,
+	"tags": ["Gyaru", "Tranche de vie", "Web Comic"],
+	"alternative_titles": ["ダウナーギャルちゃん", "A Downer Gyaru-chan with a Broken Sense of Personal Space"],
+	"release_status": "En cours",
+	"covers_gallery": [
+	],
+	"chapters": {
+		"1": {
+			"title": "Une gyaru déprimée qui n’a aucun sens de l’espace personnel",
+			"volume": "",
+			"last_updated": "1753048800",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/ne7bqkqbv75"
+			}
+		},
+		"2": {
+			"title": "Le bento maison de la gyaru déprimée est trop mignon",
+			"volume": "",
+			"last_updated": "1753048800",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/pg73lraqj7r"
+			}
+		},
+		"3": {
+			"title": "La gyaru déprimée dont les compliments donnent envie de progresser",
+			"volume": "",
+			"last_updated": "1753135200",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/xny8m3nw57b"
+			}
+		},
+		"4": {
+			"title": "La gyaru déprimée a beaucoup trop d'estime de soi !!",
+			"volume": "",
+			"last_updated": "1753480800",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/a846dpnmo7x"
+			}
+		},
+		"5": {
+			"title": "La gyaru déprimée qui se rapproche un peu trop",
+			"volume": "",
+			"last_updated": "1753740000",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/a846dpnmo7x"
+			}
+		},
+		"6": {
+			"title": "La gyaru déprimée qui ne sait pas sourire",
+			"volume": "",
+			"last_updated": "1754172000",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/a846dpnmo7x"
+			}
+		},
+		"7": {
+			"title": "Une gyaru déprimée un peu trop bien pour toi",
+			"volume": "",
+			"last_updated": "1754431200",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/a846dpnmo7x"
+			}
+		},
+		"8": {
+			"title": "Une gyaru déprimée cool et gentille",
+			"volume": "",
+			"last_updated": "1754690400",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/9p4n8noam4n"
+			}
+		},
+		"9": {
+			"title": "Une gyaru déprimée qui joue les femmes au foyer, simplement parce qu’on est amis.",
+			"volume": "",
+			"last_updated": "1756065600",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/"
+			}
+		}
+	}
+}
