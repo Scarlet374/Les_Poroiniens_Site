@@ -29,7 +29,7 @@ const lightboxCloseBtn = qs('.lightbox-close');
 
 function renderColoCard(colo, author) {
   const authorName = author?.username || 'Artiste inconnu';
-  const previewUrl = `https://file.garden/aKS5jUD-slfn6iFT/${colo.id}.png`;
+  const previewUrl = `https://file.garden/aKS5jUD-slfn6iFT/${colo.id}.webp`;
 
   return `
     <div class="colo-card" data-colo-id="${colo.id}"> 
