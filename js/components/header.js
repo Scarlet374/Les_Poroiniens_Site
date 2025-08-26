@@ -822,6 +822,37 @@ export function initHeader() {
 
     // === Recherche ===
     initHeaderSearch(); // <--- AJOUT
+
+// Ouverture/fermeture mobile
+const headerContainer = document.querySelector('.header-container');
+const openBtn  = document.querySelector('.mobile-search-btn');
+const closeBtn = document.querySelector('.close-search-btn');
+const inputEl  = document.getElementById('site-search-input');
+const suggest  = document.getElementById('search-suggest');
+
+if (openBtn && headerContainer && inputEl) {
+  openBtn.addEventListener('click', () => {
+    headerContainer.classList.add('search-open');
+    inputEl.value = '';
+    if (suggest) suggest.hidden = true;
+    setTimeout(() => inputEl.focus(), 0);
+  });
+}
+
+if (closeBtn && headerContainer) {
+  closeBtn.addEventListener('click', () => {
+    headerContainer.classList.remove('search-open');
+    if (suggest) suggest.hidden = true;
+  });
+}
+
+// Fermer avec Échap
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && headerContainer?.classList.contains('search-open')) {
+    headerContainer.classList.remove('search-open');
+    if (suggest) suggest.hidden = true;
+  }
+});
 }
 
 export {

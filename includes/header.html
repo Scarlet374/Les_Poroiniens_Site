@@ -13,15 +13,34 @@
             <div id="nav-separator" class="nav-separator" style="display: none;">|</div>
             <ul id="desktop-nav-sub" class="desktop-nav desktop-nav-sub">
             </ul>
-            <form id="site-search" class="site-search" role="search" aria-label="Recherche">
-                <input id="site-search-input" class="site-search-input" type="search" name="q" autocomplete="off" placeholder="Rechercher une œuvre…" aria-autocomplete="list" aria-controls="search-suggest" aria-expanded="false" />
-                <button class="site-search-btn" type="submit" aria-label="Rechercher">
-                    <i class="fas fa-search"></i>
-                </button>
-                <div id="search-suggest" class="search-suggest" role="listbox" hidden></div>
-            </form>
+
         </nav>
+        
     </div>
+
+<!-- Bouton loupe visible uniquement en mobile -->
+<button class="mobile-search-btn" aria-label="Rechercher">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+
+<!-- Bloc d’actions “recherche” (protégé du masquage) -->
+<div class="header-actions search-actions">
+<form id="site-search" class="site-search" role="search" autocomplete="off">
+      <input id="site-search-input"
+           class="site-search-input"
+           type="search"
+           placeholder="Rechercher une œuvre…"
+           aria-autocomplete="list"
+           aria-haspopup="listbox"
+           aria-expanded="false" />
+    <button type="button" class="close-search-btn" aria-label="Fermer">×</button>
+    <button class="site-search-btn" type="submit" aria-label="Valider">
+      <i class="fa-solid fa-magnifying-glass"></i>
+    </button>
+
+    <div id="search-suggest" class="search-suggest" role="listbox" hidden></div>
+  </form>
+</div>
 
   <div class="header-actions">
     <div class="social-icons desktop-social-icons">
