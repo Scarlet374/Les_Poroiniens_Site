@@ -16,5 +16,9 @@
     "satori": "^0.10.14",
     "satori-html": "^0.3.2",
     "workers-og": "^0.0.27"
+  },
+  "devDependencies": {
+    "clean-css-cli": "^5.6.3",
+    "tiny-glob": "^0.2.9"
   }
 }
