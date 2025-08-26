@@ -1,20 +1,27 @@
 <div class="header-container">
-  <div class="header-left-group">
-    <button class="hamburger-menu-btn" aria-label="Ouvrir le menu">
-      <i class="fas fa-bars"></i>
-    </button>
-    <div class="logo">
-      <a href="/" class="site-title-link">Les Poroïniens</a>
+    <div class="header-left-group">
+        <button class="hamburger-menu-btn" aria-label="Ouvrir le menu">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="logo">
+            <a href="/" class="site-title-link">Les Poroïniens</a>
+        </div>
+
+        <nav class="desktop-navigation-wrapper">
+            <ul id="desktop-nav-main" class="desktop-nav desktop-nav-main">
+            </ul>
+            <div id="nav-separator" class="nav-separator" style="display: none;">|</div>
+            <ul id="desktop-nav-sub" class="desktop-nav desktop-nav-sub">
+            </ul>
+            <form id="site-search" class="site-search" role="search" aria-label="Recherche">
+                <input id="site-search-input" class="site-search-input" type="search" name="q" autocomplete="off" placeholder="Rechercher une œuvre…" aria-autocomplete="list" aria-controls="search-suggest" aria-expanded="false" />
+                <button class="site-search-btn" type="submit" aria-label="Rechercher">
+                    <i class="fas fa-search"></i>
+                </button>
+                <div id="search-suggest" class="search-suggest" role="listbox" hidden></div>
+            </form>
+        </nav>
     </div>
-    
-    <nav class="desktop-navigation-wrapper">
-      <ul id="desktop-nav-main" class="desktop-nav desktop-nav-main">
-      </ul>
-      <div id="nav-separator" class="nav-separator" style="display: none;">|</div>
-      <ul id="desktop-nav-sub" class="desktop-nav desktop-nav-sub">
-      </ul>
-    </nav>
-  </div>
 
   <div class="header-actions">
     <div class="social-icons desktop-social-icons">
