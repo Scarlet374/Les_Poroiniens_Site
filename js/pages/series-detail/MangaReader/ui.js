@@ -264,16 +264,31 @@ export function renderViewer() {
   dom.viewerContainer.className = `reader-viewer-container ${state.settings.mode}-mode`;
   dom.viewerContainer.innerHTML = "";
 
+  // Ajout : détection webtoon/pornwha
+  const isPornwhaSeries = state.seriesData.pornwha === true;
+
+  viewer.className = `reader-viewer ${state.settings.mode}-mode fit-${state.settings.fit} ${state.settings.direction}-mode`;
+  if (isLandscapeSpread) viewer.classList.add("single-landscape-spread");
+  if (state.settings.stretchSmallPages) viewer.classList.add("stretch");
+  // Ajout : classe spécifique pour pornwha en mode webtoon
+  if (state.settings.mode === "webtoon" && isPornwhaSeries) {
+    viewer.classList.add("pornwha-mode");
+  }
+
+  dom.viewerContainer.className = `reader-viewer-container ${state.settings.mode}-mode`;
+  dom.viewerContainer.innerHTML = "";
+
   domImages.forEach((img) => {
     img.style.maxWidth = null;
     img.style.maxHeight = null;
   });
 
   if (state.settings.mode === "webtoon") {
-    domImages.forEach((img) => {
+    domImages.forEach((img, idx) => {
       if (state.settings.fit === "custom" && state.settings.limitWidth) {
         img.style.maxWidth = `${state.settings.customMaxWidth}px`;
       }
+      img.style.marginBottom = (!isPornwhaSeries && idx < domImages.length - 1) ? "16px" : "0";
       viewer.appendChild(img);
     });
   } else if (state.settings.mode === "double") {

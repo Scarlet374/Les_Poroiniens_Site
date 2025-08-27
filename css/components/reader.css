@@ -159,6 +159,14 @@ body.dark .reader-viewer-container {
   display: block;
 }
 
+.reader-viewer.webtoon-mode.pornwha-mode {
+  gap: 0 !important;
+}
+.reader-viewer.webtoon-mode.pornwha-mode > img {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
+
 .reader-progress-bar {
   position: fixed;
   bottom: 0;
