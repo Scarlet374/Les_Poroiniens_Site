@@ -9,8 +9,12 @@ export function saveSettings() {
 export function loadSettings() {
   const raw = localStorage.getItem("les_poroiniens_ln_settings_v1");
   if (!raw) return;
-  try { Object.assign(state.settings, JSON.parse(raw)); }
-  catch (e) { console.warn("LN prefs parse:", e); }
+  try {
+    const saved = JSON.parse(raw);
+    // migrate: if someone stored px-like values (e.g. >4), convert to em
+    if (saved.fontSize && saved.fontSize > 4) saved.fontSize = +(saved.fontSize / 16).toFixed(2);
+    Object.assign(state.settings, saved);
+  } catch (e) { console.warn("LN prefs parse:", e); }
 }
 
 export function bindControls() {
@@ -19,7 +23,7 @@ export function bindControls() {
   // MàJ visuelle centralisée
   const apply = () => {
     art.style.setProperty("--ln-font-family", state.settings.fontFamily);
-    art.style.setProperty("--ln-font-size",  state.settings.fontSize + "px");
+    art.style.setProperty("--ln-font-size",  state.settings.fontSize + "em");
     art.style.setProperty("--ln-leading",    state.settings.leading);
     art.style.setProperty("--ln-tracking",   state.settings.tracking + "px");
     art.style.textAlign = state.settings.align;
@@ -41,24 +45,15 @@ export function bindControls() {
   });
 
   // Taille
-  // document.querySelectorAll("[data-font]").forEach(btn => {
-  //   btn.addEventListener("click", () => {
-  //     const dir = btn.getAttribute("data-font");
-  //     const next = state.settings.fontSize + (dir === "+" ? 1 : -1);
-  //     setFontSize(next); // <-- utilise la fonction qui limite la plage
-  //     state.settings.fontSize = parseInt(art.style.fontSize); // sauvegarde la valeur réelle
-  //     apply(); saveSettings();
-  //   });
-  // });
   document.querySelectorAll("[data-font]").forEach(btn => {
-  btn.addEventListener("click", () => {
-    const dir = btn.getAttribute("data-font");
-    const next = +(state.settings.fontSize + (dir === "+" ? 0.05 : -0.05)).toFixed(2); // incrémente en em
-    setFontSize(next);
-    state.settings.fontSize = parseFloat(art.style.fontSize); // sauvegarde la valeur réelle en em
-    apply(); saveSettings();
+    btn.addEventListener("click", () => {
+      const dir = btn.getAttribute("data-font");
+      const next = +(state.settings.fontSize + (dir === "+" ? 0.05 : -0.05)).toFixed(2);
+      setFontSize(next);
+      state.settings.fontSize = next;   // keep value in em
+      apply(); saveSettings();
+    });
   });
-});
 
   // Interligne
   document.querySelectorAll("[data-leading]").forEach(btn => {
@@ -121,7 +116,7 @@ export function bindControls() {
   // Quand tu modifies la taille/interligne, vérifie la plage :
   function setFontSize(em) {
     const size = Math.max(minFontSize, Math.min(maxFontSize, em));
-    art.style.fontSize = size + "em";
+    art.style.setProperty("--ln-font-size", size + "em");
   }
 
   function setLeading(val) {

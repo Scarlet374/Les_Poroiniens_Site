@@ -231,7 +231,7 @@ html.ln-mode, body.ln-mode {
 
   /* Variables pilotées par le JS */
   font-family: var(--ln-font-family, system-ui, sans-serif);
-  font-size:   var(--ln-font-size, 20px);
+  font-size:   var(--ln-font-size, 1em);
   line-height: var(--ln-leading, 1.8);
   letter-spacing: var(--ln-tracking, 0px);
   color: var(--ln-text);
@@ -454,8 +454,6 @@ html.ln-mode, body.ln-mode {
     padding-right: 12px !important;
     border-radius: 10px !important;
     box-shadow: none !important;
-    font-size: 1em;
-    line-height: 1.7;
   }
   .ln-sidebar.mobile-overlay {
     position: fixed !important;
