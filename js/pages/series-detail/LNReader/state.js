@@ -10,7 +10,7 @@ export let state = {
   // Préférences d’affichage LN
   settings: {
     fontFamily: "'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif",
-    fontSize: 20,          // px
+    fontSize: 1.0,          // em
     leading: 1.8,          // line-height
     tracking: 0,           // letter-spacing (px)
     align: "justify",      // left | center | justify

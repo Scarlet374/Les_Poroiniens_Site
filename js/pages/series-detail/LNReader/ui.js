@@ -170,6 +170,23 @@ updatePagerButtons();
     mobileHeaderStats: qs(".mobile-header-stats"),
   });
 
+
+  // Ajout : ouvrir le menu d'options LN sur mobile via la roue crantée
+  if (dom.mobileSettingsBtn && dom.sidebar && dom.sidebarOverlay) {
+    dom.mobileSettingsBtn.addEventListener("click", () => {
+      dom.sidebar.classList.add("mobile-overlay");
+      dom.sidebar.style.display = "block";
+      dom.sidebarOverlay.style.display = "block";
+    });
+
+    // Fermer le menu si on clique sur l'overlay
+    dom.sidebarOverlay.addEventListener("click", () => {
+      dom.sidebar.classList.remove("mobile-overlay");
+      dom.sidebar.style.display = "";
+      dom.sidebarOverlay.style.display = "";
+    });
+  }
+
   // header mobile (comme le manga)
   qs(".mobile-header-series-link").href = `/${slugify(state.seriesData.title)}`;
   dom.mobileSeriesTitle.textContent = truncate(state.seriesData.title, 35);

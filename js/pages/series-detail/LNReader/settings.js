@@ -9,8 +9,12 @@ export function saveSettings() {
 export function loadSettings() {
   const raw = localStorage.getItem("les_poroiniens_ln_settings_v1");
   if (!raw) return;
-  try { Object.assign(state.settings, JSON.parse(raw)); }
-  catch (e) { console.warn("LN prefs parse:", e); }
+  try {
+    const saved = JSON.parse(raw);
+    // migrate: if someone stored px-like values (e.g. >4), convert to em
+    if (saved.fontSize && saved.fontSize > 4) saved.fontSize = +(saved.fontSize / 16).toFixed(2);
+    Object.assign(state.settings, saved);
+  } catch (e) { console.warn("LN prefs parse:", e); }
 }
 
 export function bindControls() {
@@ -19,14 +23,15 @@ export function bindControls() {
   // MàJ visuelle centralisée
   const apply = () => {
     art.style.setProperty("--ln-font-family", state.settings.fontFamily);
-    art.style.setProperty("--ln-font-size",  state.settings.fontSize + "px");
+    art.style.setProperty("--ln-font-size",  state.settings.fontSize + "em");
     art.style.setProperty("--ln-leading",    state.settings.leading);
     art.style.setProperty("--ln-tracking",   state.settings.tracking + "px");
     art.style.textAlign = state.settings.align;
     setThemeClass();
 
     // UI values
-    qs("#ln-font-size-val").textContent = state.settings.fontSize + "px";
+    // qs("#ln-font-size-val").textContent = state.settings.fontSize + "px";
+    qs("#ln-font-size-val").textContent = Math.round(state.settings.fontSize * 16) + "px"; // si 1em = 16px
     qs("#ln-leading-val").textContent   = String(state.settings.leading);
     qs("#ln-tracking-val").textContent  = state.settings.tracking + "px";
     const f = qs("#ln-font-family"); if (f) f.value = state.settings.fontFamily;
@@ -43,7 +48,9 @@ export function bindControls() {
   document.querySelectorAll("[data-font]").forEach(btn => {
     btn.addEventListener("click", () => {
       const dir = btn.getAttribute("data-font");
-      state.settings.fontSize = Math.min(36, Math.max(7, state.settings.fontSize + (dir === "+" ? 1 : -1)));
+      const next = +(state.settings.fontSize + (dir === "+" ? 0.05 : -0.05)).toFixed(2);
+      setFontSize(next);
+      state.settings.fontSize = next;   // keep value in em
       apply(); saveSettings();
     });
   });
@@ -52,7 +59,9 @@ export function bindControls() {
   document.querySelectorAll("[data-leading]").forEach(btn => {
     btn.addEventListener("click", () => {
       const dir = btn.getAttribute("data-leading");
-      state.settings.leading = +(Math.min(2.4, Math.max(1.2, state.settings.leading + (dir === "+" ? 0.1 : -0.1)))).toFixed(1);
+      const next = +(state.settings.leading + (dir === "+" ? 0.1 : -0.1)).toFixed(1);
+      setLeading(next); // <-- utilise la fonction qui limite la plage
+      state.settings.leading = parseFloat(art.style.lineHeight); // sauvegarde la valeur réelle
       apply(); saveSettings();
     });
   });
@@ -82,7 +91,7 @@ export function bindControls() {
   qs("#ln-reset")?.addEventListener("click", () => {
     Object.assign(state.settings, {
       fontFamily: "'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif",
-      fontSize: 20,
+      fontSize: 1.0,
       leading: 1.8,
       tracking: 0,
       align: "justify",
@@ -91,5 +100,30 @@ export function bindControls() {
     apply(); saveSettings();
   });
 
+  // Ajustements selon mobile/desktop
+  function isMobile() {
+    return window.innerWidth <= 600;
+  }
+
+  // Exemple pour la taille de police
+  const minFontSize = isMobile() ? 0.9 : 1.0; // em
+  const maxFontSize = isMobile() ? 1.3 : 2.0; // em
+
+  // Exemple pour l'interligne
+  const minLeading = isMobile() ? 1.4 : 1.5;
+  const maxLeading = isMobile() ? 2.0 : 2.5;
+
+  // Quand tu modifies la taille/interligne, vérifie la plage :
+  function setFontSize(em) {
+    const size = Math.max(minFontSize, Math.min(maxFontSize, em));
+    art.style.setProperty("--ln-font-size", size + "em");
+  }
+
+  function setLeading(val) {
+    const leading = Math.max(minLeading, Math.min(maxLeading, val));
+    art.style.lineHeight = leading;
+  }
+
+  // Initial
   apply();
 }
