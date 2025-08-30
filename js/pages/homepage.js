@@ -1,5 +1,5 @@
 // js/pages/homepage.js
-import { fetchData, fetchAllSeriesData } from "../utils/fetchUtils.js";
+import { fetchData, fetchAllSeriesData, fetchAllAnimeData } from "../utils/fetchUtils.js";
 import { slugify, qs, qsa, limitVisibleTags } from "../utils/domUtils.js";
 import { parseDateToTimestamp, timeAgo } from "../utils/dateUtils.js";
 
@@ -354,6 +354,83 @@ async function initHeroCarousel() {
   }
 }
 
+function renderAnimeCard(anime) {
+  if (!anime) return "";
+
+  // const seriesSlug = anime.slug || slugify(anime.title);
+  const seriesSlug = slugify(
+  (anime && (anime.title || anime.seriesTitle)) || ""  // titre de l’œuvre
+) || (anime.slug ? slugify(anime.slug) : "");          // fallback exceptionnel
+
+  const detailUrl  = `/${seriesSlug}/episodes`;
+  const imageUrl   = anime.cover || "/img/placeholder_preview.png";
+
+  const studiosTxt = Array.isArray(anime.studios) ? anime.studios.join(", ") : (anime.studios || "");
+  const yearTxt    = anime.year ? `<strong>Année :</strong> ${anime.year}` : "";
+
+  const authorYearLineHtml = `
+    <div class="meta series-author-year-line">
+      ${studiosTxt ? `<span class="series-author-info"><strong>Studio :</strong> ${studiosTxt}</span>` : ""}
+      ${studiosTxt && yearTxt ? `<span class="meta-separator-card"></span>` : ""}
+      ${yearTxt ? `<span class="series-year-info">${yearTxt}</span>` : ""}
+    </div>
+  `;
+
+  const tagsHtml = Array.isArray(anime.tags) && anime.tags.length
+    ? `<div class="tags series-tags">${anime.tags.map(t => `<span class="tag">${t}</span>`).join("")}</div>`
+    : "";
+
+  // 3 derniers épisodes par date
+  const eps = Array.isArray(anime.episodes) ? anime.episodes.slice() : [];
+  const last3 = eps.map(e => {
+      const ts = parseDateToTimestamp(e.date || e.release_date || 0);
+      return { ...e, ts };
+    })
+    .sort((a,b) => b.ts - a.ts)
+    .slice(0,3);
+
+  const latestThreeChaptersHtml = last3.length ? `
+    <div class="series-latest-chapters-container-desktop">
+      ${last3.map(ep => `
+        <a href="${detailUrl}" class="series-chapter-item-desktop">
+          <span class="chapter-number-desktop">Ep. ${ep.index ?? "?"}</span>
+          <span class="chapter-title-desktop" title="${ep.title || "Sans titre"}">${truncateText(ep.title || "Sans titre", 30)}</span>
+          <span class="chapter-date-desktop">${timeAgo(ep.ts)}</span>
+        </a>
+      `).join("")}
+    </div>` : "";
+
+  const latestMobile = last3[0] ? `
+    <div class="series-latest-chapters-container-mobile">
+      <a href="${detailUrl}" class="series-chapter-item">
+        <div class="series-chapter-item-main-info-mobile">
+          <span class="chapter-number-small">Ep. ${last3[0].index ?? "?"}</span>
+          <span class="chapter-title-small">${truncateText(last3[0].title || "Sans titre", 25)}</span>
+        </div>
+        <span class="chapter-date-small-mobile">${timeAgo(last3[0].ts)}</span>
+      </a>
+    </div>` : "";
+
+  const descHtml = anime.description ? `<div class="series-description">${anime.description}</div>` : "";
+
+  // même markup/classes que tes cartes série → CSS réutilisé
+  return `
+    <div class="series-card" data-url="${detailUrl}">
+      <div class="series-cover">
+        <img src="${imageUrl}" alt="${anime.title}" loading="lazy" referrerpolicy="no-referrer">
+      </div>
+      <div class="series-info">
+        <div class="series-title">${anime.title}</div>
+        ${authorYearLineHtml}
+        ${tagsHtml}
+        ${descHtml}
+        ${latestMobile}
+        ${latestThreeChaptersHtml}
+      </div>
+    </div>
+  `;
+}
+
 // --- LOGIQUE EXISTANTE POUR LES GRILLES DE SÉRIES ---
 
 function renderSeriesCard(series) {
@@ -526,18 +603,17 @@ export async function initHomepage() {
   const seriesGridDoujin     = qs(".series-grid.doujinshi");
   const seriesGridPornwha    = qs(".series-grid.pornwha");
   const seriesGridLightNovel = qs(".series-grid.light-novel");
+  const seriesGridAnime      = qs(".series-grid.anime"); // ⬅️ nouveau
 
   // +18: local flag
   const ADULT_KEY = "adult_on";
   const adultEnabled = () => localStorage.getItem(ADULT_KEY) === "1";
 
-  // Helper pour lire manga_type (série ou s.series)
   const isPornographicSeries = (s) => {
     const mt = (s?.series?.manga_type ?? s?.manga_type ?? "").toLowerCase();
     return mt === "pornographique";
   };
 
-  // Relance les petits “enhancers” après chaque rendu de page
   const rerunCardEnhancers = (root) => {
     qsa(".series-card .series-tags", root).forEach(c => limitVisibleTags(c, 3, "plusN"));
     makeSeriesCardsClickable();
@@ -546,8 +622,26 @@ export async function initHomepage() {
   // 2) Carrousel
   await initHeroCarousel();
 
+  // 2.5) Monte la grille ANIME (indépendante du reste)
+  if (seriesGridAnime) {
+    try {
+      const animeItems = await fetchAllAnimeData();  // ← lit les épisodes depuis les JSON d'œuvres
+      mountPagedSection({
+        grid: seriesGridAnime,
+        items: animeItems,
+        renderFn: renderAnimeCard,
+        sectionKey: "anime",
+        pageSize: 5,
+        afterRender: rerunCardEnhancers
+      });
+    } catch (e) {
+      console.error("Anime grid error:", e);
+      seriesGridAnime.innerHTML = "<p>Aucun anime.</p>";
+    }
+  }
+
   try {
-    // 3) Charger
+    // 3) Charger (séries/LN/doujin/pornwha)
     const allSeries = await fetchAllSeriesData();
     if (!Array.isArray(allSeries) || allSeries.length === 0) {
       if (seriesGridOngoing)    seriesGridOngoing.innerHTML    = "<p>Aucune série en cours.</p>";
@@ -555,12 +649,11 @@ export async function initHomepage() {
       if (seriesGridDoujin)     seriesGridDoujin.innerHTML     = "<p>Aucun doujinshi.</p>";
       if (seriesGridPornwha)    seriesGridPornwha.innerHTML    = "<p>Aucun pornwha.</p>";
       if (seriesGridLightNovel) seriesGridLightNovel.innerHTML = "<p>Aucun light novel.</p>";
-      return;
+      // on ne return pas : la section Anime a déjà été montée ci-dessus
     }
 
     const showAdult = adultEnabled();
 
-    // Cacher carrément les sections si OFF
     if (!showAdult) {
       const doujSec = document.getElementById("doujinshi-section");
       const pornSec = document.getElementById("pornwha-section");
@@ -568,27 +661,22 @@ export async function initHomepage() {
       if (pornSec) pornSec.style.display = "none";
     }
 
-    // 4) Répartition (exclusion progressive pour éviter les doublons)
     const doujinList     = allSeries.filter(s => isDoujinshi(s));
     const pornwhaList    = allSeries.filter(s => isPornwha(s)    && !isDoujinshi(s));
     const lightNovelList = allSeries.filter(s => isLightNovel(s) && !isDoujinshi(s) && !isPornwha(s));
     const oneShots       = allSeries.filter(s => s && s.os === true  && !isDoujinshi(s) && !isPornwha(s) && !isLightNovel(s));
     const onGoingSeries  = allSeries.filter(s => s && s.os !== true  && !isDoujinshi(s) && !isPornwha(s) && !isLightNovel(s));
 
-    // 4.5) Tri par date de MAJ (chapitre le plus récent)
     const onGoingSorted    = sortSeriesByNewest(onGoingSeries);
     const oneShotsSorted   = sortSeriesByNewest(oneShots);
     const doujinSorted     = sortSeriesByNewest(doujinList);
     const pornwhaSorted    = sortSeriesByNewest(pornwhaList);
     const lightNovelSorted = sortSeriesByNewest(lightNovelList);
 
-    // >>> Filtre +18
     const doujinListF  = showAdult ? doujinSorted  : [];
     const pornwhaListF = showAdult ? pornwhaSorted : [];
-    // LN “Pornographique” -> visibles uniquement si +18
     const lightNovelListF = lightNovelSorted.filter(s => showAdult || !isPornographicSeries(s));
 
-    // 5) Rendu avec pagination (5 cartes/page)
     const PAGE_SIZE = 5;
 
     if (seriesGridOngoing) {
@@ -641,7 +729,6 @@ export async function initHomepage() {
         afterRender: rerunCardEnhancers
       });
     }
-
   } catch (error) {
     console.error("🚨 Erreur init homepage:", error);
     if (seriesGridOngoing)    seriesGridOngoing.innerHTML    = "<p>Erreur chargement séries.</p>";
@@ -651,6 +738,5 @@ export async function initHomepage() {
     if (seriesGridLightNovel) seriesGridLightNovel.innerHTML = "<p>Erreur chargement light novel.</p>";
   }
 
-  // Recharger si l’utilisateur (dé)active le contenu +18 depuis le header
   window.addEventListener("adult-visibility-changed", () => location.reload());
 }

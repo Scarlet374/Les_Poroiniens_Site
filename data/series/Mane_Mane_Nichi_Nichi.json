@@ -221,7 +221,8 @@
 			"last_updated": "1746990010",
 			"groups": {
 				"LesPoroïniens": "/proxy/api/imgchest/chapter/a846d3zkg7x"
-			},
+			}
+		},
 		"27": {
 			"title": "Aroma",
 			"volume": "",
@@ -309,7 +310,6 @@
 			"groups": {
 				"LesPoroïniens": "/proxy/api/imgchest/chapter/5xy22qmbnyl"
 			}
-		}
 		}
 	}
 }

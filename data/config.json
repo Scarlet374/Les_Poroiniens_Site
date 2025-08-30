@@ -1,7 +1,5 @@
 {
   "ENV": "LOCAL_DEV",
-  "URL_GIT_CUBARI": "https://api.github.com/repos/Bigherooooo/Cubari/contents",
-  "URL_RAW_JSON_GITHUB": "raw/Bigherooooo/BigSolo-Site/refs/heads/master/data/series/",
   "URL_API_IMGCHEST": "/api/imgchest-chapter-pages",
   "LOCAL_SERIES_FILES": [
     "Mane_Mane_Nichi_Nichi.json",
@@ -31,6 +29,17 @@
     "Hakari_to_Karane_to_IchaLove_H_suru_HON_(Doujinshi).json",
     "Marine_Senchou_wa_Hi_Goui_no_Ue_de_Wakarasaretai_(Doujinshi).json",
     "Sa_Chan.json",
-    "Hospitalized_Life_in_Another_World.json"
+    "Hospitalized_Life_in_Another_World.json",
+    "Boku_wa_Chiisana_Succubus_no_Shimobe_Soushuuhen_(Doujinshi).json",
+    "Toradora_no_Erohon_(Doujinshi).json",
+    "Isekai_Kita_no_de_Mahou_o_Sukebe_na_Koto_ni_Riyou_Shiyou_to_Omou_(Doujinshi).json",
+    "I_NEED_MORE _POWER_(Doujinshi).json",
+    "Rover's_Brave_Request_(Doujinshi).json",
+    "AAA_(Doujinshi).json",
+    "Lolikko_Megumin_o_Kouryaku_Seyo_(Doujinshi).json",
+    "Kono_Sukebe_na_Bakuretsu_Musume_ni_Tyoukyou _wo_(Doujinshi).json",
+    "Mizu_Mahou_Gurai_Shika_Torie_ga_Nai_Kedo_Gendai_Chishiki_ga_Areba_Juubun_da_yo_ne.json",
+    "Haite_Kudasai_Takamine_san.json",
+    "Tenshi_na_Tenkousei_chan_to_Kyonyuu_Kyoufushou_kun.json"
   ]
 }

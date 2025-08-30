@@ -26,37 +26,15 @@ const subNavTitlesConfig = {
 };
 
 const subNavLinksConfig = {
-    homepage: [{
-            text: "À la une",
-            href: "#hero-section",
-            id: "hero"
-        },
-        {
-            text: "Séries",
-            href: "#on-going-section",
-            id: "series"
-        },
-        {
-            text: "One-Shot",
-            href: "#one-shot-section",
-            id: "oneshots"
-        },
-        {
-            text: "Doujinshi",
-            href: "#doujinshi-section",
-            id: "doujinshi"
-        },
-        {
-            text: "Pornwha",
-            href: "#pornwha-section",
-            id: "pornwha"
-        },
-        {
-            text: "Light novel",
-            href: "#lightnovel-section",
-            id: "lightnovel"
-        },
-    ],
+homepage: [
+  { text: "À la une",   href: "#hero-section",       id: "hero" },
+  { text: "Séries",     href: "#on-going-section",   id: "series" },
+  { text: "One-Shot",   href: "#one-shot-section",   id: "oneshots" },
+  { text: "Doujinshi",  href: "#doujinshi-section",  id: "doujinshi" },
+  { text: "Pornwha",    href: "#pornwha-section",    id: "pornwha" },
+  { text: "Light novel",href: "#lightnovel-section", id: "lightnovel" },
+  { text: "Anime",      href: "#anime-section",      id: "anime" }, 
+],
     galeriepage: [],
     presentationpage: [],
     seriesdetailpage: [],
@@ -112,6 +90,65 @@ function renderNavLinks(container, links, isMobile = false) {
         li.appendChild(a);
         container.appendChild(li);
     });
+}
+
+function renderSubNavWithMore(container, links, maxVisible = 5) {
+  if (!container) return;
+  container.innerHTML = "";
+
+  const visible = links.slice(0, maxVisible);
+  const overflow = links.slice(maxVisible);
+
+  // liens visibles
+  visible.forEach((link) => {
+    const li = document.createElement("li");
+    const a  = document.createElement("a");
+    a.href = link.href;
+    if (link.id) a.id = `navlink-${link.id}-desktop`;
+    a.textContent = link.text;
+    li.appendChild(a);
+    container.appendChild(li);
+  });
+
+  // menu “Plus” si nécessaire
+  if (overflow.length) {
+    const liMore   = document.createElement("li");
+    liMore.className = "nav-more";
+    liMore.innerHTML = `
+      <button type="button" class="more-toggle" aria-expanded="false" aria-haspopup="true">Plus</button>
+      <ul class="more-menu" role="menu"></ul>
+    `;
+    const menu = liMore.querySelector(".more-menu");
+    overflow.forEach((link) => {
+      const li  = document.createElement("li");
+      const a   = document.createElement("a");
+      a.href = link.href;
+      if (link.id) a.id = `navlink-${link.id}-desktop`;
+      a.textContent = link.text;
+      li.appendChild(a);
+      menu.appendChild(li);
+    });
+    container.appendChild(liMore);
+
+    // interactions (ouvrir/fermer)
+    const btn = liMore.querySelector(".more-toggle");
+    const close = () => {
+      liMore.classList.remove("open");
+      btn.setAttribute("aria-expanded", "false");
+    };
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      const open = !liMore.classList.contains("open");
+      liMore.classList.toggle("open", open);
+      btn.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+    document.addEventListener("click", (e) => {
+      if (!liMore.contains(e.target)) close();
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") close();
+    });
+  }
 }
 
 function getSubNavLinksForPage(pageId) {
@@ -187,26 +224,24 @@ function getSubNavLinksForPage(pageId) {
 }
 
 function populateDesktopNavigation() {
-    const mainNavContainer = qs("#desktop-nav-main");
-    const subNavContainer = qs("#desktop-nav-sub");
-    const separator = qs("#nav-separator");
-    const currentPageId = getCurrentPageId();
+  const mainNavContainer = qs("#desktop-nav-main");
+  const subNavContainer  = qs("#desktop-nav-sub");
+  const separator        = qs("#nav-separator");
+  const currentPageId    = getCurrentPageId();
 
-    renderNavLinks(mainNavContainer, mainNavLinksConfig, false);
+  renderNavLinks(mainNavContainer, mainNavLinksConfig, false);
 
-    const subLinksForCurrentPage = getSubNavLinksForPage(currentPageId);
-    renderNavLinks(subNavContainer, subLinksForCurrentPage, false);
+  const subLinksForCurrentPage = getSubNavLinksForPage(currentPageId);
+  // AVANT: renderNavLinks(subNavContainer, subLinksForCurrentPage, false);
+  renderSubNavWithMore(subNavContainer, subLinksForCurrentPage, 5); // ⬅️ nouveau
 
-    if (mainNavContainer && subNavContainer && separator) {
-        if (
-            mainNavContainer.children.length > 0 &&
-            subNavContainer.children.length > 0
-        ) {
-            separator.style.display = "inline-block";
-        } else {
-            separator.style.display = "none";
-        }
+  if (mainNavContainer && subNavContainer && separator) {
+    if (mainNavContainer.children.length > 0 && subNavContainer.children.length > 0) {
+      separator.style.display = "inline-block";
+    } else {
+      separator.style.display = "none";
     }
+  }
 }
 
 function populateMobileNavigation() {

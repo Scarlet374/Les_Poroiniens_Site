@@ -1,0 +1,47 @@
+{
+    "title": "Je n’ai que la magie de l’eau… mais mes connaissances modernes suffisent",
+    "description": "Frim, une orpheline de 5 ans livrée à elle-même dans les rues d’un bidonville, recouvre un jour les souvenirs de sa vie antérieure… au Japon.\n  \nDans un monde brutal, où règnent la violence et l’injustice, elle ne peut compter sur personne. Même rêver d'un simple toit semblait être un luxe, pour elle. Ses seuls atouts en ce bas-monde : une magie capable de produire de l’eau, et les connaissances modernes de son ancienne vie. \n\nPourtant, grâce à son ingéniosité et à des idées absentes de ce monde, elle parvient à améliorer son quotidien et celui des autres. En détournant la magie de l’eau à des usages inédits, Frim commence peu à peu à se faire un nom !",
+    "artist": "Azyaraya Benbe",
+    "author": "mono-zo",
+    "cover": "https://file.garden/aKS5jUD-slfn6iFT/Cover%20Je%20n%E2%80%99ai%20que%20la%20magie%20de%20l%E2%80%99eau%E2%80%A6%20mais%20mes%20connaissances%20modernes%20suffisent%20LQ.jpg",
+    "manga_type": "Seinen",
+    "magazine": "Comic Walker",
+    "release_year": 2024,
+    "tags": [
+        "Réincarnation",
+        "Magie",
+        "Isekai",
+        "Fantastique",
+        "Adaptation"
+    ],
+    "alternative_titles": [
+        "水魔法ぐらいしか取り柄がないけど現代知識があれば充分だよね？",
+        "Even if My Only Strength is Water Magic, Having Modern Knowledge Should be Sufficient, Right?"
+    ],
+    "release_status": "En cours",
+    "covers_gallery": [
+        {
+            "url_hq": "https://file.garden/aKS5jUD-slfn6iFT/Cover%20Je%20n%E2%80%99ai%20que%20la%20magie%20de%20l%E2%80%99eau%E2%80%A6%20mais%20mes%20connaissances%20modernes%20suffisent.jpg",
+            "url_lq": "https://file.garden/aKS5jUD-slfn6iFT/Cover%20Je%20n%E2%80%99ai%20que%20la%20magie%20de%20l%E2%80%99eau%E2%80%A6%20mais%20mes%20connaissances%20modernes%20suffisent%20LQ.jpg",
+            "volume": "1"
+        }
+    ],
+    "chapters": {
+        "1": {
+            "title": "",
+            "volume": "1",
+            "last_updated": "1744567200",
+            "groups": {
+                "LesPoroïniens": "/proxy/api/imgchest/chapter/5xy22q5o9yl"
+            }
+        },
+        "2": {
+            "title": "",
+            "volume": "1",
+            "last_updated": "1748898000",
+            "groups": {
+                "LesPoroïniens": "/proxy/api/imgchest/chapter/ej7m8apvnyd"
+            }
+        }
+    }
+}

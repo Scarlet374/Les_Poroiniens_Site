@@ -58,6 +58,106 @@ export async function loadGlobalConfig() {
   }
 }
 
+// --- Détection + normalisation "anime présent" ---------------------------
+function hasAnime(meta) {
+  if (!meta || typeof meta !== "object") return false;
+  if (Array.isArray(meta.episodes) && meta.episodes.length) return true;       // tes épisodes à plat
+  if (meta.media?.anime?.entries?.length) return true;                         // futur schéma v2
+  return false;
+}
+
+function normalizeAnime(meta, filename) {
+  if (!hasAnime(meta)) return null;
+
+  // Source "anime" v1 (tes *_an) si présente, sinon info de base
+  const entry = meta.media?.anime?.entries?.[0] || meta.anime?.[0] || null;
+
+  const cover     = entry?.cover || entry?.cover_an || meta.cover_an || meta.cover || "/img/placeholder_preview.png";
+  const type      = entry?.type  || entry?.type_an  || "";
+  const status    = entry?.status|| entry?.status_an|| "";
+  const studios   = entry?.studios || entry?.studios_an || [];
+  const dateStart = entry?.date_start || entry?.date_start_an || meta.date_start || "";
+
+  const tags        = entry?.tags || meta.tags || [];
+  const description = entry?.description || meta.description || "";
+
+  // Épisodes (mappe tes champs indice_ep/date_ep/title_ep)
+  let episodes = [];
+  if (Array.isArray(meta.episodes)) {
+    episodes = meta.episodes.map(e => ({
+      type:  e.type,
+      id:    e.id,
+      index: e.indice_ep ?? e.index ?? e.ep ?? null,
+      date:  typeof e.date_ep === "string" ? parseInt(e.date_ep, 10) : (e.date_ep ?? e.date ?? null),
+      title: e.title_ep ?? e.title ?? ""
+    }));
+  } else if (entry?.episodes) {
+    episodes = entry.episodes;
+  } else if (entry?.seasons) {
+    Object.values(entry.seasons).forEach(arr => { if (Array.isArray(arr)) episodes.push(...arr); });
+  }
+
+  // Slug depuis le nom de fichier (fallback titre)
+  const baseName = (filename ? filename.replace(/\.json$/,'') : (meta.slug || meta.file || meta.title || ''));
+  const slug = (typeof window !== "undefined" && window.slugify) ? window.slugify(String(baseName)) : String(baseName).toLowerCase().replace(/\s+/g,'-');
+
+  // Année (pour l’affichage à droite)
+  let year = "";
+  if (typeof dateStart === "number") year = String(new Date(dateStart*1000).getFullYear());
+  else if (typeof dateStart === "string") {
+    const parts = dateStart.split(/[\/\-]/); year = parts[parts.length-1] || "";
+  }
+
+  return {
+    __kind: "anime",
+    slug,
+    title: meta.title || "(Sans titre)",
+    cover,
+    type,
+    status,
+    studios,
+    year,
+    tags,
+    description,
+    episodes,
+    episodesCount: Array.isArray(episodes) ? episodes.length : 0
+  };
+}
+
+/**
+ * Charge TOUTES les fiches listées en config et retourne
+ * toutes les "cartes anime" (y compris si le fichier a des chapitres).
+ */
+export async function fetchAllAnimeData() {
+  const config = await loadGlobalConfig();
+
+  let fileList = [];
+  if (config.ENV === "LOCAL_DEV" && Array.isArray(config.LOCAL_SERIES_FILES)) {
+    fileList = config.LOCAL_SERIES_FILES.map(name => ({ name, url: `/data/series/${name}` }));
+  } else {
+    const contents = await fetchData(config.URL_GIT_CUBARI);
+    if (Array.isArray(contents)) {
+      fileList = contents
+        .filter(f => f.type === "file" && f.name.endsWith(".json"))
+        .map(f => ({ name: f.name, url: f.download_url }));
+    }
+  }
+
+  const results = await Promise.all(fileList.map(async ({name, url}) => {
+    try {
+      const meta = await fetchData(url);
+      return normalizeAnime(meta, name);
+    } catch (e) {
+      const msg = String(e?.message || e);
+      if (msg.includes("status: 404")) { console.warn("⏭️  Skip missing series file:", name); return null; }
+      console.error("Anime file load error:", name, e);
+      return null;
+    }
+  }));
+
+  return results.filter(Boolean);
+}
+
 // --- NOUVELLE FONCTION OPTIMISÉE ---
 /**
  * Récupère les données d'UNE SEULE série en se basant sur son slug.
