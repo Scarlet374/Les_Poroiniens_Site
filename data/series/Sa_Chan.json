@@ -1,0 +1,350 @@
+{
+	"title": "Le quotidien de Sa-chan, une employée de pharmacie",
+	"description": "Une série réunissant une employée de pharmacie sans expression, Sa-chan, et son ami d'enfance turbulent qui est fou amoureux d'elle mais qui hésite à lui avouer son amour. Accompagnez-les dans leur quotidien plein de comédie amoureuse en travaillant dans une pharmacie.",
+	"artist": "Izumi Rei",
+	"author": "Izumi Rei",
+	"cover": "https://file.garden/aKS5jUD-slfn6iFT/Cover%20Sa-chan%205%20LQ.png",
+	"manga_type": "Shonen",
+    "magazine": "",
+	"release_year": 2021,
+	"tags": [
+		"Comédie",
+		"Romance",
+		"Tranche de vie"
+	],
+	"alternative_titles": [
+		"ドラッグストア店員さっちゃんの日常",
+		"Daily Life of Sa-chan, a Drugstore Clerk"
+	],
+	"release_status": "En cours",
+	"covers_gallery": [
+		{ "url_hq": "https://file.garden/aKS5jUD-slfn6iFT/Cover%20Sa-chan%201.jpg", "url_lq": "https://file.garden/aKS5jUD-slfn6iFT/Cover%20Sa-chan%201%20LQ.jpg", "volume": "1" },
+        { "url_hq": "https://file.garden/aKS5jUD-slfn6iFT/Cover%20Sa-chan%201.2.png", "url_lq": "https://file.garden/aKS5jUD-slfn6iFT/Cover%20Sa-chan%201.2%20LQ.png", "volume": "1" },
+        { "url_hq": "https://file.garden/aKS5jUD-slfn6iFT/Cover%20Sa-chan%202.png", "url_lq": "https://file.garden/aKS5jUD-slfn6iFT/Cover%20Sa-chan%202%20LQ.png", "volume": "2" },
+        { "url_hq": "https://file.garden/aKS5jUD-slfn6iFT/Cover%20Sa-chan%203.png", "url_lq": "https://file.garden/aKS5jUD-slfn6iFT/Cover%20Sa-chan%203%20LQ.png", "volume": "3" },
+        { "url_hq": "https://file.garden/aKS5jUD-slfn6iFT/Cover%20Sa-chan%204.png", "url_lq": "https://file.garden/aKS5jUD-slfn6iFT/Cover%20Sa-chan%204%20LQ.png", "volume": "4" },
+        { "url_hq": "https://file.garden/aKS5jUD-slfn6iFT/Cover%20Sa-chan%205.png", "url_lq": "https://file.garden/aKS5jUD-slfn6iFT/Cover%20Sa-chan%205%20LQ.png", "volume": "5" }
+	],
+	"chapters": {
+		"0": {
+			"title": "",
+			"volume": "",
+			"last_updated": "1722022623",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/5xy22qoejyl"
+			}
+		},
+		"1": {
+			"title": "",
+			"volume": "",
+			"last_updated": "1693260027",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/ljyq2akqoy2"
+			}
+		},
+		"2": {
+			"title": "",
+			"volume": "",
+			"last_updated": "1693316440",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/6eyrlan2eyp"
+			}
+		},
+		"2.5": {
+			"title": "",
+			"volume": "",
+			"last_updated": "1693316574",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/qb4zn5rxv4j"
+			}
+		},
+		"3": {
+			"title": "",
+			"volume": "",
+			"last_updated": "1693409905",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/bp45qmj8x45"
+			}
+		},
+		"3.5": {
+			"title": "",
+			"volume": "",
+			"last_updated": "1693410039",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/m9yx395vmyq"
+			}
+		},
+		"4": {
+			"title": "",
+			"volume": "",
+			"last_updated": "1693495910",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/924932mav4n"
+			}
+		},
+		"5": {
+			"title": "",
+			"volume": "",
+			"last_updated": "1693669006",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/9p4n8vq2w4n"
+			}
+		},
+		"6": {
+			"title": "",
+			"volume": "",
+			"last_updated": "1693669152",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/md7o8adla4p"
+			}
+		},
+		"7": {
+			"title": "",
+			"volume": "",
+			"last_updated": "1693765959",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/na7k8a2rk78"
+			}
+		},
+		"8": {
+			"title": "",
+			"volume": "",
+			"last_updated": "1693845177",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/vj4j8e53578"
+			}
+		},
+		"8.5": {
+			"title": "",
+			"volume": "",
+			"last_updated": "1695944632",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/ljyq2amqey2"
+			}
+		},
+		"9": {
+			"title": "",
+			"volume": "",
+			"last_updated": "1695944701",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/6eyrla32kyp"
+			}
+		},
+		"9.4": {
+			"title": "",
+			"volume": "",
+			"last_updated": "1698086026",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/ej7m8ajnqyd"
+			}
+		},
+		"9.5": {
+			"title": "",
+			"volume": "",
+			"last_updated": "1698086179",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/pg73ld2pv7r"
+			}
+		},
+		"9.6": {
+			"title": "",
+			"volume": "",
+			"last_updated": "1704028301",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/lqyemdwvx7d"
+			}
+		},
+		"10": {
+			"title": "",
+			"volume": "",
+			"last_updated": "1704028410",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/qe4gwmzlo7j"
+			}
+		},
+		"10.5": {
+			"title": "",
+			"volume": "",
+			"last_updated": "1714467217",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/o24aj2dkg4l"
+			}
+		},
+		"10.6": {
+			"title": "",
+			"volume": "",
+			"last_updated": "1722022661",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/agyvrxgew78"
+			}
+		},
+		"11": {
+			"title": "",
+			"volume": "",
+			"last_updated": "1722548248",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/dl7p8arz8yo"
+			}
+		},
+		"11.5": {
+			"title": "",
+			"volume": "",
+			"last_updated": "1723120187",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/na7k8a2wk78"
+			}
+		},
+		"12": {
+			"title": "",
+			"volume": "",
+			"last_updated": "1723651710",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/5xy22qxlnyl"
+			}
+		},
+		"12.5": {
+			"title": "",
+			"volume": "",
+			"last_updated": "1724267772",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/wl7loalm67x"
+			}
+		},
+		"13": {
+			"title": "",
+			"volume": "",
+			"last_updated": "1726085120",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/ljyq2amdey2"
+			}
+		},
+		"14": {
+			"title": "",
+			"volume": "",
+			"last_updated": "1727632853",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/ej7m8aj2qyd"
+			}
+		},
+		"14.4": {
+			"title": "",
+			"volume": "",
+			"last_updated": "1727632884",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/n87wm98r34x"
+			}
+		},
+		"14.5": {
+			"title": "",
+			"volume": "",
+			"last_updated": "1727977038",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/lqyemdwpx7d"
+			}
+		},
+		"15": {
+			"title": "",
+			"volume": "",
+			"last_updated": "1728509943",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/qe4gwmzro7j"
+			}
+		},
+		"16": {
+			"title": "",
+			"volume": "",
+			"last_updated": "1730065123",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/bp45qmjzx45"
+			}
+		},
+		"16.5": {
+			"title": "Spécial Noël",
+			"volume": "",
+			"last_updated": "1730933554",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/a846d3qkg7x"
+			}
+		},
+		"16.6": {
+			"title": "Noël Extra",
+			"volume": "",
+			"last_updated": "1731537591",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/924932mgv4n"
+			}
+		},
+		"17": {
+			"title": "",
+			"volume": "",
+			"last_updated": "1732197501",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/md7o8adxa4p"
+			}
+		},
+		"18": {
+			"title": "",
+			"volume": "",
+			"last_updated": "1732813575",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/5xy22qx3nyl"
+			}
+		},
+		"19": {
+			"title": "",
+			"volume": "",
+			"last_updated": "1733351679",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/vj4j8e5v578"
+			}
+		},
+		"19.5": {
+			"title": "",
+			"volume": "",
+			"last_updated": "1734647580",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/wl7loalrp7x"
+			}
+		},
+		"20": {
+			"title": "",
+			"volume": "",
+			"last_updated": "1734820509",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/vj4j8e5v278"
+			}
+		},
+		"21": {
+			"title": "",
+			"volume": "",
+			"last_updated": "1736714891",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/6eyrla38eyp"
+			}
+		},
+		"22": {
+			"title": "",
+			"volume": "",
+			"last_updated": "1738618881",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/n87wm98ez4x"
+			}
+		},
+		"23": {
+			"title": "",
+			"volume": "",
+			"last_updated": "1740946556",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/xny8merqo7b"
+			}
+		},
+		"24": {
+			"title": "",
+			"volume": "",
+			"last_updated": "1754855711",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/bp45qmj2245 "
+			}
+		}
+	}
+}
