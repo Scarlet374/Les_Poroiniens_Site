@@ -81,6 +81,21 @@ function normalizeAnime(meta, filename) {
   const tags        = entry?.tags || meta.tags || [];
   const description = entry?.description || meta.description || "";
 
+  // --- Détection +18 (depuis manga_type ou tags) ---
+  const mangaType = String(
+    meta?.series?.manga_type ??
+    meta?.manga_type ??
+    meta?.media?.manga?.manga_type ??
+    entry?.manga_type ?? ""
+  ).toLowerCase();
+
+  const has18Tag = (
+    (Array.isArray(meta?.tags)  ? meta.tags  : []).concat(
+    Array.isArray(entry?.tags) ? entry.tags : [])
+  ).some(t => String(t).includes("+18") || /adult|nsfw/i.test(String(t)));
+
+  const pornographic = (mangaType === "pornographique") || has18Tag;
+
   // Épisodes (mappe tes champs indice_ep/date_ep/title_ep)
   let episodes = [];
   if (Array.isArray(meta.episodes)) {
@@ -99,7 +114,9 @@ function normalizeAnime(meta, filename) {
 
   // Slug depuis le nom de fichier (fallback titre)
   const baseName = (filename ? filename.replace(/\.json$/,'') : (meta.slug || meta.file || meta.title || ''));
-  const slug = (typeof window !== "undefined" && window.slugify) ? window.slugify(String(baseName)) : String(baseName).toLowerCase().replace(/\s+/g,'-');
+  const slug = (typeof window !== "undefined" && window.slugify)
+    ? window.slugify(String(baseName))
+    : String(baseName).toLowerCase().replace(/\s+/g,'-');
 
   // Année (pour l’affichage à droite)
   let year = "";
@@ -120,7 +137,8 @@ function normalizeAnime(meta, filename) {
     tags,
     description,
     episodes,
-    episodesCount: Array.isArray(episodes) ? episodes.length : 0
+    episodesCount: Array.isArray(episodes) ? episodes.length : 0,
+    pornographic, // ⬅️ flag +18 pour filtrer côté homepage
   };
 }
 

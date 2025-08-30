@@ -625,10 +625,13 @@ export async function initHomepage() {
   // 2.5) Monte la grille ANIME (indépendante du reste)
   if (seriesGridAnime) {
     try {
-      const animeItems = await fetchAllAnimeData();  // ← lit les épisodes depuis les JSON d'œuvres
+      const animeItems = await fetchAllAnimeData();
+      const showAdult = adultEnabled(); // même helper que pour les autres sections
+      const animeFiltered = showAdult ? animeItems : animeItems.filter(a => !a.pornographic);
+
       mountPagedSection({
         grid: seriesGridAnime,
-        items: animeItems,
+        items: animeFiltered,
         renderFn: renderAnimeCard,
         sectionKey: "anime",
         pageSize: 5,
