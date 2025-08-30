@@ -575,3 +575,45 @@
 body#homepage main {
   padding-top: 0 !important;
 }
+
+/* --- FIN SECTION RESPONSIVE MOBILE --- */
+/* === Début Pager === */
+.pager{
+  display:flex; align-items:center; gap:8px;
+  justify-content:center; margin:16px 0 24px;
+}
+.pager-nums{ display:flex; gap:6px; }
+.pager-ellipsis{ padding:0 6px; opacity:.7; }
+
+.pager-btn, .pager-num{
+  min-width:34px; height:34px; padding:0 10px;
+  border-radius:8px; font:inherit; cursor:pointer;
+  border:1px solid var(--pager-border, #e5e7eb);
+  background: var(--pager-surface, #ffffff);
+  color: var(--pager-text, #111111);
+}
+.pager-num.is-active{
+  background: var(--pager-accent, #00b3c6);
+  color:#fff; border-color: transparent;
+}
+.pager-btn[disabled]{ opacity:.45; cursor: default; }
+
+/* Dark mode — essaie toutes ces cibles pour couvrir ton toggle actuel */
+html.dark .pager,
+body.dark .pager,
+[data-theme="dark"] .pager,
+.theme-dark .pager{
+  --pager-surface: #1f2328;
+  --pager-border:  #2b2f35;
+  --pager-text:    #e8edf2;
+}
+
+/* Fallback automatique si aucun flag de thème : */
+@media (prefers-color-scheme: dark){
+  .pager{
+    --pager-surface: #1f2328;
+    --pager-border:  #2b2f35;
+    --pager-text:    #e8edf2;
+  }
+}
+/* === Fin Pager === */

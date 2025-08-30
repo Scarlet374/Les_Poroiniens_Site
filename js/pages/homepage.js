@@ -26,6 +26,114 @@ function truncateText(text, maxLength) {
   return text;
 }
 
+// Helper pour pagination
+
+// ------- Pagination util -------
+// Stocke la page courante par section (onglet) dans sessionStorage
+function getPage(sectionKey) {
+  const v = sessionStorage.getItem(`pager:${sectionKey}`);
+  const n = parseInt(v, 10);
+  return Number.isFinite(n) && n > 0 ? n : 1;
+}
+function setPage(sectionKey, page) {
+  sessionStorage.setItem(`pager:${sectionKey}`, String(page));
+}
+
+// Crée/retourne un <nav class="pager"> après la grille
+function ensurePager(gridEl, sectionKey) {
+  let pager = gridEl.nextElementSibling;
+  if (!pager || !pager.classList.contains("pager")) {
+    pager = document.createElement("nav");
+    pager.className = "pager";
+    pager.dataset.key = sectionKey;
+    gridEl.after(pager);
+  }
+  return pager;
+}
+
+// Rendu d'une page
+function renderPagedGrid({ grid, items, renderFn, page, pageSize, pager, sectionKey, afterRender }) {
+  const total  = items.length;
+  const pages  = Math.max(1, Math.ceil(total / pageSize));
+  const p      = Math.min(Math.max(1, Number(page) || 1), pages);
+  const start  = (p - 1) * pageSize;
+  const slice  = items.slice(start, start + pageSize);
+
+  // Reset d'état
+  grid.classList.remove("pager-ready");
+
+  // Injecte la page
+  grid.innerHTML = slice.map(renderFn).join("");
+
+  // Révèle les cartes au frame suivant (force inline)
+  requestAnimationFrame(() => {
+    grid.classList.add("pager-ready");
+    grid.querySelectorAll(".series-card").forEach((el, i) => {
+      // supprime d'éventuelles classes de masquage connues
+      el.classList.remove("hidden", "invisible", "is-hidden", "card-hidden", "fade-start");
+      // force l'affichage
+      el.style.opacity = "1";
+      el.style.transform = "none";
+      el.style.visibility = "visible";
+      el.style.transition = "opacity .22s ease, transform .22s ease";
+    });
+  });
+
+  if (typeof afterRender === "function") afterRender(grid);
+
+  // --- Pager ---
+  if (pages <= 1) { pager.innerHTML = ""; return; }
+
+  const btn = (label, act, disabled = false) =>
+    `<button type="button" class="pager-btn" data-act="${act}" ${disabled ? "disabled" : ""}>${label}</button>`;
+  const pageBtn = (n, active) =>
+    `<button type="button" class="pager-num ${active ? "is-active" : ""}" data-page="${n}">${n}</button>`;
+
+  const maxNums = 7;
+  let first = Math.max(1, p - Math.floor(maxNums / 2));
+  let last  = Math.min(pages, first + maxNums - 1);
+  first     = Math.max(1, last - maxNums + 1);
+
+  let numsHtml = "";
+  if (first > 1) {
+    numsHtml += pageBtn(1, p === 1);
+    if (first > 2) numsHtml += `<span class="pager-ellipsis">…</span>`;
+  }
+  for (let i = first; i <= last; i++) numsHtml += pageBtn(i, i === p);
+  if (last < pages) {
+    if (last < pages - 1) numsHtml += `<span class="pager-ellipsis">…</span>`;
+    numsHtml += pageBtn(pages, p === pages);
+  }
+
+  pager.innerHTML =
+    `${btn("«", "first", p === 1)}${btn("‹", "prev", p === 1)}<div class="pager-nums">${numsHtml}</div>${btn("›", "next", p === pages)}${btn("»", "last", p === pages)}`;
+
+  // Events
+  pager.onclick = (e) => {
+    const t = e.target.closest("button");
+    if (!t) return;
+    if (t.dataset.page) {
+      setPage(sectionKey, parseInt(t.dataset.page, 10));
+    } else {
+      const act = t.dataset.act;
+      if (act === "first") setPage(sectionKey, 1);
+      else if (act === "prev") setPage(sectionKey, p - 1);
+      else if (act === "next") setPage(sectionKey, p + 1);
+      else if (act === "last") setPage(sectionKey, pages);
+      else return;
+    }
+    renderPagedGrid({ grid, items, renderFn, page: getPage(sectionKey), pageSize, pager, sectionKey, afterRender });
+  };
+}
+
+// Montage d'une section paginée (réutilisable)
+function mountPagedSection({ grid, items, renderFn, sectionKey, pageSize = 5, afterRender }) {
+  if (!grid) return;
+  const pager = ensurePager(grid, sectionKey);
+  const page  = getPage(sectionKey);
+  renderPagedGrid({ grid, items, renderFn, page, pageSize, pager, sectionKey, afterRender });
+}
+
 // --- LOGIQUE DU HERO CAROUSEL ---
 
 function renderHeroSlide(series) {
@@ -429,6 +537,12 @@ export async function initHomepage() {
     return mt === "pornographique";
   };
 
+  // Relance les petits “enhancers” après chaque rendu de page
+  const rerunCardEnhancers = (root) => {
+    qsa(".series-card .series-tags", root).forEach(c => limitVisibleTags(c, 3, "plusN"));
+    makeSeriesCardsClickable();
+  };
+
   // 2) Carrousel
   await initHeroCarousel();
 
@@ -474,35 +588,60 @@ export async function initHomepage() {
     // LN “Pornographique” -> visibles uniquement si +18
     const lightNovelListF = lightNovelSorted.filter(s => showAdult || !isPornographicSeries(s));
 
-    // 5) Rendu
+    // 5) Rendu avec pagination (5 cartes/page)
+    const PAGE_SIZE = 5;
+
     if (seriesGridOngoing) {
-      seriesGridOngoing.innerHTML = onGoingSorted.map(renderSeriesCard).join("");
-      qsa(".series-card .series-tags", seriesGridOngoing)
-        .forEach(c => limitVisibleTags(c, 3, "plusN"));
+      mountPagedSection({
+        grid: seriesGridOngoing,
+        items: onGoingSorted,
+        renderFn: renderSeriesCard,
+        sectionKey: "ongoing",
+        pageSize: PAGE_SIZE,
+        afterRender: rerunCardEnhancers
+      });
     }
     if (seriesGridOneShot) {
-      seriesGridOneShot.innerHTML = oneShotsSorted.map(renderSeriesCard).join("");
-      qsa(".series-card .series-tags", seriesGridOneShot)
-        .forEach(c => limitVisibleTags(c, 3, "plusN"));
+      mountPagedSection({
+        grid: seriesGridOneShot,
+        items: oneShotsSorted,
+        renderFn: renderSeriesCard,
+        sectionKey: "oneshot",
+        pageSize: PAGE_SIZE,
+        afterRender: rerunCardEnhancers
+      });
     }
     if (seriesGridDoujin) {
-      seriesGridDoujin.innerHTML = doujinListF.map(renderSeriesCard).join("");
-      qsa(".series-card .series-tags", seriesGridDoujin)
-        .forEach(c => limitVisibleTags(c, 3, "plusN"));
+      mountPagedSection({
+        grid: seriesGridDoujin,
+        items: doujinListF,
+        renderFn: renderSeriesCard,
+        sectionKey: "doujin",
+        pageSize: PAGE_SIZE,
+        afterRender: rerunCardEnhancers
+      });
     }
     if (seriesGridPornwha) {
-      seriesGridPornwha.innerHTML = pornwhaListF.map(renderSeriesCard).join("");
-      qsa(".series-card .series-tags", seriesGridPornwha)
-        .forEach(c => limitVisibleTags(c, 3, "plusN"));
+      mountPagedSection({
+        grid: seriesGridPornwha,
+        items: pornwhaListF,
+        renderFn: renderSeriesCard,
+        sectionKey: "pornwha",
+        pageSize: PAGE_SIZE,
+        afterRender: rerunCardEnhancers
+      });
     }
     if (seriesGridLightNovel) {
-      seriesGridLightNovel.innerHTML = lightNovelListF.map(renderSeriesCard).join("");
-      qsa(".series-card .series-tags", seriesGridLightNovel)
-        .forEach(c => limitVisibleTags(c, 3, "plusN"));
+      mountPagedSection({
+        grid: seriesGridLightNovel,
+        items: lightNovelListF,
+        renderFn: renderSeriesCard,
+        sectionKey: "lightnovel",
+        pageSize: PAGE_SIZE,
+        afterRender: rerunCardEnhancers
+      });
     }
 
-    // 6) Click handlers
-    makeSeriesCardsClickable();
   } catch (error) {
     console.error("🚨 Erreur init homepage:", error);
     if (seriesGridOngoing)    seriesGridOngoing.innerHTML    = "<p>Erreur chargement séries.</p>";
