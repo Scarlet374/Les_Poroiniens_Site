@@ -1,0 +1,284 @@
+{
+    "title": "Fermier dans un autre monde",
+    "description": "<b>Machio Hiraku</b> est mort d'une maladie liée au surmenage. Quand il rencontre Dieu, il a l'opportunité de se réincarner dans un autre monde et reçoit quatre souhaits en plus pour son travail acharné. Ainsi, <b>Machio</b> souhaite un corps qui ne puisse jamais tomber malade, vivre dans un endroit paisible, connaître la langue de l'endroit où il va se réincarner et ... être fermier !\n\nEntouré de différentes personnes, qui vont le rejoindre au fur et à mesure, <b>Machio</b> est prêt à vivre sa nouvelle vie !",
+    "artist": "Yasumo",
+    "author": "Kinosuke Naito",
+    "cover": "https://file.garden/aKS5jUD-slfn6iFT/Fermier%20dans%20un%20autre%20monde%20Vol.%202%20LQ.jpg",
+    "manga_type": "Shounen",
+    "magazine": "Shousetsuka ni Narou",
+    "release_year": 2017,
+    "tags": [
+        "Aventure",
+        "Comédie",
+        "Fantastique",
+        "Isekai",
+        "Romance",
+        "Tranche de vie",
+        "Agriculture",
+        "Harem"
+    ],
+    "alternative_titles": [
+        "Farming life in another world.",
+        "異世界のんびり農家"
+    ],
+    "release_status": "En cours",
+    "light_novel": true,
+    "covers_gallery": [
+        {
+            "url_hq": "https://file.garden/aKS5jUD-slfn6iFT/Fermier%20dans%20un%20autre%20monde%20Vol.%201.png",
+            "url_lq": "https://file.garden/aKS5jUD-slfn6iFT/Fermier%20dans%20un%20autre%20monde%20Vol.%201%20LQ.jpg",
+            "volume": "1"
+        },
+        {
+            "url_hq": "https://file.garden/aKS5jUD-slfn6iFT/Fermier%20dans%20un%20autre%20monde%20Vol.%202.png",
+            "url_lq": "https://file.garden/aKS5jUD-slfn6iFT/Fermier%20dans%20un%20autre%20monde%20Vol.%202%20LQ.jpg",
+            "volume": "2" 
+        }
+    ],
+	"episodes": [
+    {
+      "type": "gdrive",
+      "id": "1kp9oGevIWTAXmymgvRRB29qUvINU-3Qs",
+      "indice_ep": 1,
+      "date_ep": "1672963200",
+      "title_ep": "L'Outil Divin Agricole"
+    },
+    {
+      "type": "gdrive",
+      "id": "1_-lKBGc_xV-Mc1kZTdua0uKuHpPX2M0d",
+      "indice_ep": 2,
+      "date_ep": "1673568000",
+      "title_ep": "La Première Villageoise"
+    },
+    {
+      "type": "gdrive",
+      "id": "1a-vLr7tbiS3ILozO2KkQNSlwqIrkQS5r",
+      "indice_ep": 3,
+      "date_ep": "1674172800",
+      "title_ep": "L'une après l'autre"
+    },
+    {
+      "type": "gdrive",
+      "id": "1vOIoHLQxgLH2qvsRcqr8lYJDXu-yCirS",
+      "indice_ep": 4,
+      "date_ep": "1674777600",
+      "title_ep": "Une arrivée d'eau, une vie meilleure"
+    },
+    {
+      "type": "gdrive",
+      "id": "1mtjx0_8kkRREtkiM4UauOsm4yifqnISm",
+      "indice_ep": 5,
+      "date_ep": "1675382400",
+      "title_ep": "Curry et hibernation"
+    },
+    {
+      "type": "gdrive",
+      "id": "158YOvswPI_cCtWfYluyapBcHyb0E5y4d",
+      "indice_ep": 6,
+      "date_ep": "1675987200",
+      "title_ep": "Notre village"
+    },
+    {
+      "type": "gdrive",
+      "id": "13vfzAesg4XRXyrRtQFETP0lu1TbtXs5U",
+      "indice_ep": 7,
+      "date_ep": "1676592000",
+      "title_ep": "Un cœur accueillant"
+    },
+    {
+      "type": "gdrive",
+      "id": "1UK1qjIFWONGAfhaWJtMJopZf1sdnC-B_",
+      "indice_ep": 8,
+      "date_ep": "1677196800",
+      "title_ep": "Les Princesses scientifiques"
+    },
+    {
+      "type": "gdrive",
+      "id": "1ZnHxEzfhoMHBhZ85DM0epbEnmwpq3fPu",
+      "indice_ep": 9,
+      "date_ep": "1677801600",
+      "title_ep": "Le Marchand et le dragon"
+    },
+    {
+      "type": "gdrive",
+      "id": "12s2PS_vlk5Tz5AcBNjxp91AAZbQe1P3j",
+      "indice_ep": 10,
+      "date_ep": "1678406400",
+      "title_ep": "La Princesse Yûri"
+    },
+    {
+      "type": "gdrive",
+      "id": "1IBV4Rl_a9ULnb2Q9NqAIQc9EGk01iRF8",
+      "indice_ep": 11,
+      "date_ep": "1679011200",
+      "title_ep": "La Vie avec les fondateurs"
+    },
+    {
+      "type": "gdrive",
+      "id": "1-L3X2572H8_PTsXJAhga65f-pGunrBcr",
+      "indice_ep": 12,
+      "date_ep": "1679616000",
+      "title_ep": "La Naissance"
+    }
+    ],
+    "anime": [
+    {
+      "cover_an": "https://file.garden/aKS5jUD-slfn6iFT/Isekai%20Nonbiri%20Nouka.webp",
+      "type_an": "TV",
+      "status_an": "En cou",
+      "studios_an": ["Zero-G"],
+      "date_start_an": "06/01/2023",
+      "op_an": [
+        {
+          "title_op_fr_an": "Flower Ring",
+          "title_op_jp_an": "",
+          "author_op_an": "Shimoji Shino",
+          "youtube_url_op_an": "https://www.youtube.com/watch?v=lXv2bFPmeA8"
+        }
+      ],
+      "ed_an": [
+        {
+          "title_op_fr_an": "Feel the winds",
+          "title_op_jp_an": "",
+          "author_op_an": "Hizuki Yui",
+          "youtube_url_op_an": "https://www.youtube.com/watch?v=DFf1gl1vUW0"
+        }
+      ],
+      "tags": ["Aventure",
+        "Comédie",
+        "Fantastique",
+        "Isekai",
+        "Romance",
+        "Tranche de vie",
+        "Agriculture",
+        "Harem"
+    ],
+      "description": "<b>Machio Hiraku</b> est mort d'une maladie liée au surmenage. Quand il rencontre Dieu, il a l'opportunité de se réincarner dans un autre monde et reçoit quatre souhaits en plus pour son travail acharné. Ainsi, <b>Machio</b> souhaite un corps qui ne puisse jamais tomber malade, vivre dans un endroit paisible, connaître la langue de l'endroit où il va se réincarner et ... être fermier !\n\nEntouré de différentes personnes, qui vont le rejoindre au fur et à mesure, <b>Machio</b> est prêt à vivre sa nouvelle vie !"
+    }
+    ],
+    "chapters": {
+        "1": {
+            "title": "Prologue",
+            "volume": "1",
+            "last_updated": "1711843200",
+			"file": "https://file.garden/aKS5jUD-slfn6iFT/fermierv1c1.txt" 
+        },
+        "2": {
+            "title": "Un autre monde",
+            "volume": "1",
+            "last_updated": "1711929600",
+			"file": "https://file.garden/aKS5jUD-slfn6iFT/fermierv1c2.txt" 
+
+        },
+        "3": {
+            "title": "Outil Agricole Divin",
+            "volume": "1",
+            "last_updated": "1712016000",
+			"file": "https://file.garden/aKS5jUD-slfn6iFT/fermierv1c3.txt" 
+
+        },
+        "4": {
+            "title": "Toilettes",
+            "volume": "1",
+            "last_updated": "1712102400",
+			"file": "https://file.garden/aKS5jUD-slfn6iFT/fermierv1c4.txt" 
+
+        },
+        "5": {
+            "title": "Sécurité alimentaire",
+            "volume": "1",
+            "last_updated": "1712188800",
+			"file": "https://file.garden/aKS5jUD-slfn6iFT/fermierv1c5.txt" 
+        },
+        "6": {
+            "title": "Opportunité et rencontre",
+            "volume": "1",
+            "last_updated": "1712793600",
+			"file": "https://file.garden/aKS5jUD-slfn6iFT/fermierv1c6.txt" 
+        },
+        "7": {
+            "title": "Chiens",
+            "volume": "1",
+            "last_updated": "1713398400",
+			"file": "https://file.garden/aKS5jUD-slfn6iFT/fermierv1c7.txt" 
+        },
+        "8": {
+            "title": "Vivre avec des chiens",
+            "volume": "1",
+            "last_updated": "1714003200",
+			"file": "https://file.garden/aKS5jUD-slfn6iFT/fermierv1c8.txt" 
+        },
+        "9": {
+            "title": "Les noms des chiens",
+            "volume": "1",
+            "last_updated": "1714608000",
+			"file": "https://file.garden/aKS5jUD-slfn6iFT/fermierv1c9.txt" 
+        },
+        "10": {
+            "title": "Un chien ?",
+            "volume": "1",
+            "last_updated": "1715212800",
+			"file": "https://file.garden/aKS5jUD-slfn6iFT/fermierv1c10.txt" 
+        },
+        "11": {
+            "title": "Du côté de Kuro",
+            "volume": "1",
+            "last_updated": "1715817600",
+			"file": "https://file.garden/aKS5jUD-slfn6iFT/fermierv1c11.txt" 
+        },
+        "12": {
+            "title": "Reconfirmation",
+            "volume": "1",
+            "last_updated": "1716422400",
+			"file": "https://file.garden/aKS5jUD-slfn6iFT/fermierv1c12.txt" 
+        },
+        "13": {
+            "title": "Rivière",
+            "volume": "1",
+            "last_updated": "1717027200",
+			"file": "https://file.garden/aKS5jUD-slfn6iFT/fermierv1c13.txt" 
+        },
+        "14": {
+            "title": "Début de la construction d’un aqueduc",
+            "volume": "1",
+            "last_updated": "1717632000",
+			"file": "https://file.garden/aKS5jUD-slfn6iFT/fermierv1c14.txt" 
+        },
+        "15": {
+            "title": "Préparatifs hivernaux et nouveau résident",
+            "volume": "1",
+            "last_updated": "1718236800",
+			"file": "https://file.garden/aKS5jUD-slfn6iFT/fermierv1c15.txt" 
+        },
+        "16": {
+            "title": "Zabuton",
+            "volume": "1",
+            "last_updated": "1718841600",
+			"file": "https://file.garden/aKS5jUD-slfn6iFT/fermierv1c16.txt" 
+        },
+        "17": {
+            "title": "L’hiver arrive",
+            "volume": "1",
+            "last_updated": "1719446400",
+			"file": "https://file.garden/aKS5jUD-slfn6iFT/fermierv1c17.txt" 
+        },
+        "18": {
+            "title": "Le printemps est arrivé",
+            "volume": "1",
+            "last_updated": "1720051200",
+			"file": "https://file.garden/aKS5jUD-slfn6iFT/fermierv1c18.txt" 
+        },
+        "19": {
+            "title": "Le voyage de Kuroichi et la bande",
+            "volume": "1",
+            "last_updated": "1720656000",
+			"file": "https://file.garden/aKS5jUD-slfn6iFT/fermierv1c19.txt" 
+        },
+        "20": {
+            "title": "Les partenaires de Kuroichi et la bande",
+            "volume": "1",
+            "last_updated": "1721260800",
+			"file": "https://file.garden/aKS5jUD-slfn6iFT/fermierv1c20.txt" 
+        }
+    }
+}
