@@ -313,3 +313,44 @@
   flex-wrap: wrap;
   margin-bottom: 1rem;
 }
+
+/* Espacement icône ↔ texte uniquement pour le menu des séries */
+#custom-series-options .custom-dropdown-option{
+  display: flex;
+  align-items: center;
+  gap: 8px;              /* ← l'espace entre l’icône et le titre */
+}
+
+#custom-series-options .custom-dropdown-option i{
+  flex: 0 0 auto;        /* évite que l’icône se compresse */
+}
+
+/* Séries : base icône + état actif (clair & sombre via variables) */
+#custom-series-filter .custom-dropdown-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0.7rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+#custom-series-filter .custom-dropdown-option i {
+  width: 20px;
+  text-align: center;
+  color: var(--clr-text-sub);
+}
+
+/* survol (même fond que le tri) */
+#custom-series-filter .custom-dropdown-option:hover {
+  background-color: rgba(var(--clr-primary-rgb), 0.08);
+}
+
+/* élément sélectionné = bleu */
+#custom-series-filter .custom-dropdown-option.active {
+  background-color: rgba(var(--clr-primary-rgb), 0.08);
+  color: var(--clr-primary);
+}
+#custom-series-filter .custom-dropdown-option.active i {
+  color: var(--clr-primary);
+}

@@ -10,6 +10,16 @@ let authorsInfoData = {};
 let selectedArtistIds = new Set();
 let currentSortMode = 'date-desc'; // 'date-desc', 'date-asc', 'chapter-desc', 'chapter-asc'
 
+// --- Série (état + helper) ---
+let selectedSeriesSlug = "ALL";
+
+function prettifySlug(slug = "") {
+  return slug
+    .split("_")
+    .map(s => s.charAt(0).toUpperCase() + s.slice(1))
+    .join(" ");
+}
+
 // --- SÉLECTEURS DOM ---
 const galleryGridContainer = qs('#gallery-grid-container');
 const totalCountSpan = qs('#colo-total-count');
@@ -31,18 +41,24 @@ function renderColoCard(colo, author) {
   const authorName = author?.username || 'Artiste inconnu';
   const previewUrl = `https://file.garden/aKS5jUD-slfn6iFT/${colo.id}.webp`;
 
+  const seriesTitle =
+    (colo.series_title && String(colo.series_title).trim()) ||
+    (colo.series_slug ? prettifySlug(String(colo.series_slug)) : "");
+
   return `
-    <div class="colo-card" data-colo-id="${colo.id}"> 
-      <img class="lazy-load-gallery" 
-           src="/img/placeholder_preview.png" 
-           alt="Colorisation Chap. ${colo.chapitre || 'N/A'} par ${authorName}" 
-           data-src="${previewUrl}"> 
+    <div class="colo-card" data-colo-id="${colo.id}">
+      <img class="lazy-load-gallery"
+           src="/img/placeholder_preview.png"
+           alt="${seriesTitle ? seriesTitle + ' — ' : ''}Colorisation Chap. ${colo.chapitre || 'N/A'} par ${authorName}"
+           data-src="${previewUrl}">
       <div class="colo-card-overlay">
+        ${seriesTitle ? `<div class="series-pill">${seriesTitle}</div>` : ""}
         <p>Chap. ${colo.chapitre || 'N/A'}${colo.page ? `, Page ${colo.page}` : ''}</p>
         <p>Par ${authorName}</p>
       </div>
     </div>`;
 }
+
 
 function getSocialsHTML(links, typeClassPrefix) {
   if (!links || Object.values(links).every(val => !val)) return '';
@@ -179,79 +195,93 @@ function populateCustomArtistFilter() {
 
 function displayColos() {
   if (!galleryGridContainer || !allColosData.length || !Object.keys(authorsInfoData).length) {
-    if (galleryGridContainer) galleryGridContainer.innerHTML = "<p>Aucune colorisation à afficher.</p>";
+    if (galleryGridContainer) {
+      galleryGridContainer.innerHTML = "<p>Aucune colorisation à afficher.</p>";
+    }
+    if (totalCountSpan) totalCountSpan.textContent = "(0)";
     return;
   }
 
-  let colosToDisplay = [...allColosData];
+  // 1) Base
+  let colosToDisplay = allColosData.slice();
 
-  if (selectedArtistIds.size > 0) {
+  // 2) Filtre ARTISTE
+  if (selectedArtistIds && selectedArtistIds.size > 0) {
     colosToDisplay = colosToDisplay.filter(c => selectedArtistIds.has(String(c.author_id)));
   }
 
-  // Tri selon le mode sélectionné
+  // 3) Filtre SÉRIE
+  if (typeof selectedSeriesSlug !== "undefined" && selectedSeriesSlug !== "ALL") {
+    colosToDisplay = colosToDisplay.filter(c => String(c.series_slug || "") === String(selectedSeriesSlug));
+  }
+
+  // 4) Tri
   switch (currentSortMode) {
-    case 'date-desc':
+    case "date-desc":
       colosToDisplay.sort((a, b) => parseDateToTimestamp(b.date) - parseDateToTimestamp(a.date));
       break;
-    case 'date-asc':
+    case "date-asc":
       colosToDisplay.sort((a, b) => parseDateToTimestamp(a.date) - parseDateToTimestamp(b.date));
       break;
-    case 'chapter-desc':
-      colosToDisplay.sort((a, b) => {
-        const chapA = parseInt(a.chapitre) || 0;
-        const chapB = parseInt(b.chapitre) || 0;
-        return chapB - chapA;
-      });
+    case "chapter-desc":
+      colosToDisplay.sort((a, b) => (parseInt(b.chapitre) || 0) - (parseInt(a.chapitre) || 0));
       break;
-    case 'chapter-asc':
-      colosToDisplay.sort((a, b) => {
-        const chapA = parseInt(a.chapitre) || 0;
-        const chapB = parseInt(b.chapitre) || 0;
-        return chapA - chapB;
-      });
+    case "chapter-asc":
+      colosToDisplay.sort((a, b) => (parseInt(a.chapitre) || 0) - (parseInt(b.chapitre) || 0));
       break;
+    default:
+      // rien
+      break;
+  }
+
+  // 5) Rendu / message si vide
+  if (colosToDisplay.length === 0) {
+    galleryGridContainer.innerHTML = "<p>Aucun résultat pour ces filtres.</p>";
+    if (totalCountSpan) totalCountSpan.textContent = "(0)";
+    return;
   }
 
   galleryGridContainer.innerHTML = colosToDisplay.map(colo => {
     const author = authorsInfoData[colo.author_id];
     return renderColoCard(colo, author);
-  }).join('');
+  }).join("");
 
-  qsa('.colo-card', galleryGridContainer).forEach(card => {
+  // 6) Interactions cartes (lightbox)
+  qsa(".colo-card", galleryGridContainer).forEach(card => {
     if (!card.dataset.lightboxListenerAttached) {
-      card.addEventListener('click', () => openLightboxForId(card.dataset.coloId));
-      card.dataset.lightboxListenerAttached = 'true';
+      card.addEventListener("click", () => openLightboxForId(card.dataset.coloId));
+      card.dataset.lightboxListenerAttached = "true";
     }
   });
 
-  initLazyLoadObserver('img.lazy-load-gallery');
-  initMainScrollObserver('#gallery-grid-container .colo-card');
+  // 7) Lazy-load + scroll observer
+  initLazyLoadObserver("img.lazy-load-gallery");
+  initMainScrollObserver("#gallery-grid-container .colo-card");
 
-  // Initialize Masonry if not already done
+  // 8) Masonry
   const masonry = new Masonry(galleryGridContainer, {
-    itemSelector: '.colo-card',
-    columnWidth: '.colo-card',
+    itemSelector: ".colo-card",
+    columnWidth: ".colo-card",
     percentPosition: true,
     gutter: 8,
-    // horizontalOrder: true,
     transitionDuration: 0,
     initLayout: false,
   });
-  
-  imagesLoaded(galleryGridContainer)
-    .on('progress', () => {
-      masonry.layout();
-    });
 
-  // relayout masonry each .5s for the first 5 seconds
-  let relayoutInterval = setInterval(() => {
+  imagesLoaded(galleryGridContainer).on("progress", () => {
     masonry.layout();
-  }, 500);
-  setTimeout(() => {
-    clearInterval(relayoutInterval);
-  }, 5000);
+  });
+
+  // 9) Relayout opportuniste au chargement
+  let relayoutInterval = setInterval(() => masonry.layout(), 500);
+  setTimeout(() => clearInterval(relayoutInterval), 5000);
+
+  // 10) Compteur affiché dans le titre
+  if (totalCountSpan) {
+    totalCountSpan.textContent = `(${colosToDisplay.length})`;
+  }
 }
+
 
 function getSortModeText(mode) {
   switch(mode) {
@@ -287,6 +317,21 @@ export async function initGaleriePage() {
     return;
   }
 
+  // petit helper centralisé pour (re)rendre la grille + pastilles
+  const rerenderGallery = () => {
+    // ta fonction existante qui applique les filtres (artiste/tri) et remplit le DOM
+    displayColos();
+    // ajoute la pastille "titre de série" sur les cartes visibles
+    try {
+      const itemsForPill = (typeof applySeriesFilterToRender === "function")
+        ? applySeriesFilterToRender(allColosData)
+        : allColosData;
+    } catch (e) {
+      // si les helpers n'existent pas encore, on ignore silencieusement
+      // console.debug("Series pill skipped:", e);
+    }
+  };
+
   try {
     const [colos, authors] = await Promise.all([
       fetchData('/data/colos/colos.json', { noCache: true }),
@@ -298,8 +343,82 @@ export async function initGaleriePage() {
     allColosData = colos;
     authorsInfoData = authors;
 
+    // === Série : construit la liste des séries (slug -> titre) et branche le dropdown ===
+const seriesRoot  = document.getElementById("custom-series-filter");
+const seriesBtn   = seriesRoot?.querySelector(".custom-dropdown-toggle");
+const seriesMenu  = seriesRoot?.querySelector(".custom-dropdown-menu");
+const seriesLabel = seriesRoot?.querySelector("#custom-series-text") || seriesBtn?.querySelector("span");
+
+if (seriesRoot && seriesBtn && seriesMenu) {
+  // 1) options
+  const index = new Map(); // slug -> titre
+  for (const c of allColosData) {
+    if (!c?.series_slug) continue;
+    const slug  = String(c.series_slug);
+    const title = (c.series_title && String(c.series_title).trim()) || prettifySlug(slug);
+    if (!index.has(slug)) index.set(slug, title);
+  }
+  // remet "Toutes les séries", puis ajoute les séries triées
+  seriesMenu.innerHTML = `
+    <div class="custom-dropdown-option" data-series="ALL" role="option">
+      <i class="fas fa-layer-group"></i>
+      <span class="series-name">Toutes les séries</span>
+    </div>
+  ` + Array.from(index.entries())
+           .sort((a,b)=>a[1].localeCompare(b[1], "fr", {sensitivity:"base"}))
+           .map(([slug,title]) => `
+              <div class="custom-dropdown-option" data-series="${slug}" role="option">
+                <i class="fas fa-book"></i>
+                <span class="series-name">${title}</span>
+              </div>
+           `).join("");
+
+  const setSeriesActive = (slug) => {
+  seriesMenu.querySelectorAll(".custom-dropdown-option[data-series]")
+    .forEach(opt => opt.classList.toggle("active", opt.dataset.series === slug));
+};
+
+  setSeriesActive(selectedSeriesSlug || "ALL");
+
+  // 2) toggle open/close
+  seriesBtn.addEventListener("click", () => {
+    const isExpanded = seriesBtn.getAttribute("aria-expanded") === "true";
+    seriesBtn.setAttribute("aria-expanded", String(!isExpanded));
+    seriesMenu.classList.toggle("show");
+  });
+  document.addEventListener("click", (e) => {
+    if (!seriesRoot.contains(e.target)) {
+      seriesBtn.setAttribute("aria-expanded", "false");
+      seriesMenu.classList.remove("show");
+    }
+  });
+
+  // 3) choix d'une série -> filtre + re-render
+  seriesMenu.addEventListener("click", (e) => {
+    const opt = e.target.closest(".custom-dropdown-option[data-series]");
+    if (!opt) return;
+    selectedSeriesSlug = opt.dataset.series || "ALL";
+    const txt = opt.querySelector(".series-name")?.textContent || "Toutes les séries";
+    if (seriesLabel) seriesLabel.textContent = txt;
+
+    // marque l’option comme active
+    setSeriesActive(selectedSeriesSlug);
+
+    seriesBtn.setAttribute("aria-expanded", "false");
+    seriesMenu.classList.remove("show");
+    displayColos(); // relance le rendu
+  });
+}
+
     if (totalCountSpan) {
       totalCountSpan.textContent = `(${allColosData.length})`;
+    }
+
+    // ➜ intègre le filtre SÉRIE (helpers déjà collés ailleurs)
+    if (typeof initSeriesFilterForGallery === "function") {
+      await initSeriesFilterForGallery(allColosData, rerenderGallery);
+      // NB: si ta version de initSeriesFilterForGallery n'accepte pas de callback,
+      // elle relancera elle-même render(); notre callback supplémentaire sera ignoré sans effet.
     }
 
     // Set up sort dropdown
@@ -321,6 +440,8 @@ export async function initGaleriePage() {
           updateSortMode(option.dataset.sort);
           sortToggleBtn.setAttribute('aria-expanded', 'false');
           sortMenu.classList.remove('show');
+          // on relance le rendu pour refléter le nouveau tri + pastilles
+          rerenderGallery();
         });
       });
 
@@ -336,6 +457,7 @@ export async function initGaleriePage() {
     // Initialize sort state
     updateSortMode(currentSortMode);
 
+    // filtre ARTISTE (ton existant)
     populateCustomArtistFilter();
 
     if (filterToggleBtn && filterMenu) {
@@ -353,6 +475,7 @@ export async function initGaleriePage() {
       });
     }
 
+    // Lightbox
     if (lightboxModal && lightboxCloseBtn) {
       lightboxCloseBtn.addEventListener('click', closeLightbox);
       lightboxModal.addEventListener('click', (e) => {
@@ -370,7 +493,8 @@ export async function initGaleriePage() {
       }
     });
 
-    displayColos();
+    // premier rendu + pastilles
+    rerenderGallery();
 
     const galleryPathMatch = window.location.pathname.match(/^\/galerie\/(\d+)\/?$/);
     if (galleryPathMatch) {

@@ -2,6 +2,8 @@
     {
         "id": 1,
         "author_id": "842003392368869376",
+        "series_slug": "montre-moi_tes_dents_de_requin",
+        "series_title": "Montre-moi tes dents de requin",
         "chapitre": 1,
         "page": 7,
         "date": "2025-06-09 00:00:00",
@@ -13,6 +15,8 @@
     {
         "id": 2,
         "author_id": "842003392368869376",
+        "series_slug": "montre-moi_tes_dents_de_requin",
+        "series_title": "Montre-moi tes dents de requin",
         "chapitre": 1,
         "page": 11,
         "date": "2025-06-09 00:00:00",
@@ -24,6 +28,8 @@
     {
         "id": 3,
         "author_id": "842003392368869376",
+        "series_slug": "montre-moi_tes_dents_de_requin",
+        "series_title": "Montre-moi tes dents de requin",
         "chapitre": 1,
         "page": 14,
         "date": "2025-06-09 00:00:00",
@@ -35,6 +41,8 @@
     {
         "id": 4,
         "author_id": "842003392368869376",
+        "series_slug": "montre-moi_tes_dents_de_requin",
+        "series_title": "Montre-moi tes dents de requin",
         "chapitre": 2,
         "page": 2,
         "date": "2025-06-09 00:00:00",
@@ -46,6 +54,8 @@
     {
         "id": 5,
         "author_id": "842003392368869376",
+        "series_slug": "montre-moi_tes_dents_de_requin",
+        "series_title": "Montre-moi tes dents de requin",
         "chapitre": 2,
         "page": 3,
         "date": "2025-06-09 00:00:00",
@@ -57,9 +67,24 @@
     {
         "id": 6,
         "author_id": "842003392368869376",
+        "series_slug": "montre-moi_tes_dents_de_requin",
+        "series_title": "Montre-moi tes dents de requin",
         "chapitre": 2,
         "page": 9,
         "date": "2025-06-09 00:00:00",
+        "twitter": null,
+        "instagram": null,
+        "tiktok": null,
+        "reddit": null
+    },
+    {
+        "id": 7,
+        "author_id": "842003392368869377",
+        "series_slug": "la_fiancee_de_la_vilaine",
+        "series_title": "La Fiancée de la Vilaine",
+        "chapitre": 1,
+        "page": 33,
+        "date": "2025-09-01 00:41:00",
         "twitter": null,
         "instagram": null,
         "tiktok": null,
