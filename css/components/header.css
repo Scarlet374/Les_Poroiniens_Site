@@ -388,6 +388,98 @@ html.dark .desktop-nav-sub .more-menu a:hover{
   .site-search{ flex-basis: clamp(150px, 16vw, 320px); }
 }
 
-/* (rappels) Tes règles existantes basculent en mode mobile vers 1150px :
-   .hamburger-menu-btn {display:block;} et la recherche passe en mode “icône”.
-   On garde ce comportement. */
+/* === Mobile search: plein écran, une seule loupe, pas de chevauchement === */
+@media (max-width: 900px){
+
+  /* groupe gauche en ligne (hamburger + logo + nav) */
+  .header-left-group{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    min-width:0;
+  }
+
+  /* bouton loupe mobile : pas de largeur fixe */
+  .mobile-search-btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    padding:6px 8px;
+    flex:0 0 auto;
+  }
+
+  /* par défaut, masquer la grosse barre (tu l'ouvres via .search-open) */
+  .site-search{
+    display:none;
+    width:100%;
+    margin:0;
+  }
+
+  /* quand on ouvre la recherche */
+  .header-container.search-open {
+    gap:8px;
+  }
+
+  /* 1) ne garder que la recherche en évidence */
+  .header-container.search-open .logo,
+  .header-container.search-open .desktop-navigation-wrapper,
+  .header-container.search-open .header-actions:not(.search-actions),
+  .header-container.search-open .hamburger-menu-btn,
+  .header-container.search-open .mobile-search-btn {
+    display:none !important;
+  }
+
+  /* 2) le bloc "search-actions" prend toute la ligne */
+  .header-container.search-open .header-actions.search-actions{
+    display:flex;
+    flex:1 1 100%;
+    min-width:0;
+  }
+
+  /* 3) le formulaire occupe 100% */
+  .header-container.search-open .site-search{
+    display:block;
+    flex:1 1 100%;
+    width:100%;
+    margin:0;
+  }
+
+  .header-container.search-open .site-search-input{
+    width:100%;
+    height:40px;
+    padding:0 44px 0 14px; /* marge pour la loupe à droite */
+    font-size:1rem;
+  }
+
+  /* 4) popover/search-suggest bien positionné en mobile */
+  .search-popover, .search-suggest{
+    position:fixed;
+    left:12px; right:12px;
+    top:calc(var(--header-height,64px) + 8px);
+    width:auto;
+    max-height:calc(100vh - var(--header-height,64px) - 24px);
+    border-radius:14px;
+    z-index:2200;
+  }
+}
+
+/* Masquer le bouton "clear" natif de l'input type=search
+   (Chrome/Safari/Edge chromium) */
+.site-search-input::-webkit-search-cancel-button,
+.site-search-input::-webkit-search-decoration,
+.site-search-input::-webkit-search-results-button,
+.site-search-input::-webkit-search-results-decoration {
+  -webkit-appearance: none;
+  appearance: none;
+  display: none;
+}
+
+/* Ancien Edge / IE */
+.site-search-input::-ms-clear,
+.site-search-input::-ms-reveal {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+/* ---------- FIN ---------- */
