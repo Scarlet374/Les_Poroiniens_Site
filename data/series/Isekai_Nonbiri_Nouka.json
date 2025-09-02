@@ -17,6 +17,10 @@
         "Agriculture",
         "Harem"
     ],
+    "vignette_anime":{
+    "color":"#FFD700",
+    "text":"Saison 2 d'annoncée !"
+  },
     "alternative_titles": [
         "Farming life in another world.",
         "異世界のんびり農家"
@@ -40,6 +44,7 @@
       "type": "gdrive",
       "id": "1kp9oGevIWTAXmymgvRRB29qUvINU-3Qs",
       "indice_ep": 1,
+      "saison_ep": 1,
       "date_ep": "1672963200",
       "title_ep": "L'Outil Divin Agricole"
     },
@@ -47,6 +52,7 @@
       "type": "gdrive",
       "id": "1_-lKBGc_xV-Mc1kZTdua0uKuHpPX2M0d",
       "indice_ep": 2,
+      "saison_ep": 1,
       "date_ep": "1673568000",
       "title_ep": "La Première Villageoise"
     },
@@ -54,6 +60,7 @@
       "type": "gdrive",
       "id": "1a-vLr7tbiS3ILozO2KkQNSlwqIrkQS5r",
       "indice_ep": 3,
+      "saison_ep": 1,
       "date_ep": "1674172800",
       "title_ep": "L'une après l'autre"
     },
@@ -61,6 +68,7 @@
       "type": "gdrive",
       "id": "1vOIoHLQxgLH2qvsRcqr8lYJDXu-yCirS",
       "indice_ep": 4,
+      "saison_ep": 1,
       "date_ep": "1674777600",
       "title_ep": "Une arrivée d'eau, une vie meilleure"
     },
@@ -68,6 +76,7 @@
       "type": "gdrive",
       "id": "1mtjx0_8kkRREtkiM4UauOsm4yifqnISm",
       "indice_ep": 5,
+      "saison_ep": 1,
       "date_ep": "1675382400",
       "title_ep": "Curry et hibernation"
     },
@@ -75,6 +84,7 @@
       "type": "gdrive",
       "id": "158YOvswPI_cCtWfYluyapBcHyb0E5y4d",
       "indice_ep": 6,
+      "saison_ep": 1,
       "date_ep": "1675987200",
       "title_ep": "Notre village"
     },
@@ -82,6 +92,7 @@
       "type": "gdrive",
       "id": "13vfzAesg4XRXyrRtQFETP0lu1TbtXs5U",
       "indice_ep": 7,
+      "saison_ep": 1,
       "date_ep": "1676592000",
       "title_ep": "Un cœur accueillant"
     },
@@ -89,6 +100,7 @@
       "type": "gdrive",
       "id": "1UK1qjIFWONGAfhaWJtMJopZf1sdnC-B_",
       "indice_ep": 8,
+      "saison_ep": 1,
       "date_ep": "1677196800",
       "title_ep": "Les Princesses scientifiques"
     },
@@ -96,6 +108,7 @@
       "type": "gdrive",
       "id": "1ZnHxEzfhoMHBhZ85DM0epbEnmwpq3fPu",
       "indice_ep": 9,
+      "saison_ep": 1,
       "date_ep": "1677801600",
       "title_ep": "Le Marchand et le dragon"
     },
@@ -103,6 +116,7 @@
       "type": "gdrive",
       "id": "12s2PS_vlk5Tz5AcBNjxp91AAZbQe1P3j",
       "indice_ep": 10,
+      "saison_ep": 1,
       "date_ep": "1678406400",
       "title_ep": "La Princesse Yûri"
     },
@@ -110,6 +124,7 @@
       "type": "gdrive",
       "id": "1IBV4Rl_a9ULnb2Q9NqAIQc9EGk01iRF8",
       "indice_ep": 11,
+      "saison_ep": 1,
       "date_ep": "1679011200",
       "title_ep": "La Vie avec les fondateurs"
     },
@@ -117,6 +132,7 @@
       "type": "gdrive",
       "id": "1-L3X2572H8_PTsXJAhga65f-pGunrBcr",
       "indice_ep": 12,
+      "saison_ep": 2,
       "date_ep": "1679616000",
       "title_ep": "La Naissance"
     }

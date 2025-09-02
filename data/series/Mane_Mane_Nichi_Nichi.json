@@ -8,6 +8,7 @@
     "magazine": "Sunday Webry",
 	"release_year": 2024,
 	"tags": ["Comédie", "École", "Tranche de vie", "Sport"],
+	"vignette":{ "color":"#ff4901", "text":"Coup de cœur ❤️"},
 	"alternative_titles": ["マネマネにちにち", "Mane Mane Nichi Nichi"],
 	"release_status": "En cours",
 	"covers_gallery": [

@@ -367,3 +367,87 @@ body.dark .series-latest-chapters-container-desktop {
   .series-latest-chapters-container-desktop { display: none; }
   .series-latest-chapters-container-mobile { display: block; }
 }
+
+/* --- Badge / Vignette sur les cartes --- */
+/* ===== Vignette lisible sur toutes les covers ===== */
+.series-cover{ position:relative; overflow:hidden; }
+
+/* style par défaut : pastille bien contrastée */
+.series-badge{
+  position:absolute; top:8px; left:8px;
+  padding:5px 12px;
+  max-width:calc(100% - 16px);
+  border-radius:999px;
+  font:700 0.84rem/1.15 "Urbanist",system-ui,sans-serif;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+
+  /* ↴ Lisibilité : texte blanc, fond coloré + opaque */
+  color:#fff;
+  background: rgba(var(--badge-rgb,16,224,193), .85);
+  border:1px solid rgba(var(--badge-rgb,16,224,193), .95);
+  box-shadow:0 4px 14px rgba(0,0,0,.28);
+  text-shadow:0 1px 1px rgba(0,0,0,.35);
+  letter-spacing:.15px;
+  pointer-events:none;
+}
+
+/* Bonus lisibilité : blur derrière la pastille si dispo */
+@supports (backdrop-filter: blur(4px)) {
+  .series-badge{
+    backdrop-filter: blur(4px) saturate(120%);
+    -webkit-backdrop-filter: blur(4px) saturate(120%);
+    /* on peut alors baisser un peu l’opacité du fond */
+    background: rgba(var(--badge-rgb,16,224,193), .70);
+  }
+}
+
+/* Dark mode: inutile de noircir davantage, on garde le même rendu */
+html.dark .series-badge{
+  background: rgba(var(--badge-rgb,16,224,193), .82);
+  border-color: rgba(var(--badge-rgb,16,224,193), .95);
+}
+
+/* Option: taille compacte si le texte est très long (petits écrans) */
+@media (max-width: 520px){
+  .series-badge{ font-size:0.8rem; padding:4px 10px; }
+}
+
+/* === Vignettes : version compacte sur petits écrans === */
+
+/* ≤ 640px : chip compacte */
+@media (max-width: 640px){
+  .series-badge{
+    top:6px; left:6px;
+    padding:3px 8px;
+    font-size:0.72rem;      /* avant ~0.84rem */
+    line-height:1.1;
+    max-width:70%;          /* évite de couvrir la cover */
+    border-radius:10px;
+    box-shadow:0 3px 10px rgba(0,0,0,.22);
+  }
+  /* si jamais plusieurs vignettes sont injectées, on les empile */
+  .series-cover .series-badge:nth-of-type(2){ top: calc(6px + 24px); }
+  .series-cover .series-badge:nth-of-type(3){ top: calc(6px + 24px*2); }
+}
+
+/* ≤ 420px : encore plus discret */
+@media (max-width: 420px){
+  .series-badge{
+    padding:2px 6px;
+    font-size:0.66rem;
+    max-width:62%;
+    text-shadow:0 1px 0 rgba(0,0,0,.25); /* lisible mais léger */
+  }
+}
+
+/* ≤ 340px : mode micro-chip */
+@media (max-width: 340px){
+  .series-badge{
+    padding:2px 6px;
+    font-size:0.62rem;
+    max-width:58%;
+    letter-spacing:.1px;
+  }
+}
+
+/* Fin Vignette */

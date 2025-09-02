@@ -161,10 +161,21 @@ export async function fetchAllAnimeData() {
     }
   }
 
-  const results = await Promise.all(fileList.map(async ({name, url}) => {
+  const results = await Promise.all(fileList.map(async ({ name, url }) => {
     try {
-      const meta = await fetchData(url);
-      return normalizeAnime(meta, name);
+      const meta = await fetchData(url);               // <- JSON série (manga/LN)
+      const norm = normalizeAnime(meta, name);         // <- ce que tu fais déjà
+
+      // ⬇️ Ajout MINIMAL : on propage la pastille de la fiche série vers chaque objet anime
+      const addBadge = (a) => {
+        if (!a) return null;
+        const v = a.vignette_anime ?? meta?.vignette_anime ?? null;
+        // on garde aussi une réf “series” si tu veux y accéder côté render
+        const parentSeries = a.series || { title: meta?.title, slug: meta?.slug };
+        return { ...a, vignette_anime: v, series: parentSeries };
+      };
+
+      return Array.isArray(norm) ? norm.map(addBadge) : addBadge(norm);
     } catch (e) {
       const msg = String(e?.message || e);
       if (msg.includes("status: 404")) { console.warn("⏭️  Skip missing series file:", name); return null; }
@@ -173,7 +184,8 @@ export async function fetchAllAnimeData() {
     }
   }));
 
-  return results.filter(Boolean);
+  // ⬇️ IMPORTANT : on aplatit (si normalizeAnime a renvoyé des tableaux), puis on filtre les nuls
+  return results.flatMap(x => Array.isArray(x) ? x : [x]).filter(Boolean);
 }
 
 // --- NOUVELLE FONCTION OPTIMISÉE ---

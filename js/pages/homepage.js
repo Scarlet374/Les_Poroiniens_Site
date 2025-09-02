@@ -357,10 +357,9 @@ async function initHeroCarousel() {
 function renderAnimeCard(anime) {
   if (!anime) return "";
 
-  // const seriesSlug = anime.slug || slugify(anime.title);
   const seriesSlug = slugify(
-  (anime && (anime.title || anime.seriesTitle)) || ""  // titre de l’œuvre
-) || (anime.slug ? slugify(anime.slug) : "");          // fallback exceptionnel
+    (anime && (anime.title || anime.seriesTitle)) || ""
+  ) || (anime.slug ? slugify(anime.slug) : "");
 
   const detailUrl  = `/${seriesSlug}/episodes`;
   const imageUrl   = anime.cover || "/img/placeholder_preview.png";
@@ -379,6 +378,17 @@ function renderAnimeCard(anime) {
   const tagsHtml = Array.isArray(anime.tags) && anime.tags.length
     ? `<div class="tags series-tags">${anime.tags.map(t => `<span class="tag">${t}</span>`).join("")}</div>`
     : "";
+
+  // --- Badge spécifique ANIME ---
+  // Cherche d'abord sur anime.vignette_anime, puis sur éventuel anime.series.vignette_anime
+  const v = (anime && anime.vignette_anime) || (anime?.series && anime.series.vignette_anime) || null;
+  let badgeHtml = "";
+  if (v && v.text) {
+    // hexToRgb est défini en haut de ton fichier (je l’ai vu) :contentReference[oaicite:0]{index=0}
+    const color = (typeof v.color === "string" && v.color.startsWith("#")) ? v.color : "#10e0c1";
+    const rgb   = hexToRgb(color);
+    badgeHtml = `<span class="series-badge" style="--badge-color:${color};--badge-rgb:${rgb};">${v.text}</span>`;
+  }
 
   // 3 derniers épisodes par date
   const eps = Array.isArray(anime.episodes) ? anime.episodes.slice() : [];
@@ -413,10 +423,11 @@ function renderAnimeCard(anime) {
 
   const descHtml = anime.description ? `<div class="series-description">${anime.description}</div>` : "";
 
-  // même markup/classes que tes cartes série → CSS réutilisé
+  // rendu final (badge placé AU-DESSUS de l’image, dans .series-cover)
   return `
     <div class="series-card" data-url="${detailUrl}">
       <div class="series-cover">
+        ${badgeHtml}
         <img src="${imageUrl}" alt="${anime.title}" loading="lazy" referrerpolicy="no-referrer">
       </div>
       <div class="series-info">
@@ -438,7 +449,16 @@ function renderSeriesCard(series) {
 
   const seriesSlug = slugify(series.title);
 
-    const chaptersArray = Object.entries(series.chapters)
+  // NEW: vignette (depuis la racine ou .series)
+  const v = series.vignette || series.series?.vignette;
+  let badgeHtml = "";
+  if (v && v.text) {
+    const color = v.color || "#10e0c1";
+    const rgb = hexToRgb(color); // déjà défini en haut du fichier
+    badgeHtml = `<span class="series-badge" style="--badge-color:${color};--badge-rgb:${rgb};">${v.text}</span>`;
+  }
+
+  const chaptersArray = Object.entries(series.chapters)
     .map(([chapNum, chapData]) => {
       const hasManga = !!(chapData?.groups && chapData.groups.LesPoroïniens);
       const hasLN    = !!chapData?.file;
@@ -447,7 +467,6 @@ function renderSeriesCard(series) {
         chapter: chapNum,
         ...chapData,
         last_updated_ts: parseDateToTimestamp(chapData?.last_updated || 0),
-        // même URL pour manga & LN : /:slug/:chapter
         url: readable ? `/${seriesSlug}/${String(chapNum)}` : null,
       };
     })
@@ -535,7 +554,23 @@ function renderSeriesCard(series) {
       ? `${series.cover.slice(0, -4)}-s.jpg`
       : series.cover
     : "img/placeholder_preview.png";
-  return `<div class="series-card" data-url="${detailPageUrl}"><div class="series-cover"><img src="${imageUrl}" alt="${series.title} – Cover" loading="lazy"></div><div class="series-info"><div class="series-title">${series.title}</div>${authorYearLineHtml}${tagsHtml}${descriptionHtml}${latestChapterAsButton}${latestThreeChaptersHtml}</div></div>`;
+
+  // NEW: badgeHtml placé DANS .series-cover, au-dessus de l’image
+  return `
+    <div class="series-card" data-url="${detailPageUrl}">
+      <div class="series-cover">
+        ${badgeHtml}
+        <img src="${imageUrl}" alt="${series.title} – Cover" loading="lazy">
+      </div>
+      <div class="series-info">
+        <div class="series-title">${series.title}</div>
+        ${authorYearLineHtml}
+        ${tagsHtml}
+        ${descriptionHtml}
+        ${latestChapterAsButton}
+        ${latestThreeChaptersHtml}
+      </div>
+    </div>`;
 }
 
 function makeSeriesCardsClickable() {
@@ -629,9 +664,35 @@ export async function initHomepage() {
       const showAdult = adultEnabled(); // même helper que pour les autres sections
       const animeFiltered = showAdult ? animeItems : animeItems.filter(a => !a.pornographic);
 
+      // helper: parse robuste (secondes/ms/ISO)
+      const __ts = (v) => {
+        if (v == null || v === "") return 0;
+        if (typeof v === "number") return v < 1e12 ? v * 1000 : v; // s -> ms
+        const t = Date.parse(String(v));
+        return Number.isFinite(t) ? t : 0;
+      };
+
+      // renvoie le timestamp du DERNIER épisode publié pour un anime
+      const latestEpisodeTs = (a) => {
+        const eps = Array.isArray(a.seasons)
+          ? a.seasons.flatMap(s => s.episodes || [])
+          : (Array.isArray(a.episodes) ? a.episodes : []);
+
+        let max = 0;
+        for (const e of eps) {
+          const raw = e.ts ?? e.date ?? e.date_ep ?? e.release_date ?? null;
+          const t = __ts(raw);
+          if (t > max) max = t;
+        }
+        return max;
+      };
+
+      // 👉 tri du plus récent au plus ancien
+      const animeSorted = [...animeFiltered].sort((a, b) => latestEpisodeTs(b) - latestEpisodeTs(a));
+
       mountPagedSection({
         grid: seriesGridAnime,
-        items: animeFiltered,
+        items: animeSorted,
         renderFn: renderAnimeCard,
         sectionKey: "anime",
         pageSize: 5,
