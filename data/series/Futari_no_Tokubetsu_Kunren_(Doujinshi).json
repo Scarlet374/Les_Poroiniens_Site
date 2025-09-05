@@ -1,0 +1,43 @@
+{
+    "title": "Un entraînement spécial à deux",
+    "description": "Pas de synopsis.",
+    "artist": "Ginhaha",
+    "author": "Ginhaha",
+    "cover": "https://file.garden/aKS5jUD-slfn6iFT/Un%20entraînement%20spécial%20à%20deux%20LQ.jpg",
+    "manga_type": "",
+    "magazine": "",
+    "release_year": 2022,
+    "tags": [
+        "Romance",
+        "Vie scolaire",
+        "BD en ligne",
+        "Tranche de vie",
+        "En couleur",
+        "Yuri",
+        "Sex toys",
+        "Non censuré"
+    ],
+    "alternative_titles": [
+        "リコリス・リコイル - ふたりの特別訓練",
+        "Lycoris Recoil - Special Training For Two"
+    ],
+    "release_status": "Terminé",
+	"doujinshi": true,
+    "covers_gallery": [
+        {
+            "url_hq": "https://file.garden/aKS5jUD-slfn6iFT/Un%20entraînement%20spécial%20à%20deux.png",
+            "url_lq": "https://file.garden/aKS5jUD-slfn6iFT/Un%20entraînement%20spécial%20à%20deux%20LQ.jpg",
+            "volume": "1"
+        }
+    ],
+    "chapters": {
+        "1": {
+            "title": "",
+            "volume": "",
+            "last_updated": "1660332060",
+            "groups": {
+                "LesPoroïniens": "/proxy/api/imgchest/chapter/a846d6v9w7x"
+            }
+        }
+    }
+}

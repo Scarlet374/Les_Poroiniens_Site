@@ -1,0 +1,54 @@
+{
+    "title": "Le porte bonheur de mademoiselle Kaguya",
+    "description": "Kaguya Shinomiya et Miyuki Shirogane sont respectivement vice-présidente et président du conseil des élèves. Bien qu'ils s'aiment, leur fierté les empêche de se le confesser ouvertement. Ils tentent donc chacun de faire tomber l'autre amoureux d'eux.\n\nUn jour, la domestique de Kaguya lui donne un « porte-bonheur » qui garantira presque à coup sûr que Shirogane lui déclarera son amour. Mais à son insu, il s'agit en réalité d'un...",
+    "artist": "Hisasi",
+    "author": "Hisasi",
+    "cover": "https://file.garden/aKS5jUD-slfn6iFT/Le%20porte%20bonheur%20de%20mademoiselle%20Kaguya%20LQ.jpg",
+    "manga_type": "",
+    "magazine": "",
+    "release_year": 2022,
+    "tags": [
+        "Fille chat",
+        "Kemonomimi",
+        "Une femme",
+        "Queue",
+        "Un homme",
+        "Non censuré"
+    ],
+    "alternative_titles": [
+        "かぐや様の縁結び",
+        "Kaguya-sama’s Matchmaking Charm"
+    ],
+    "release_status": "Terminé",
+	"doujinshi": true,
+    "covers_gallery": [
+        {
+            "url_hq": "https://file.garden/aKS5jUD-slfn6iFT/Le%20porte%20bonheur%20de%20mademoiselle%20Kaguya.png",
+            "url_lq": "https://file.garden/aKS5jUD-slfn6iFT/Le%20porte%20bonheur%20de%20mademoiselle%20Kaguya%20LQ.jpg",
+            "volume": "1"
+        },
+        {
+            "url_hq": "https://file.garden/aKS5jUD-slfn6iFT/Mademoiselle%20Kaguya%20veut.png",
+            "url_lq": "https://file.garden/aKS5jUD-slfn6iFT/Mademoiselle%20Kaguya%20veut%20LQ.jpg",
+            "volume": "1"
+        }
+    ],
+    "chapters": {
+        "1": {
+            "title": "Le porte bonheur de mademoiselle Kaguya",
+            "volume": "",
+            "last_updated": "1688764500",
+            "groups": {
+                "LesPoroïniens": "/proxy/api/imgchest/chapter/92493lol24n"
+            }
+        },
+        "1.1": {
+            "title": "Mademoiselle Kaguya veut s'envoyer en l'air",
+            "volume": "",
+            "last_updated": "1711968660",
+            "groups": {
+                "LesPoroïniens": "/proxy/api/imgchest/chapter/wl7lo5e5p7x"
+            }
+        }
+    }
+}

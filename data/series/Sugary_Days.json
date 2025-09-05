@@ -1,0 +1,38 @@
+{
+    "title": "Sugary Days",
+    "description": "Pas de synopsis.",
+    "artist": "Orikuchi Hirata",
+    "author": "Orikuchi Hirata",
+    "cover": "https://file.garden/aKS5jUD-slfn6iFT/Sugary%20day%20LQ.jpg",
+    "manga_type": "",
+    "magazine": "",
+    "release_year": 2023,
+    "tags": [
+        "Tranche de vie",
+        "Romance",
+        "Ecchi",
+        "Yuri"
+    ],
+    "alternative_titles": [
+        "シュガリィデイズ"
+    ],
+    "release_status": "Terminé",
+	"os": true,
+    "covers_gallery": [
+        {
+            "url_hq": "https://file.garden/aKS5jUD-slfn6iFT/Sugary%20day.jpg",
+            "url_lq": "https://file.garden/aKS5jUD-slfn6iFT/Sugary%20day%20LQ.jpg",
+            "volume": "1"
+        }
+    ],
+    "chapters": {
+        "1": {
+            "title": "",
+            "volume": "",
+            "last_updated": "1702209300",
+            "groups": {
+                "LesPoroïniens": "/proxy/api/imgchest/chapter/bp45q6aox45"
+            }
+        }
+    }
+}
