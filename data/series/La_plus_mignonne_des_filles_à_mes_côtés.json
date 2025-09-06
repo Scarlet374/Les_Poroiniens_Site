@@ -1,0 +1,52 @@
+{
+    "title": "La plus mignonne des filles à mes côtés",
+    "description": "Hinako, une amie de la sœur aînée d'Asahi, est une invitée fréquente chez le lycéen. Elle le trouble toujours avec son attitude suggestive tout en le traitant comme un petit frère... ou plutôt comme un animal de compagnie ? Une histoire d'amour entre une fille qui a un sens de la proximité buggé et un otaku qui joue les papas !",
+    "artist": "Takase Waka",
+    "author": "Takase Waka",
+    "cover": "https://file.garden/aKS5jUD-slfn6iFT/La%20plus%20mignonne%20des%20filles%20%C3%A0%20mes%20c%C3%B4t%C3%A9s%20Vol.1%20LQ.jpg",
+    "manga_type": "Seinen",
+    "magazine": "",
+    "release_year": 2022,
+    "tags": [
+        "Romance",
+        "Comédie",
+        "Vie scolaire",
+        "Tranche de vie",
+        "Gyaru"
+    ],
+    "alternative_titles": [
+        "姉の友人",
+        "The Cutest Girl Closest to Me."
+    ],
+    "release_status": "Fini",
+    "covers_gallery": [
+        {
+            "url_hq": "https://file.garden/aKS5jUD-slfn6iFT/La%20plus%20mignonne%20des%20filles%20%C3%A0%20mes%20c%C3%B4t%C3%A9s%20Vol.1.jpg",
+            "url_lq": "https://file.garden/aKS5jUD-slfn6iFT/La%20plus%20mignonne%20des%20filles%20%C3%A0%20mes%20c%C3%B4t%C3%A9s%20Vol.1%20LQ.jpg",
+            "volume": "1"
+        },
+        {
+            "url_hq": "https://file.garden/aKS5jUD-slfn6iFT/La%20plus%20mignonne%20des%20filles%20%C3%A0%20mes%20c%C3%B4t%C3%A9s%20Vol.2.jpg",
+            "url_lq": "https://file.garden/aKS5jUD-slfn6iFT/La%20plus%20mignonne%20des%20filles%20%C3%A0%20mes%20c%C3%B4t%C3%A9s%20Vol.2%20LQ.jpg",
+            "volume": "2"
+        }
+    ],
+    "chapters": {
+        "1": {
+            "title": "Une belle gueule, c'est la justice.",
+            "volume": "1",
+            "last_updated": "16/06/2025",
+            "groups": {
+                "LesPoroïniens": "/proxy/api/imgchest/chapter/9rydrejrn7k"
+            }
+        },
+        "2": {
+            "title": "Le charme, c'est le top.",
+            "volume": "1",
+            "last_updated": "20/07/2025",
+            "groups": {
+                "LesPoroïniens": "/proxy/api/imgchest/chapter/xny8m9qmd7b"
+            }
+        }
+    }
+}

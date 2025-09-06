@@ -1,0 +1,38 @@
+{
+	"title": "Bocchi the Rock! Anthology Comic",
+	"description": "Anthologie Bocchi the Rock ! par divers mangakas.",
+	"artist": "Multiple",
+	"author": "Multiple",
+	"cover": "https://file.garden/aKS5jUD-slfn6iFT/Bocchi%20The%20Rock!%20Anthology%20Comic%20Vol.%205%20LQ.jpg",
+	"manga_type": "Shonen",
+    "magazine": "Book Walker",
+	"release_year": 2022,
+	"tags": ["Comédie", "Musique", "Tranche de vie"],
+	"alternative_titles": ["ぼっち・ざ・ろっく！アンソロジーコミック"],
+	"release_status": "En cours",
+	"covers_gallery": [
+		{ "url_hq": "https://file.garden/aKS5jUD-slfn6iFT/Bocchi%20The%20Rock!%20Anthology%20Comic%20Vol.%201.jpg", "url_lq": "https://file.garden/aKS5jUD-slfn6iFT/Bocchi%20The%20Rock!%20Anthology%20Comic%20Vol.%201%20LQ.jpg", "volume": "1" },
+		{ "url_hq": "https://file.garden/aKS5jUD-slfn6iFT/Bocchi%20The%20Rock!%20Anthology%20Comic%20Vol.%202.jpg", "url_lq": "https://file.garden/aKS5jUD-slfn6iFT/Bocchi%20The%20Rock!%20Anthology%20Comic%20Vol.%202%20LQ.jpg", "volume": "2" },
+		{ "url_hq": "https://file.garden/aKS5jUD-slfn6iFT/Bocchi%20The%20Rock!%20Anthology%20Comic%20Vol.%203.jpg", "url_lq": "https://file.garden/aKS5jUD-slfn6iFT/Bocchi%20The%20Rock!%20Anthology%20Comic%20Vol.%203%20LQ.jpg", "volume": "3" },
+		{ "url_hq": "https://file.garden/aKS5jUD-slfn6iFT/Bocchi%20The%20Rock!%20Anthology%20Comic%20Vol.%204.jpg", "url_lq": "https://file.garden/aKS5jUD-slfn6iFT/Bocchi%20The%20Rock!%20Anthology%20Comic%20Vol.%204%20LQ.jpg", "volume": "4" },
+		{ "url_hq": "https://file.garden/aKS5jUD-slfn6iFT/Bocchi%20The%20Rock!%20Anthology%20Comic%20Vol.%205.jpg", "url_lq": "https://file.garden/aKS5jUD-slfn6iFT/Bocchi%20The%20Rock!%20Anthology%20Comic%20Vol.%205%20LQ.jpg", "volume": "5" }
+	],
+	"chapters": {
+		"2": {
+			"title": "La grande opération de courses de Futari !",
+			"volume": "1",
+			"last_updated": "1734044400",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/ne7bq3xvg75"
+			}
+		},
+		"26": {
+			"title": "Opération ☆ Paraître plus jeune",
+			"volume": "3",
+			"last_updated": "1724882400",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/md7o8vjxl4p"
+			}
+		}
+	}
+}

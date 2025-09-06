@@ -209,13 +209,28 @@ function renderChaptersListForVolume(chaptersToRender, seriesSlug) {
 function displayGroupedChapters(seriesData, seriesSlug) {
   const chaptersContainer = qs(".chapters-accordion-container");
   if (!chaptersContainer) return;
-  const currentSeriesAllChaptersRaw = Object.entries(
-    seriesData.chapters || {}
-  ).map(([chapNum, chapData]) => ({
-    chapter: chapNum,
-    ...chapData,
-    last_updated_ts: parseDateToTimestamp(chapData.last_updated || 0),
-  }));
+  const currentSeriesAllChaptersRaw = Object.entries(seriesData.chapters || {})
+    .map(([chapNum, chapData]) => {
+      // Cherche la meilleure date disponible
+      const candidates = [
+        chapData.last_updated,
+        chapData.updated_at,
+        chapData.lastUpdate,
+        chapData.date,
+        chapData.time,
+        chapData.timestamp
+      ];
+      let ts = NaN;
+      for (const v of candidates) {
+        const t = parseDateToTimestamp(v);
+        if (!Number.isNaN(t)) { ts = t; break; } // prend le 1er valide
+      }
+      return {
+        chapter: chapNum,
+        ...chapData,
+        last_updated_ts: ts,
+      };
+    });
   if (currentSeriesAllChaptersRaw.length === 0) {
     chaptersContainer.innerHTML = "<p>Aucun chapitre à afficher.</p>";
     return;
@@ -240,6 +255,12 @@ function displayGroupedChapters(seriesData, seriesSlug) {
   });
   for (const [, chapters] of grouped.entries()) {
     chapters.sort((a, b) => {
+      const ta = a.last_updated_ts, tb = b.last_updated_ts;
+      if (!Number.isNaN(ta) && !Number.isNaN(tb) && ta !== tb) {
+        // plus récent d'abord
+        return tb - ta;
+      }
+      // fallback: numéro de chapitre
       const chapA = parseFloat(String(a.chapter).replace(",", "."));
       const chapB = parseFloat(String(b.chapter).replace(",", "."));
       return currentVolumeSortOrder === "desc" ? chapB - chapA : chapA - chapB;

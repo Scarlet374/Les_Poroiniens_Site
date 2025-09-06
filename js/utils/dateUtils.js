@@ -1,43 +1,68 @@
 // js/utils/dateUtils.js
 
 export function parseDateToTimestamp(dateInput) {
-  if (dateInput === null || typeof dateInput === 'undefined' || dateInput === "") return NaN;
+  if (dateInput == null || dateInput === "") return NaN;
 
-  let timestamp;
-
-  if (typeof dateInput === 'string') {
-    // Essayer de le convertir en nombre d'abord (pour les timestamps Unix en string)
-    const numericValue = parseInt(dateInput, 10);
-    if (!isNaN(numericValue) && String(numericValue) === dateInput) { // S'assure que c'est bien une chaîne de chiffres
-        // Supposé être un timestamp en secondes si c'est une chaîne
-        timestamp = numericValue * 1000;
-    } else {
-      // Sinon, essayer de parser comme format YYYY-MM-DD HH:MM:SS
-      const parts = dateInput.split(" ");
-      const dateParts = parts[0].split("-");
-      const timeParts = parts[1] ? parts[1].split(":") : ["00", "00", "00"];
-
-      if (dateParts.length === 3) {
-        timestamp = Date.UTC(
-          parseInt(dateParts[0], 10),
-          parseInt(dateParts[1], 10) - 1,
-          parseInt(dateParts[2], 10),
-          parseInt(timeParts[0] || "0", 10),
-          parseInt(timeParts[1] || "0", 10),
-          parseInt(timeParts[2] || "0", 10)
-        );
-      } else {
-        timestamp = NaN;
-      }
-    }
-  } else if (typeof dateInput === 'number') {
-    // Si c'est un nombre, on suppose que c'est déjà un timestamp.
-    // Si c'est des secondes (comme de Cubari), multiplier par 1000.
-    timestamp = dateInput < 30000000000 ? dateInput * 1000 : dateInput; // Augmenté le seuil pour les timestamps futurs
-  } else {
-    timestamp = NaN;
+  // Nombres : secondes ou millisecondes
+  if (typeof dateInput === "number") {
+    return dateInput < 1e12 ? dateInput * 1000 : dateInput;
   }
-  return timestamp;
+
+  const s = String(dateInput).trim();
+
+  // Timestamps en string
+  if (/^\d{13}$/.test(s)) return Number(s);        // ms
+  if (/^\d{10}$/.test(s)) return Number(s) * 1000; // s
+
+  // ------- Formats FR : DD/MM/YYYY [HH:mm] ou [HHhmm] -------
+  let m = s.match(
+    /^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})(?:[\/\s]+(\d{1,2})(?:(?::|h)(\d{1,2}))?)?$/
+  );
+  if (m) {
+    const [, d, mo, y, H = "0", Mi = "0"] = m;
+    return safeLocal(y, mo, d, H, Mi, 0);
+  }
+
+  // ------- ISO "naïf" (sans fuseau) : YYYY-MM-DD [HH[:mm[:ss]]] -------
+  m = s.match(
+    /^(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})(?:[ T]+(\d{1,2})(?::(\d{2})(?::(\d{2}))?)?)?$/
+  );
+  if (m) {
+    const [, y, mo, d, H = "0", Mi = "0", S = "0"] = m;
+    return safeLocal(y, mo, d, H, Mi, S);
+  }
+
+  // ------- ISO avec fuseau ('Z' ou '+02:00') : on laisse le moteur gérer en UTC -------
+  if (/[zZ]|[+\-]\d{2}:\d{2}$/.test(s)) {
+    const t = Date.parse(s);
+    if (!Number.isNaN(t)) return t;
+  }
+
+  // Fallback général (noms de mois, etc.)
+  const t = Date.parse(s);
+  return Number.isNaN(t) ? NaN : t;
+
+  // ---- helpers ----
+  function safeLocal(y, mo, d, H, Mi, S) {
+    const DEFAULT_HOUR_FOR_DATE_ONLY = 0; // mets 12 si tu veux "midi local" quand l'heure est absente
+    const yr = parseInt(y, 10);
+    const mon = parseInt(mo, 10) - 1;
+    const day = parseInt(d, 10);
+    const hh = H == null ? DEFAULT_HOUR_FOR_DATE_ONLY : (parseInt(H, 10) || 0);
+    const mm = parseInt(Mi, 10) || 0;
+    const ss = parseInt(S, 10) || 0;
+
+    const dt = new Date(yr, mon, day, hh, mm, ss); // ← LOCAL time
+    // Validation pour éviter les débordements (31/02 -> 03/03, etc.)
+    if (
+      dt.getFullYear() !== yr ||
+      dt.getMonth() !== mon ||
+      dt.getDate() !== day
+    ) {
+      return NaN;
+    }
+    return dt.getTime();
+  }
 }
 
 // ... timeAgo et formatDateForGallery restent inchangés pour l'instant ...

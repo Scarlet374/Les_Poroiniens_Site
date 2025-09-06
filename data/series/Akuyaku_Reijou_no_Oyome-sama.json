@@ -7,11 +7,26 @@
 	"manga_type": "",
     "magazine": "Comic Seasons",
 	"release_year": 2024,
-	"tags": ["Yuri", "Romance","Drame", "Fantastique", "Fille monstres", "Monstres", "Vilaine"],
-	"alternative_titles": ["Akuyaku Reijou no Oyome-sama", "The Villainess' Bride"],
+	"tags": [
+		"Yuri",
+		"Romance",
+		"Drame",
+		"Fantastique",
+		"Fille monstres",
+		"Monstres",
+		"Vilaine"
+	],
+	"alternative_titles": [
+		"Akuyaku Reijou no Oyome-sama",
+		"The Villainess' Bride"
+	],
 	"release_status": "En cours",
 	"covers_gallery": [
-		{ "url_hq": "https://file.garden/aKS5jUD-slfn6iFT/La%20Fianc%C3%A9e%20de%20la%20Vilaine.jpg", "url_lq": "https://file.garden/aKS5jUD-slfn6iFT/La%20Fianc%C3%A9e%20de%20la%20Vilaine.webp", "volume": "1" }
+		{
+			"url_hq": "https://file.garden/aKS5jUD-slfn6iFT/La%20Fianc%C3%A9e%20de%20la%20Vilaine.jpg",
+			"url_lq": "https://file.garden/aKS5jUD-slfn6iFT/La%20Fianc%C3%A9e%20de%20la%20Vilaine.webp",
+			"volume": "1" 
+		}
 	],
 	"chapters": {
 		"1": {

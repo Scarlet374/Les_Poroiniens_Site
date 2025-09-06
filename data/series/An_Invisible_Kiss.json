@@ -11,7 +11,8 @@
 		"Drame",
 		"Fantastique",
 		"Fille monstres",
-		"Superpouvoir"
+		"Superpouvoir",
+		"Non censuré"
 	],
 	"alternative_titles": [
 		"안 보이는 투명츄"
@@ -25,9 +26,121 @@
 		"1": {
 			"title": "",
 			"volume": "",
-			"last_updated": "1726851114",
+			"last_updated": "20/09/2024",
 			"groups": {
 				"LesPoroïniens": "/proxy/api/imgchest/chapter/ej7m89o8qyd"
+			}
+		},
+		"2": {
+			"title": "",
+			"volume": "",
+			"last_updated": "20/09/2024",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/dl7p86zkjyo"
+			}
+		},
+		"3": {
+			"title": "",
+			"volume": "",
+			"last_updated": "20/09/2024",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/wl7lo6m337x"
+			}
+		},
+		"4": {
+			"title": "",
+			"volume": "",
+			"last_updated": "20/09/2024",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/6eyrl6dxlyp"
+			}
+		},
+		"5": {
+			"title": "",
+			"volume": "",
+			"last_updated": "20/09/2024",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/pg73l8jbo7r"
+			}
+		},
+		"6": {
+			"title": "",
+			"volume": "",
+			"last_updated": "20/09/2024",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/bp45qnd2v45"
+			}
+		},
+		"7": {
+			"title": "",
+			"volume": "",
+			"last_updated": "20/09/2024",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/ej7m862wjyd"
+			}
+		},
+		"8": {
+			"title": "",
+			"volume": "",
+			"last_updated": "1730847600",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/9p4n86ljl4n"
+			}
+		},
+		"9": {
+			"title": "",
+			"volume": "",
+			"last_updated": "06/11/2024",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/ljyq26drky2"
+			}
+		},
+		"10": {
+			"title": "",
+			"volume": "",
+			"last_updated": "1738537200",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/dl7p86zdkyo"
+			}
+		},
+		"11": {
+			"title": "",
+			"volume": "",
+			"last_updated": "1740870000",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/wl7lo6m2o7x"
+			}
+		},
+		"12": {
+			"title": "",
+			"volume": "",
+			"last_updated": "1742079600",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/n87wmjrxb4x"
+			}
+		},
+		"13": {
+			"title": "",
+			"volume": "",
+			"last_updated": "1744495200",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/lqyemzpgk7d"
+			}
+		},
+		"14": {
+			"title": "",
+			"volume": "",
+			"last_updated": "1746309600",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/agyvrlerz78"
+			}
+		},
+		"15": {
+			"title": "",
+			"volume": "",
+			"last_updated": "1753567200",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/ne7bq3xqv75"
 			}
 		}
 	}

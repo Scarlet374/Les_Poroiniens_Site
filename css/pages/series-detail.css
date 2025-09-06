@@ -569,6 +569,164 @@ body.dark .detail-episode-item {
   opacity: 0.7;
 }
 
+/* section recommandations (3 colonnes responsive) */
+.recommendations-section { margin-top: 24px; }
+.recommendations-section .reco-title { margin: 0 0 10px; }
+.recommendations-section .reco-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+@media (max-width: 900px){
+  .recommendations-section .reco-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 520px){
+  .recommendations-section .reco-grid { grid-template-columns: 1fr; }
+}
+
+/* panneau recommandations : même look que tes cartes/chapitres */
+.recommendations-section .reco-panel{
+  border:1px solid var(--ln-border);
+  border-radius: var(--ln-radius, 18px);
+  background: color-mix(in oklab, var(--ln-surface) 6%, transparent);
+  padding: 12px;
+  margin-top: 16px;
+}
+
+.recommendations-section .reco-title{
+  margin: 4px 8px 10px;
+}
+
+/* grille 3 colonnes responsive */
+.recommendations-section .reco-grid{
+  display:grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: 12px;
+}
+
+/* cartes reco : on force un layout simple (img bien visible) */
+.recommendations-section .series-card.series-card--reco{
+  display:flex;
+  gap:12px;
+  border:1px solid var(--ln-border);
+  border-radius: calc(var(--ln-radius, 18px) - 6px);
+  background: color-mix(in oklab, var(--ln-surface) 3%, transparent);
+  padding:12px;
+  text-decoration:none;
+  color: var(--ln-text);
+}
+
+.recommendations-section .series-card.series-card--reco .series-cover{
+  flex:0 0 90px;
+  aspect-ratio: 3/4;
+  overflow:hidden;
+  border-radius: 8px;
+}
+
+.recommendations-section .series-card.series-card--reco .series-cover img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+
+.recommendations-section .series-card.series-card--reco .series-info{
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+
+.recommendations-section .series-card.series-card--reco .series-title{
+  font-weight:600;
+  margin-bottom:6px;
+}
+
+/* responsive */
+@media (max-width: 900px){
+  .recommendations-section .reco-grid{ grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 560px){
+  .recommendations-section .reco-grid{ grid-template-columns: 1fr; }
+}
+
+/* même look que le panneau chapitres */
+.recommendations-section .reco-panel.like-chapters{
+  border:1px solid var(--ln-border);
+  border-radius: var(--ln-radius, 18px);
+  background: color-mix(in oklab, var(--ln-surface) 6%, transparent);
+  padding: 12px;
+  margin-top: 16px;
+}
+
+/* grille 3 colonnes */
+.recommendations-section .reco-grid{
+  display:grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap:12px;
+}
+
+/* carte reco simple (image visible à coup sûr) */
+.recommendations-section .series-card.series-card--reco{
+  display:flex;
+  gap:12px;
+  border:1px solid var(--ln-border);
+  border-radius: calc(var(--ln-radius, 18px) - 6px);
+  background: color-mix(in oklab, var(--ln-surface) 3%, transparent);
+  padding:12px;
+  text-decoration:none;
+  color: var(--ln-text);
+}
+
+.recommendations-section .series-card.series-card--reco .series-cover{
+  flex:0 0 90px;
+  aspect-ratio: 3/4;
+  overflow:hidden;
+  border-radius:8px;
+}
+
+/* forcer l’affichage, même si un style global cache les <img> au chargement */
+.recommendations-section .series-card.series-card--reco .series-cover img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+  opacity:1 !important;
+}
+
+.recommendations-section .series-card.series-card--reco .series-info{
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+
+.recommendations-section .series-card.series-card--reco .series-title{
+  font-weight:600;
+  margin-bottom:6px;
+}
+
+@media (max-width: 900px){
+  .recommendations-section .reco-grid{ grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 560px){
+  .recommendations-section .reco-grid{ grid-template-columns: 1fr; }
+}
+
+/* largeur/alignement identiques à la section chapitres */
+#recommendations-section{
+  max-width: var(--content-max, 1100px);
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+/* grille identique aux cartes d’accueil */
+.series-reco-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--grid-gap, 16px);
+}
+
 @media (max-width: 992px) {
   .player-layout-grid {
     display: flex;

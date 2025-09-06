@@ -81,7 +81,7 @@ function renderPagedGrid({ grid, items, renderFn, page, pageSize, pager, section
 
   if (typeof afterRender === "function") afterRender(grid);
 
-  // --- Pager ---
+  // --- Pager (version "4 5 … 8 9") ---
   if (pages <= 1) { pager.innerHTML = ""; return; }
 
   const btn = (label, act, disabled = false) =>
@@ -89,26 +89,46 @@ function renderPagedGrid({ grid, items, renderFn, page, pageSize, pager, section
   const pageBtn = (n, active) =>
     `<button type="button" class="pager-num ${active ? "is-active" : ""}" data-page="${n}">${n}</button>`;
 
-  const maxNums = 7;
-  let first = Math.max(1, p - Math.floor(maxNums / 2));
-  let last  = Math.min(pages, first + maxNums - 1);
-  first     = Math.max(1, last - maxNums + 1);
+  // CONFIG
+  const LEFT_BEFORE = 1;  // combien de pages à afficher AVANT (incluant la courante) -> "4 5"
+  const LEFT_AFTER  = 0;  // 0 pour ne pas montrer "6" (mettre 1 si tu veux "4 5 6")
+  const RIGHT_EDGES = 2;  // toujours montrer les 2 dernières -> "8 9"
 
-  let numsHtml = "";
-  if (first > 1) {
-    numsHtml += pageBtn(1, p === 1);
-    if (first > 2) numsHtml += `<span class="pager-ellipsis">…</span>`;
+  function buildSlimPager(cur, total) {
+    const keep = new Set();
+
+    // Fenêtre gauche autour de la page courante (sans les tout débuts)
+    const start = Math.max(1, cur - LEFT_BEFORE);
+    const end   = Math.min(total, cur + LEFT_AFTER);
+    for (let i = start; i <= end; i++) keep.add(i);
+
+    // Bords droits (les 2 dernières)
+    for (let i = Math.max(1, total - RIGHT_EDGES + 1); i <= total; i++) keep.add(i);
+
+    // Ordonne et insère "…"
+    const seq = [...keep].filter(n => n >= 1 && n <= total).sort((a,b) => a - b);
+    const out = [];
+    let prev = 0;
+    for (const n of seq) {
+      if (prev && n - prev > 1) out.push("…");
+      out.push(n);
+      prev = n;
+    }
+    return out;
   }
-  for (let i = first; i <= last; i++) numsHtml += pageBtn(i, i === p);
-  if (last < pages) {
-    if (last < pages - 1) numsHtml += `<span class="pager-ellipsis">…</span>`;
-    numsHtml += pageBtn(pages, p === pages);
+
+  const seq = buildSlimPager(p, pages);
+  let numsHtml = "";
+  for (const tok of seq) {
+    numsHtml += tok === "…"
+      ? `<span class="pager-ellipsis">…</span>`
+      : pageBtn(tok, tok === p);
   }
 
   pager.innerHTML =
     `${btn("«", "first", p === 1)}${btn("‹", "prev", p === 1)}<div class="pager-nums">${numsHtml}</div>${btn("›", "next", p === pages)}${btn("»", "last", p === pages)}`;
 
-  // Events
+  // events identiques…
   pager.onclick = (e) => {
     const t = e.target.closest("button");
     if (!t) return;
@@ -587,17 +607,17 @@ function makeSeriesCardsClickable() {
 }
 
 // Renvoie le plus grand timestamp d'une série (chapitres ou fallback série)
+// Accepte timestamps (s/ms) ET dates en string (FR/ISO) via parseDateToTimestamp
 function getLastUpdateStamp(series) {
-  // Certains de tes JSON ont la série dans { series: {...} }, on couvre les deux cas
   const s = series?.series || series;
   const chapters = s?.chapters || {};
   let ts = 0;
 
-  // 1) on regarde tous les chapitres
+  // 1) regarder tous les chapitres
   for (const k of Object.keys(chapters)) {
     const ch = chapters[k] || {};
     const candidates = [
-      ch.last_updated,    // ce que tu utilises le plus souvent
+      ch.last_updated,  // ton champ courant
       ch.lastUpdate,
       ch.updated_at,
       ch.date,
@@ -605,18 +625,18 @@ function getLastUpdateStamp(series) {
       ch.timestamp
     ];
     for (const v of candidates) {
-      const n = Number(v);
-      if (Number.isFinite(n) && n > ts) ts = n;
+      const t = parseDateToTimestamp(v);
+      if (!Number.isNaN(t) && t > ts) ts = t;
     }
   }
 
-  // 2) fallback au niveau série si on n'a rien trouvé
+  // 2) fallback au niveau série
   const seriesLevelCandidates = [
-    s?.last_updated, s?.updated_at, s?.lastUpdate, s?.release_time
+    s?.last_updated, s?.updated_at, s?.lastUpdate, s?.release_time, s?.date
   ];
   for (const v of seriesLevelCandidates) {
-    const n = Number(v);
-    if (Number.isFinite(n) && n > ts) ts = n;
+    const t = parseDateToTimestamp(v);
+    if (!Number.isNaN(t) && t > ts) ts = t;
   }
 
   return ts || 0;
