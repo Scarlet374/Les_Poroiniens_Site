@@ -1,16 +1,17 @@
 // functions/_middleware.js
+import { slugToFile } from "./_slugmap.js";
 
 function slugify(text) {
   if (!text) return "";
   return text
     .toString()
-    .normalize("NFD") // Sépare les caractères de leurs accents (ex: "é" -> "e" + "´")
-    .replace(/[\u0300-\u036f]/g, "") // Supprime les accents et diacritiques
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
     .toLowerCase()
     .trim()
-    .replace(/[\s\u3000]+/g, "_") // Remplace les espaces (normaux et idéographiques) par un underscore
-    .replace(/[^\w-]+/g, "") // Supprime les caractères non autorisés
-    .replace(/--+/g, "_"); // Nettoie les tirets multiples (au cas où)
+    .replace(/[\s\u3000]+/g, "_")
+    .replace(/[^\w-]+/g, "")
+    .replace(/--+/g, "_");
 }
 
 function generateMetaTags(meta) {
@@ -18,8 +19,7 @@ function generateMetaTags(meta) {
   const description =
     meta.description ||
     "Retrouvez toutes les sorties des Poroïniens en un seul et unique endroit !";
-  const imageUrl =
-    meta.image || new URL("/img/banner.jpg", meta.url).toString();
+  const imageUrl = meta.image || new URL("/img/banner.jpg", meta.url).toString();
   const url = meta.url || "https://lesporoiniens.org";
 
   return `
@@ -41,22 +41,20 @@ export async function onRequest(context) {
   const { request, env, next } = context;
   const url = new URL(request.url);
   const originalPathname = url.pathname;
+
+  // Normalisation basique
   let pathname =
     originalPathname.endsWith("/") && originalPathname.length > 1
       ? originalPathname.slice(0, -1)
       : originalPathname;
-  // on retire ".html" si présent
-  if (pathname.endsWith(".html")) {
-    pathname = pathname.slice(0, -5);
-  }
-  if (pathname === "/index") pathname = "/"; // Traite "index" comme racine
+  if (pathname.endsWith(".html")) pathname = pathname.slice(0, -5);
+  if (pathname === "/index") pathname = "/";
 
-  // --- GESTION SPÉCIFIQUE DES URLS DE LA GALERIE ---
+  // --- Pages spéciales (ex: galerie) ---
   if (pathname.startsWith("/galerie")) {
     const metaData = {
       title: "Galerie - Les Poroïniens",
-      description:
-        "Découvrez toutes les colorisations et fan-arts de la communauté !",
+      description: "Découvrez toutes les colorisations et fan-arts de la communauté !",
       htmlFile: "/galerie.html",
     };
     const assetUrl = new URL(metaData.htmlFile, url.origin);
@@ -64,12 +62,10 @@ export async function onRequest(context) {
     let html = await response.text();
     const tags = generateMetaTags({ ...metaData, url: url.href });
     html = html.replace("<!-- DYNAMIC_OG_TAGS_PLACEHOLDER -->", tags);
-    return new Response(html, {
-      headers: { "Content-Type": "text/html;charset=UTF-8" },
-    });
+    return new Response(html, { headers: { "Content-Type": "text/html;charset=UTF-8" } });
   }
 
-  // Gestion des pages statiques
+  // --- Pages statiques ---
   const staticPageMeta = {
     "/": {
       title: "Accueil - Les Poroïniens",
@@ -85,7 +81,6 @@ export async function onRequest(context) {
       htmlFile: "/presentation.html",
     },
   };
-
   if (staticPageMeta[pathname]) {
     const metaData = staticPageMeta[pathname];
     const assetUrl = new URL(metaData.htmlFile, url.origin);
@@ -93,184 +88,148 @@ export async function onRequest(context) {
     let html = await response.text();
     const tags = generateMetaTags({ ...metaData, url: url.href });
     html = html.replace("<!-- DYNAMIC_OG_TAGS_PLACEHOLDER -->", tags);
-    return new Response(html, {
-      headers: { "Content-Type": "text/html;charset=UTF-8" },
-    });
+    return new Response(html, { headers: { "Content-Type": "text/html;charset=UTF-8" } });
   }
 
-  // Ignorer les assets connus pour ne pas faire de traitement inutile
-  const knownPrefixes = [
-    "/css/",
-    "/js/",
-    "/img/",
-    "/data/",
-    "/includes/",
-    "/functions/",
-    "/api/",
-    "/fonts/",
-  ];
+  // --- Laisse passer les assets ---
+  const knownPrefixes = ["/css/", "/js/", "/img/", "/data/", "/includes/", "/functions/", "/api/", "/fonts/", "/ln/"];
   if (knownPrefixes.some((prefix) => originalPathname.startsWith(prefix))) {
     return next();
   }
 
-  // --- LOGIQUE DE ROUTAGE DYNAMIQUE POUR LES SÉRIES ET LE LECTEUR ---
+  // --- Routage dynamique séries / lecteur ---
   try {
-    const pathSegments = originalPathname.split("/").filter(Boolean);
-    if (pathSegments.length === 0) return next(); // C'est la page d'accueil, déjà gérée
+    const segments = originalPathname.split("/").filter(Boolean);
+    if (segments.length === 0) return next(); // racine déjà gérée
 
-    const seriesSlug = pathSegments[0];
+    const seriesSlug = segments[0];
 
-    // Charger la config et les données de toutes les séries une seule fois
-    const config = await env.ASSETS.fetch(
-      new URL("/data/config.json", url.origin)
-    ).then((res) => res.json());
-    const seriesFiles = config.LOCAL_SERIES_FILES || [];
-    const allSeriesDataPromises = seriesFiles.map((filename) =>
-      env.ASSETS.fetch(new URL(`/data/series/${filename}`, url.origin))
-        .then((res) => res.json().then((data) => ({ data, filename })))
-        .catch((e) => {
-          console.error(`Failed to load ${filename}`, e);
-          return null;
-        })
-    );
-    const allSeriesResults = (await Promise.all(allSeriesDataPromises)).filter(
-      Boolean
-    );
-    const foundSeries = allSeriesResults.find(
-      (s) => s && s.data && slugify(s.data.title) === seriesSlug
-    );
+    // 1) Trouver le fichier via le slug map (aucun scan, 0 fetch supplémentaire)
+    const matchFilename =
+      slugToFile[seriesSlug] ||
+      slugToFile[seriesSlug.replace(/-/g, "_")] ||
+      slugToFile[seriesSlug.replace(/_/g, "-")];
 
-    if (!foundSeries) return next(); // Laisser Cloudflare Pages gérer la 404
-
-    const seriesData = foundSeries.data;
-    const jsonFilename = foundSeries.filename;
-    const ogImageFilename = jsonFilename.replace(".json", ".png");
-    const ogImageUrl = new URL(
-      `/img/banner/${ogImageFilename}`,
-      url.origin
-    ).toString();
-
-    // ROUTE 1: LECTEUR DE CHAPITRE (ex: /nom-de-serie/123 ou /nom-de-serie/123/5)
-    const isChapterRoute =
-      (pathSegments.length === 2 || pathSegments.length === 3) &&
-      !isNaN(parseFloat(pathSegments[1]));
-
-    if (isChapterRoute) {
-      const chapterNumber = pathSegments[1];
-      if (seriesData.chapters[chapterNumber]) {
-        const metaData = {
-          title: `${seriesData.title} - Chapitre ${chapterNumber} | Les Poroïniens`,
-          description: `Lisez le chapitre ${chapterNumber} de ${seriesData.title}. ${seriesData.description}`,
-          image: ogImageUrl,
-        };
-
-        const assetUrl = new URL("/reader.html", url.origin);
-        let html = await env.ASSETS.fetch(assetUrl).then((res) => res.text());
-
-        const tags = generateMetaTags({ ...metaData, url: url.href });
-        html = html.replace("<!-- DYNAMIC_OG_TAGS_PLACEHOLDER -->", tags);
-
-        const readerPayload = {
-          series: seriesData,
-          chapterNumber: chapterNumber,
-        };
-        html = html.replace(
-          "<!-- READER_DATA_PLACEHOLDER -->",
-          JSON.stringify(readerPayload)
-        );
-
-        return new Response(html, {
-          headers: { "Content-Type": "text/html;charset=UTF-8" },
-        });
+    // 2) Charger UNIQUEMENT cette série si on a un match
+    let seriesData = null;
+    let ogImageUrl = new URL("/img/banner.jpg", url.origin).toString(); // défaut générique
+    if (matchFilename) {
+      const jsonUrl = new URL(`/data/series/${matchFilename}`, url.origin);
+      const resp = await env.ASSETS.fetch(jsonUrl);
+      if (resp.ok) {
+        seriesData = await resp.json();
+        const ogImageFilename = matchFilename.replace(".json", ".png");
+        ogImageUrl = new URL(`/img/banner/${ogImageFilename}`, url.origin).toString();
       }
     }
 
-    // --- NOUVELLE SECTION POUR GÉRER LES ÉPISODES ---
-    const isEpisodeRoute =
-      pathSegments.length > 1 && pathSegments[1] === "episodes";
-    if (isEpisodeRoute) {
-      let metaData;
-      const animeInfo =
-        seriesData.anime && seriesData.anime[0] ? seriesData.anime[0] : null;
+    // 3) Routes
+    const isChapterRoute =
+      (segments.length === 2 || segments.length === 3) && !isNaN(parseFloat(segments[1]));
+    const isEpisodes = segments.length > 1 && segments[1] === "episodes";
+    const isCover = segments.length > 1 && segments[1] === "cover";
 
-      if (pathSegments.length === 3) {
-        // C'est une page de lecteur d'épisode
-        const episodeNumber = pathSegments[2];
-        metaData = {
-          title: `Épisode ${episodeNumber} de ${seriesData.title} - Les Poroïniens`,
-          description: `Regardez l'épisode ${episodeNumber} de l'anime ${seriesData.title}.`,
-          image: animeInfo?.cover_an || ogImageUrl,
+    // --- LECTEUR (/slug/123[/x]) ---
+    if (isChapterRoute) {
+      const chapterNumber = segments[1];
+      const assetUrl = new URL("/reader.html", url.origin);
+      let html = await env.ASSETS.fetch(assetUrl).then((res) => res.text());
+
+      if (seriesData?.chapters && seriesData.chapters[chapterNumber]) {
+        const metaData = {
+          title: `${seriesData.title} - Chapitre ${chapterNumber} | Les Poroïniens`,
+          description: `Lisez le chapitre ${chapterNumber} de ${seriesData.title}. ${seriesData.description || ""}`,
+          image: ogImageUrl,
         };
+        const tags = generateMetaTags({ ...metaData, url: url.href });
+        html = html
+          .replace("<!-- DYNAMIC_OG_TAGS_PLACEHOLDER -->", tags)
+          .replace("<!-- READER_DATA_PLACEHOLDER -->", JSON.stringify({ series: seriesData, chapterNumber }));
       } else {
-        // C'est la liste des épisodes
-        metaData = {
-          title: `Épisodes de ${seriesData.title} - Les Poroïniens`,
-          description: `Liste de tous les épisodes de l'anime ${seriesData.title}.`,
-          image: animeInfo?.cover_an || ogImageUrl,
-        };
+        // fallback : pas d'injection, le front fera le fetch client → pas de boucle
+        const tags = generateMetaTags({
+          title: "Lecture - Les Poroïniens",
+          description: "",
+          image: ogImageUrl,
+          url: url.href,
+        });
+        html = html
+          .replace("<!-- DYNAMIC_OG_TAGS_PLACEHOLDER -->", tags)
+          .replace("<!-- READER_DATA_PLACEHOLDER -->", "READER_DATA_PLACEHOLDER");
       }
-      // Dans tous les cas (liste ou lecteur), on sert la page de détail qui contient le routeur JS
+
+      return new Response(html, { headers: { "Content-Type": "text/html; charset=UTF-8" } });
+    }
+
+    // --- ÉPISODES (/slug/episodes[/<n>]) ---
+    if (isEpisodes) {
+      const animeInfo = seriesData?.anime && seriesData.anime[0] ? seriesData.anime[0] : null;
+      const metaData =
+        segments.length === 3
+          ? {
+              title: `Épisode ${segments[2]} de ${seriesData?.title || ""} - Les Poroïniens`,
+              description: `Regardez l'épisode ${segments[2]} de l'anime ${seriesData?.title || ""}.`,
+              image: animeInfo?.cover_an || ogImageUrl,
+            }
+          : {
+              title: `Épisodes de ${seriesData?.title || ""} - Les Poroïniens`,
+              description: `Liste de tous les épisodes de l'anime ${seriesData?.title || ""}.`,
+              image: animeInfo?.cover_an || ogImageUrl,
+            };
+
       const assetUrl = new URL("/series-detail.html", url.origin);
       let html = await env.ASSETS.fetch(assetUrl).then((res) => res.text());
 
       const tags = generateMetaTags({ ...metaData, url: url.href });
       html = html.replace("<!-- DYNAMIC_OG_TAGS_PLACEHOLDER -->", tags);
+
+      // injection si on a les données; sinon placeholder (fallback client côté front)
       html = html.replace(
         "<!-- SERIES_DATA_PLACEHOLDER -->",
-        JSON.stringify(seriesData)
+        seriesData ? JSON.stringify(seriesData) : "SERIES_DATA_PLACEHOLDER"
       );
 
-      return new Response(html, {
-        headers: { "Content-Type": "text/html;charset=UTF-8" },
-      });
+      return new Response(html, { headers: { "Content-Type": "text/html;charset=UTF-8" } });
     }
-    // --- FIN DE LA NOUVELLE SECTION ---
 
-    // ROUTE 2: GALERIE DE COUVERTURES (ex: /nom-de-serie/cover)
-    if (pathSegments.length > 1 && pathSegments[1] === "cover") {
+    // --- GALERIE DE COUVERTURES (/slug/cover) ---
+    if (isCover) {
       const metaData = {
-        title: `Couvertures de ${seriesData.title} - Les Poroïniens`,
-        description: `Découvrez toutes les couvertures de la série ${seriesData.title} !`,
+        title: `Couvertures de ${seriesData?.title || ""} - Les Poroïniens`,
+        description: `Découvrez toutes les couvertures de la série ${seriesData?.title || ""} !`,
         image: ogImageUrl,
       };
       const assetUrl = new URL("/series-covers.html", url.origin);
       let html = await env.ASSETS.fetch(assetUrl).then((res) => res.text());
-
       const tags = generateMetaTags({ ...metaData, url: url.href });
       html = html.replace("<!-- DYNAMIC_OG_TAGS_PLACEHOLDER -->", tags);
-      return new Response(html, {
-        headers: { "Content-Type": "text/html;charset=UTF-8" },
-      });
+      return new Response(html, { headers: { "Content-Type": "text/html;charset=UTF-8" } });
     }
 
-    // ROUTE 3: PAGE DE DÉTAIL DE LA SÉRIE (ex: /nom-de-serie)
-    if (pathSegments.length === 1) {
+    // --- PAGE DÉTAIL (/slug) ---
+    if (segments.length === 1) {
       const metaData = {
-        title: `${seriesData.title} - Les Poroïniens`,
-        description: seriesData.description,
+        title: `${seriesData?.title || ""} - Les Poroïniens`,
+        description: seriesData?.description || "",
         image: ogImageUrl,
       };
       const assetUrl = new URL("/series-detail.html", url.origin);
       let html = await env.ASSETS.fetch(assetUrl).then((res) => res.text());
-
       const tags = generateMetaTags({ ...metaData, url: url.href });
       html = html.replace("<!-- DYNAMIC_OG_TAGS_PLACEHOLDER -->", tags);
+
+      // injection si on a trouvé la série, sinon placeholder (fallback front)
       html = html.replace(
         "<!-- SERIES_DATA_PLACEHOLDER -->",
-        JSON.stringify(seriesData)
+        seriesData ? JSON.stringify(seriesData) : "SERIES_DATA_PLACEHOLDER"
       );
 
-      return new Response(html, {
-        headers: { "Content-Type": "text/html;charset=UTF-8" },
-      });
+      return new Response(html, { headers: { "Content-Type": "text/html;charset=UTF-8" } });
     }
   } catch (error) {
-    console.error(
-      `Error during dynamic routing for "${originalPathname}":`,
-      error
-    );
+    console.error(`Error during dynamic routing for "${originalPathname}":`, error);
   }
 
-  // Si aucune route ne correspond, on passe la main
+  // Pas concerné → main HTML / 404 CF Pages
   return next();
 }
