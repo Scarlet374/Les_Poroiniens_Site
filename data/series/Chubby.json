@@ -1,0 +1,69 @@
+{
+	"title": "Le Musclé et la Potelée",
+	"description": "Chaque jour, Kataoka, un jeune homme à la carrure impressionnante, se consacre à sculpter son corps. À la salle de sport qu’il fréquente, une employée attire sans cesse son regard. Son nom ? Shiina. Mais ce n’est pas sa silhouette voluptueuse qui a d’abord captivé son attention… c’est son petit ventre rond et moelleux !?",
+	"artist": "Hinohara Fuki",
+	"author": "Hinohara Fuki",
+	"cover": "https://file.garden/aKS5jUD-slfn6iFT/Le%20Muscl%C3%A9%20et%20la%20Potel%C3%A9e.jpg",
+	"manga_type": "Seinen",
+    "magazine": "Yanmanga",
+	"release_year": 2025,
+	"tags": [
+		"Comédie",
+		"Romance",
+		"Tranche de vie"
+	],
+	"alternative_titles": [
+		"Ookii Muki Muki Chiisai Muchi Muchi",
+		"Big and Muscular, Small and Chubby"
+	],
+	"release_status": "En cours",
+	"covers_gallery": [
+		{
+			"url_hq": "https://file.garden/aKS5jUD-slfn6iFT/Le%20Muscl%C3%A9%20et%20la%20Potel%C3%A9e.jpg",
+			"url_lq": "https://file.garden/aKS5jUD-slfn6iFT/Le%20Muscl%C3%A9%20et%20la%20Potel%C3%A9e.jpg",
+			"volume": "1" 
+		}
+	],
+	"chapters": {
+		"1": {
+			"title": "",
+			"volume": "",
+			"last_updated": "1757275653",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/na7k8ng8b78"
+			}
+		},
+		"2": {
+			"title": "",
+			"volume": "",
+			"last_updated": "1757275653",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/vj4j86z8x78"
+			}
+		},
+		"3": {
+			"title": "",
+			"volume": "",
+			"last_updated": "1757275654",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/ej7m865anyd"
+			}
+		},
+		"4": {
+			"title": "",
+			"volume": "",
+			"last_updated": "1757275655",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/qe4gw83mj7j"
+			}
+		},
+		"5": {
+			"title": "",
+			"volume": "",
+			"last_updated": "1757275656",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/bp45qnrmq45"
+			}
+		}
+	}
+}

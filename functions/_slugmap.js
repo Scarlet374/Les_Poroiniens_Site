@@ -34,6 +34,7 @@ export const slugToFile = {
   "la_presidente_lalcool_et_les_etoiles": "Shachou_to_Sake_to_Hoshi.json",
   "lamour_a_sens_unique_de_momoi": "Momoiro_no_Kataomoi_(Doujinshi).json",
   "le_bar_a_hotesse_genshin": "Le_Bar_À_Hôtesse_Genshin_(Doujinshi).json",
+  "le_muscle_et_la_potelee": "Chubby.json",
   "le_porte_bonheur_de_mademoiselle_kaguya": "Kaguya_sama_no_Enmusubi_(Doujinshi).json",
   "le_quotidien_de_sa-chan_une_employee_de_pharmacie": "Sa_Chan.json",
   "les_amies_du_chevalier_le_soignent_avec_leur_corps": "Kenshi_sama_o_Karada_de_Iyasu_Nakama_tachi_(Doujinshi).json",
