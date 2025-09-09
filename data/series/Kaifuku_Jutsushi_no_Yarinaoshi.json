@@ -158,20 +158,145 @@
 			"title": "Prologue",
 			"volume": "1",
 			"last_updated": "1721994697",
-			"file": "https://file.garden/aKS5jUD-slfn6iFT/redov1c0.txt"
+			"file": "https://file.garden/aKS5jUD-slfn6iFT/redov1c0V2.txt"
 		},
 		"1": {
 			"title": "Le Garçon Fait un Rêve",
 			"volume": "1",
 			"last_updated": "1722549600",
-			"file": "https://file.garden/aKS5jUD-slfn6iFT/redov1c1.txt"
+			"file": "https://file.garden/aKS5jUD-slfn6iFT/redov1c1V2.txt"
 		},
 		"2": {
 			"title": "Le Garçon se Souvient de Tout",
 			"volume": "1",
 			"last_updated": "1723154400",
-			"file": "https://file.garden/aKS5jUD-slfn6iFT/redov1c2.txt"
-		}
-		
+			"file": "https://file.garden/aKS5jUD-slfn6iFT/redov1c2V2.txt"
+		},
+		"3": {
+			"title": "Le Garçon Séveille Comme Guérisseur",
+			"volume": "1",
+			"last_updated": "1723759200",
+			"file": "https://file.garden/aKS5jUD-slfn6iFT/redov1c3V2.txt"
+		},
+		"4": {
+			"title": "Le Guérisseur rencontre le Héros Magique",
+			"volume": "1",
+			"last_updated": "1724364000",
+			"file": "https://file.garden/aKS5jUD-slfn6iFT/redov1c4V2.txt"
+		},
+		"5": {
+			"title": "Le Guérisseur est Invité dans la Capitale",
+			"volume": "1",
+			"last_updated": "1726178400",
+			"file": "https://file.garden/aKS5jUD-slfn6iFT/redov1c5V4.txt"
+		},
+    "6": {
+      "title": "Le Guérisseur Devient Adulte",
+      "volume": "1",
+      "last_updated": "1727560800",
+      "file": "https://file.garden/aKS5jUD-slfn6iFT/redov1c6.txt"
+    },
+    "7": {
+      "title": "Le Guérisseur Brûle de Vengeance",
+      "volume": "1",
+      "last_updated": "1728165600",
+      "file": "https://file.garden/aKS5jUD-slfn6iFT/redov1c7.txt"
+    },
+    "8": {
+      "title": "Le Guérisseur Devient un Chien",
+      "volume": "1",
+      "last_updated": "1728597600",
+      "file": "https://file.garden/aKS5jUD-slfn6iFT/redov1c8.txt"
+    },
+    "9": {
+      "title": "Le Guérisseur Arrête d’Endurer",
+      "volume": "1",
+      "last_updated": "1729980000",
+      "file": "https://file.garden/aKS5jUD-slfn6iFT/redov1c9.txt"
+    },
+    "10": {
+      "title": "Le Guérisseur Va Voir la Princesse Flare",
+      "volume": "1",
+      "last_updated": "1730502000",
+      "file": "https://file.garden/aKS5jUD-slfn6iFT/redov1c10.txt"
+    },
+    "11": {
+      "title": "Le Guérisseur Détruit la Princesse Flare",
+      "volume": "1",
+      "last_updated": "9/11/2024",
+      "file": "https://file.garden/aKS5jUD-slfn6iFT/redov1c11.txt"
+    },
+    "12": {
+      "title": "Le Guérisseur se Rend dans la Ville Suivante à la Recherche d’Amis",
+      "volume": "1",
+      "last_updated": "18/11/2024",
+      "file": "https://file.garden/aKS5jUD-slfn6iFT/redov1c12.txt"
+    },
+    "12.1":{
+      "title": "Chapitre 0 - Le Jour Où Keyaru s’est Réveillé",
+      "volume": "1",
+      "last_updated": "22/11/2024",
+      "file": "https://file.garden/aKS5jUD-slfn6iFT/redov1c12.1.txt"
+    },
+    "13": {
+      "title": "Le Guérisseur se Dirige Vers une Nouvelle Ville",
+      "volume": "1",
+      "last_updated": "05/12/2024",
+      "file": "https://file.garden/aKS5jUD-slfn6iFT/redov1c13.txt"
+    },
+    "14": {
+      "title": "Le Guérisseur Atteint la Ville des Forts",
+      "volume": "1",
+      "last_updated": "09/12/2024",
+      "file": "https://file.garden/aKS5jUD-slfn6iFT/redov1c14.txt"
+    },
+    "15": {
+      "title": "Le Héros Sauve la Ville ?",
+      "volume": "1",
+      "last_updated": "17/12/2024",
+      "file": "https://file.garden/aKS5jUD-slfn6iFT/redov1c15.txt"
+    },
+    "16": {
+      "title": "Le Héros Fait Affaires",
+      "volume": "1",
+      "last_updated": "12/01/2025",
+      "file": "https://file.garden/aKS5jUD-slfn6iFT/redov1c16.txt"
+    },
+    "17": {
+      "title": "Le Héros Achète un Esclave",
+      "volume": "1",
+      "last_updated": "19/01/2025",
+      "file": "https://file.garden/aKS5jUD-slfn6iFT/redov1c17.txt"
+    },
+    "18": {
+      "title": "Le Héros Réconforte la Jeune Fille",
+      "volume": "1",
+      "last_updated": "26/01/2025",
+      "file": "https://file.garden/aKS5jUD-slfn6iFT/redov1c18.txt"
+    },
+    "19": {
+      "title": "Le Guérisseur Arrive au Village des Loups de Glaces",
+      "volume": "1",
+      "last_updated": "03/02/2025",
+      "file": "https://file.garden/aKS5jUD-slfn6iFT/redov1c19.txt"
+    },
+    "20": {
+      "title": "Le Guérisseur devient un Héros",
+      "volume": "1",
+      "last_updated": "09/02/2025",
+      "file": "https://file.garden/aKS5jUD-slfn6iFT/redov1c20.txt"
+    },
+    "20.1": {
+      "title": "Épilogue - Le Guérisseur obtient Setsuna",
+      "volume": "1",
+      "last_updated": "17/02/2025",
+      "file": "https://file.garden/aKS5jUD-slfn6iFT/redov1c20.1V2.txt"
+    },
+    "20.2": {
+      "title": "Postface",
+      "volume": "1",
+      "last_updated": "09/09/2025/16h25",
+      "file": "https://file.garden/aKS5jUD-slfn6iFT/redov1c20.2.txt"
+    }
 	}
 }

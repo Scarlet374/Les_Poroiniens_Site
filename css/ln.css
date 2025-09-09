@@ -556,3 +556,129 @@ html.ln-mode, body.ln-mode {
   }
 }
 /* ---------------------- */
+
+/* --- Cadre 1 case (équivalent tableau 1 cellule) — thème-aware --- */
+#ln-article .ln-content .ln-box{
+  display:block;
+  border:1px solid var(--ln-border);
+  border-radius: clamp(10px, calc(var(--ln-radius, 18px) * .6), 14px);
+  padding:.75rem .9rem;
+  margin:1rem 0;
+  background: color-mix(in oklab, var(--ln-surface) 6%, transparent); /* léger voile pour se détacher du fond, transparent en clair */
+  color: var(--ln-text);
+  line-height:1.5;
+  white-space: pre-wrap;      /* ← conserve les espaces ET les \n */
+  tab-size: 2;                /* ← largeur d’une tabulation (Chrome/Edge) */
+}
+
+/* Variantes */
+#ln-article .ln-content .ln-box.is-compact  {
+  padding:.5rem .7rem;
+  line-height: 1;
+  font-variant-numeric: tabular-nums; /* sans effet si non supporté par Comfortaa */
+ }
+#ln-article .ln-content .ln-box.is-spacious { padding:1rem 1.25rem; }
+#ln-article .ln-content .ln-box.is-center   { text-align:center; }
+
+/* Comfortaa forcé à l'intérieur du cadre */
+#ln-article .ln-content .ln-box.comfortaa-text,
+#ln-article .ln-content .ln-box.comfortaa-text *{
+  font-family:"Comfortaa", cursive !important;
+}
+
+#ln-article .ln-content .comfortaa-text,
+#ln-article .ln-content .comfortaa-text *{
+  font-family:"Comfortaa", cursive !important;
+}
+
+/* Petits tags / badges */
+#ln-article .ln-content .ln-badge{
+  display:inline-block;
+  padding:.1rem .45rem;
+  border:1px solid currentColor;
+  border-radius:.35rem;
+  font-size:.85em;
+  opacity:.85;
+  margin-right:.4rem;
+}
+
+/* Séparateur centré */
+#ln-article .ln-content .ln-center{
+  text-align:center;
+  background:transparent !important;
+  color:inherit;
+}
+
+/* --- Séparateur centré --- */
+#ln-article .ln-content .ln-sep{
+  display:block;
+  text-align:center;
+  margin: 1.5em 0;
+  line-height:1;
+  color: var(--ln-text);
+  opacity:.9;
+  /* taille adaptable mais discrète */
+  font-size: clamp(18px, 2.2vw, 24px);
+}
+#ln-article .ln-content .ln-sep::before{
+  content: attr(data-icon, "◇"); /* défaut = losange si data-icon absent */
+}
+
+/* --- Listes rendues par le site (UL/OL) --- */
+/* Cache les <br> ajoutés par l'import dans les listes */
+#ln-article .ln-content .ln-list br {
+  display: none !important;
+}
+/* Listes serrées dans le lecteur */
+#ln-article .ln-content ul,
+#ln-article .ln-content ol {
+  margin-block: .4em .6em;        /* peu d'espace autour de la liste */
+  margin-inline-start: 1.1em;     /* retrait gauche */
+  padding: 0;
+  list-style-position: outside;
+  line-height: 1.45;              /* plus compact */
+}
+
+#ln-article .ln-content li {
+  margin: 0;                      /* pas de marge verticale sur les <li> */
+}
+
+#ln-article .ln-content li + li {
+  margin-top: .18em;              /* petit espace entre items */
+}
+
+/* Si le paste a mis des <p> dans les <li>, on annule leurs grosses marges */
+#ln-article .ln-content li > p {
+  margin: 0;
+}
+
+/* Sécurité : si un <li> contient plusieurs blocs, on retire les marges top/bottom parasites */
+#ln-article .ln-content li > *:first-child { margin-top: 0; }
+#ln-article .ln-content li > *:last-child  { margin-bottom: 0; }
+
+/* Marqueur un peu plus fin */
+#ln-article .ln-content li::marker {
+  font-size: .9em;
+  opacity: .9;
+}
+
+/* Variante encore plus compacte si besoin */
+#ln-article .ln-content .ln-list--tight {
+  line-height: 1.35;
+}
+#ln-article .ln-content .ln-list--tight li + li {
+  margin-top: .12em;
+}
+
+/* Comfortaa sur une liste entière (si tu ajoutes la classe) */
+#ln-article .ln-content .ln-list.comfortaa-text,
+#ln-article .ln-content .ln-list.comfortaa-text *{
+  font-family: "Comfortaa", cursive !important;
+}
+
+/* Si tu mets comfortaa-text sur la liste, tout suit */
+#ln-article .ln-content .ln-list.comfortaa-text,
+#ln-article .ln-content .ln-list.comfortaa-text *{
+  font-family: "Comfortaa", cursive !important;
+}
+/* ---------------------- */
