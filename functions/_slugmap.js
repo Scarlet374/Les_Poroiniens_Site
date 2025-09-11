@@ -53,6 +53,7 @@ export const slugToFile = {
   "pour_le_bien_de_ses_recherches_mona_sadonne_au_sexe": "Doujinshi_ni_Ireru_Mona_no_Ecchi_na_Manga_(Doujinshi).json",
   "prend_donc_plaisir_ho_aventurier_merveilleux_": "Kono_Subarashii_Boukensha_ni_Kairaku_o_(Doujinshi).json",
   "redo_of_healer": "Kaifuku_Jutsushi_no_Yarinaoshi.json",
+  "rendez-vous_nocturne": "Rendez-vous_Nocturne_(Doujinshi).json",
   "rentaro_et_maman_hahari_mode_demploi_lubrique_pour_cajoler_son_bebe": "Hahari-mama_to_Icha-babu_Ecchi_suru_Hon _(Doujinshi).json",
   "rin_et_nadeshiko_nuit_au_camping": "Rin_et_Nadeshiko_Nuit_au_Camping_(Doujinshi).json",
   "seduire_une_loli_megumin_": "Lolikko_Megumin_o_Kouryaku_Seyo_(Doujinshi).json",

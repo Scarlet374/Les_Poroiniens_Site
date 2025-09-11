@@ -34,8 +34,14 @@
 		{ "url_hq": "https://file.garden/aKS5jUD-slfn6iFT/Yokai_Harem.webp", "url_lq": "https://file.garden/aKS5jUD-slfn6iFT/Yokai_Harem%20LQ.webp", "volume": "1" }
     ],
 	"chapters": {
+		"0": {
+			"title": "Prologue",
+			"volume": "",
+			"last_updated": "08/09/2025/12h00",
+			"file": "https://file.garden/aKS5jUD-slfn6iFT/yokaiHaremc0V2.html"
+		},
 		"1": {
-			"title": "",
+			"title": "Miho Lee (1)",
 			"volume": "",
 			"last_updated": "08/09/2025/12h00",
 			"file": "https://file.garden/aKS5jUD-slfn6iFT/yokaiHaremc1.html"
