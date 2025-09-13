@@ -1,0 +1,34 @@
+{
+	"title": "La première nuit de Bocchi et Kita",
+	"description": "Pas de synopsis.",
+	"artist": "RK-2",
+	"author": "RK-2",
+	"cover": "https://file.garden/aKS5jUD-slfn6iFT/La%20premi%C3%A8re%20nuit%20de%20Bocchi%20et%20Kita1%20LQ.jpg",
+	"manga_type": "Shonen",
+	"magazine": "Twitter",
+	"release_year": 2023,
+	"tags": [
+		"Yuri",
+		"Comédie",
+		"Romance",
+		"Web Comic"
+	],
+	"alternative_titles": [
+		"First Night Bocchi x Kita"
+	],
+	"release_status": "Fini",
+	"os": true,
+	"covers_gallery": [
+		{ "url_hq": "https://file.garden/aKS5jUD-slfn6iFT/La%20premi%C3%A8re%20nuit%20de%20Bocchi%20et%20Kita1.png", "url_lq": "https://file.garden/aKS5jUD-slfn6iFT/La%20premi%C3%A8re%20nuit%20de%20Bocchi%20et%20Kita1%20LQ.jpg", "volume": "1" }
+	],
+	"chapters": {
+		"0": {
+			"title": "",
+			"volume": "",
+			"last_updated": "07/09/2023",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/bp45qrxo245"
+			}
+		}
+	}
+}
