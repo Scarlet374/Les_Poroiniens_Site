@@ -918,3 +918,163 @@ body.dark .detail-episode-item {
     margin-left: auto;
   }
 }
+/*Nouveauté AVANCEMENTS*/
+/* === Avancement: overlay & modal === */
+.progress-backdrop {
+  position: fixed; inset: 0;
+  background: color-mix(in oklab, #000 55%, transparent);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  display: none;
+  align-items: center; justify-content: center;
+  z-index: 9990;
+}
+.progress-backdrop.active { display: flex; }
+
+.progress-modal {
+  width: min(720px, 92vw);
+  border: 1px solid var(--ln-border, rgba(var(--clr-text-rgb), 0.12));
+  border-radius: var(--ln-radius, 18px);
+  background: color-mix(in oklab, var(--ln-surface) 8%, transparent);
+  box-shadow: 0 10px 30px rgba(0,0,0,.25);
+  color: var(--ln-text, var(--clr-text));
+  overflow: hidden;
+}
+
+.progress-header {
+  display:flex; align-items:center; justify-content:space-between;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--ln-border, rgba(var(--clr-text-rgb), 0.1));
+}
+.progress-title { font-weight: 800; font-size: 1.1rem; }
+.progress-close {
+  border:none; background:transparent; cursor:pointer;
+  color: var(--ln-text, var(--clr-text)); font-size: 1.2rem;
+  padding: 6px; border-radius: 8px;
+}
+.progress-close:hover { background: rgba(var(--clr-text-rgb), 0.08); }
+
+.progress-body { padding: 14px 16px 16px; }
+
+.progress-grid {
+  display:grid; gap: 10px;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+@media (max-width: 640px){
+  .progress-grid { grid-template-columns: 1fr 1fr; }
+}
+
+.progress-item {
+  display:flex; align-items:center; justify-content:space-between;
+  border: 1px solid var(--ln-border, rgba(var(--clr-text-rgb), 0.1));
+  border-radius: 12px; padding: 10px 12px;
+  background: color-mix(in oklab, var(--ln-surface) 4%, transparent);
+  font-weight: 600;
+}
+.progress-item .label { opacity:.9; }
+.progress-item .state { font-size: 1.05rem; }
+
+.progress-note {
+  margin-top: 10px;
+  font-size: .92rem;
+  color: var(--clr-text-sub);
+}
+
+.progress-pause {
+  border: 1px dashed var(--ln-border, rgba(var(--clr-text-rgb), 0.2));
+  background: color-mix(in oklab, var(--ln-surface) 6%, transparent);
+  border-radius: 12px; padding: 12px;
+  font-size: .98rem; line-height: 1.5;
+}
+.progress-pause strong { color: var(--clr-primary); }
+
+/* ==== AVANCEMENT — TUNE-UPS GÉNÉRAUX ==== */
+/* Légère élévation / lisibilité meilleure sur fond clair comme sombre */
+.progress-modal {
+  box-shadow: 0 6px 30px rgba(0,0,0,.18);
+}
+
+/* Tuiles un peu plus définies (lisible en white sans paraître “gris béton”) */
+.progress-item {
+  background: color-mix(in oklab, var(--ln-surface, #fff) 12%, transparent);
+  border-color: color-mix(in oklab, var(--ln-text, #000) 12%, transparent);
+}
+.progress-close:hover { background: color-mix(in oklab, var(--ln-text, #000) 8%, transparent); }
+.progress-note { color: color-mix(in oklab, var(--ln-text, #000) 55%, transparent); }
+.progress-pause {
+  background: color-mix(in oklab, var(--ln-surface, #fff) 14%, transparent);
+  border-color: color-mix(in oklab, var(--ln-text, #000) 20%, transparent);
+}
+
+/* ==== AVANCEMENT — SPÉCIFIQUE MODE CLAIR ==== */
+/* === AVANCEMENT — FIX THEME BASÉ SUR body.dark === */
+/* Light (par défaut) */
+body:not(.dark) .progress-backdrop {
+  background: color-mix(in oklab, #000 22%, transparent);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+}
+body:not(.dark) .progress-modal {
+  background: color-mix(in oklab, #fff 98%, var(--ln-surface, #fff) 2%);
+  border-color: rgba(0,0,0,.06);
+  color: var(--clr-text, #1b1f22);
+  box-shadow: 0 8px 28px rgba(0,0,0,.18);
+}
+body:not(.dark) .progress-item {
+  background: color-mix(in oklab, #fff 97%, #000 3%);
+  border-color: rgba(0,0,0,.08);
+}
+body:not(.dark) .progress-close:hover { background: rgba(0,0,0,.05); }
+body:not(.dark) .progress-note { color: rgba(0,0,0,.55); }
+body:not(.dark) .progress-pause {
+  background: color-mix(in oklab, #fff 95%, #000 5%);
+  border-color: rgba(0,0,0,.10);
+}
+
+/* Dark */
+body.dark .progress-backdrop {
+  background: color-mix(in oklab, #000 62%, transparent);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+body.dark .progress-modal {
+  background: color-mix(in oklab, var(--ln-surface, #0b0d10) 24%, transparent);
+  border-color: rgba(255,255,255,.06);
+  box-shadow: 0 18px 60px rgba(0,0,0,.6);
+}
+body.dark .progress-item {
+  background: color-mix(in oklab, var(--ln-surface, #0b0d10) 18%, transparent);
+  border-color: rgba(255,255,255,.05);
+}
+body.dark .progress-close:hover { background: rgba(255,255,255,.06); }
+body.dark .progress-note { color: rgba(255,255,255,.65); }
+body.dark .progress-pause {
+  background: color-mix(in oklab, var(--ln-surface, #0b0d10) 22%, transparent);
+  border-color: rgba(255,255,255,.08);
+}
+
+/* Optionnel: atténuer un peu les ✅/❌ en dark */
+body.dark .progress-item .state { opacity: .85; filter: saturate(.85); }
+
+/* Panneau "À jour" */
+.progress-up2date{
+  border: 1px dashed var(--ln-border, rgba(var(--clr-text-rgb),0.18));
+  border-radius: 12px;
+  padding: 12px;
+  font-size: .98rem;
+  margin-bottom: 10px;
+}
+
+/* Light */
+body:not(.dark) .progress-up2date{
+  background: rgba(46, 204, 113, .10); /* vert doux */
+  color: #1b1f22;
+  border-color: rgba(46, 204, 113, .28);
+}
+
+/* Dark */
+body.dark .progress-up2date{
+  background: rgba(46, 204, 113, .14);
+  color: var(--ln-text, #e8eaed);
+  border-color: rgba(46, 204, 113, .32);
+}

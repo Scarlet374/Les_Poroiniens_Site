@@ -25,6 +25,13 @@
 		"Filles Monstre",
 		"Monstres"
 	],
+	"Avancement": [
+	{"Raw":"O"},
+	{"Traduction":"O"},
+	{"Relecture":"N"},
+	{"En pause":"N"}
+	],
+	"pause_reason": "La série n'est pas en pause.",
 	"alternative_titles": [
 		"異世界迷宮でハーレムを"
 	],

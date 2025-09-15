@@ -12,6 +12,16 @@
 		"Romance",
 		"Comédie"
 	],
+	"Avancement": [
+	{"Raw":"O"},
+	{"Traduction":"O"},
+	{"Clean":"O"},
+	{"Relecture":"O"},
+	{"Lettrage":"O"},
+	{"Correction":"N"},
+	{"En pause":"N"}
+	],
+	"pause_reason": "La série n'est pas en pause.",
 	"vignette":{ "color":"#ff4901", "text":"Coup de cœur ❤️"},
 	"alternative_titles": [
 		"뒷계정 트랩!",

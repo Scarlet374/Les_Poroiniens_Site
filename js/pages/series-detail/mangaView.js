@@ -106,7 +106,33 @@ function renderReadingActions(seriesData, seriesSlug) {
       </a>`;
   }
 
+  // Bouton "Avancement"
+  const showProgress = shouldShowProgress(seriesData);
+  if (showProgress) {
+    buttonsHtml += `
+      <button type="button" class="reading-action-button start progress-btn">
+        <i class="fas fa-tasks"></i> Avancement
+      </button>
+    `;
+  }
   container.innerHTML = buttonsHtml;
+
+  if (showProgress) {
+    const progressBtn = container.querySelector('.progress-btn');
+    if (progressBtn) {
+      const progressModal = createProgressModal(seriesData);
+      progressBtn.addEventListener('click', () => progressModal.open());
+    }
+  }
+
+  container.innerHTML = buttonsHtml;
+
+  // --- branchement du modal "Avancement" ---
+  const progressBtn = container.querySelector(".progress-btn");
+  if (progressBtn) {
+    const progressModal = createProgressModal(seriesData); // défini plus bas
+    progressBtn.addEventListener("click", () => progressModal.open());
+  }
 }
 
 function handleChapterLikeClick(e, seriesSlug) {
@@ -365,4 +391,164 @@ export async function renderMangaView(seriesData, seriesSlug) {
     });
   }
   initMainScrollObserver();
+}
+
+/* Bouton avancement*/
+function createProgressModal(seriesData) {
+  const { map, order, paused, upToDate } = parseProgress(seriesData.Avancement || {});
+  const icon = ok => ok ? '✅' : '❌';
+
+  // Tuile dynamique (si jamais on affiche la grille)
+  const gridHTML = order.map(label => `
+    <div class="progress-item" role="group" aria-label="${esc(label)}">
+      <span class="label">${esc(label)}</span>
+      <span class="state ${map[label] ? 'ok' : 'ko'}" aria-hidden="true">${icon(map[label])}</span>
+    </div>
+  `).join('');
+
+  // Panneaux spéciaux
+  const pauseHTML = `
+    <div class="progress-pause">
+      <strong>La série est en pause.</strong><br>
+      ${seriesData.pause_reason ? esc(seriesData.pause_reason) : 'Aucune justification fournie.'}
+    </div>
+  `;
+
+  const upHTML = `
+    <div class="progress-up2date">
+      <strong>Nous avons traduit tous les chapitres de cette série.</strong>
+    </div>
+  `;
+
+  // Affichage : priorité Pause > À jour > Grille
+  const showOnlyPause = paused === true;
+  const showOnlyUpToDate = !showOnlyPause && (upToDate === true);
+  const showGrid = !showOnlyPause && !showOnlyUpToDate && order.length > 0;
+
+  const noteHTML = showGrid ? `
+    <div class="progress-note">
+      Avancement du prochain chapitre. Les étapes cochées sont terminées, les croix sont en cours ou à faire.
+    </div>
+  ` : '';
+
+  const noStepsHTML = (!showOnlyPause && !showOnlyUpToDate && !showGrid)
+    ? `<div class="progress-note">Aucune étape fournie pour cette série.</div>`
+    : '';
+
+  const backdrop = document.createElement('div');
+  backdrop.className = 'progress-backdrop';
+  backdrop.innerHTML = `
+    <div class="progress-modal" role="dialog" aria-modal="true" aria-label="Avancement du prochain chapitre">
+      <div class="progress-header">
+        <div class="progress-title">Avancement du prochain chapitre</div>
+        <button class="progress-close" aria-label="Fermer">✕</button>
+      </div>
+      <div class="progress-body">
+        ${showOnlyPause ? pauseHTML : ''}
+        ${showOnlyUpToDate ? upHTML : ''}
+        ${showGrid ? `<div class="progress-grid">${gridHTML}</div>` : ''}
+        ${noteHTML}
+        ${noStepsHTML}
+      </div>
+    </div>
+  `;
+
+  const close = () => backdrop.classList.remove('active');
+  backdrop.addEventListener('click', e => { if (e.target === backdrop) close(); });
+  backdrop.querySelector('.progress-close').addEventListener('click', close);
+  const escHandler = ev => { if (ev.key === 'Escape' && backdrop.classList.contains('active')) { close(); document.removeEventListener('keydown', escHandler); } };
+  document.addEventListener('keydown', escHandler);
+
+  document.body.appendChild(backdrop);
+  return { open(){ backdrop.classList.add('active'); } };
+}
+
+// échappe le texte injecté
+function esc(str){
+  return String(str).replace(/[&<>"']/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[s]));
+}
+
+// normalise une clé: supprime accents, espaces multiples, met en minuscule
+function normKey(k){
+  return String(k || "")
+    .normalize("NFD").replace(/[\u0300-\u036f]/g, "")   // accents
+    .replace(/\s+/g, " ")                               // espaces multiples
+    .replace(/\u00A0/g, " ")                            // NBSP -> espace
+    .trim().toLowerCase();
+}
+
+/**
+ * Parse Avancement (objet ou tableau) -> { map, order, paused, upToDate }
+ * - order: liste des libellés à afficher (on exclut "En pause" et "A jour/À jour")
+ * - paused: true si "En pause" === O(=true)
+ * - upToDate: true si "A jour"/"À jour" === O(=true)
+ */
+function parseProgress(avancement){
+  let order = [];
+  let map = {};
+  let paused = false;
+  let upToDate = false;
+
+  const isOn = (v) => {
+    if (v === undefined || v === null) return false;
+    if (typeof v === "boolean") return v;
+    const s = String(v).trim().toLowerCase();
+    return ["o","oui","y","yes","true","1","✓","✅"].includes(s);
+  };
+
+  const SPECIALS = {
+    pause: ["en pause"],
+    up: ["a jour","à jour","a jour","à jour"] // support espaces & NBSP
+  };
+
+  // — cas tableau: on respecte l'ordre fourni
+  if (Array.isArray(avancement)) {
+    avancement.forEach(obj => {
+      const key = Object.keys(obj || {})[0];
+      if (!key) return;
+      const nk = normKey(key);
+      if (SPECIALS.pause.includes(nk)) { paused = isOn(obj[key]); return; }
+      if (SPECIALS.up.includes(nk))    { upToDate = isOn(obj[key]); return; }
+      map[key] = isOn(obj[key]);       // on garde le libellé d'origine pour l'affichage
+      order.push(key);
+    });
+  }
+  // — cas objet simple
+  else if (avancement && typeof avancement === "object") {
+    // ordre canonique d'abord si présent, puis les autres
+    const BASE = ['Raw','Traduction','Clean','Relecture','Lettrage','Correction','En pause','A jour','À jour'];
+    const keys = Object.keys(avancement);
+
+    // détecte les spéciaux
+    keys.forEach(k => {
+      const nk = normKey(k);
+      if (SPECIALS.pause.includes(nk)) paused   = isOn(avancement[k]);
+      if (SPECIALS.up.includes(nk))    upToDate = isOn(avancement[k]);
+    });
+
+    // construit map + order
+    BASE.forEach(k => {
+      if (k in avancement) {
+        const nk = normKey(k);
+        if (SPECIALS.pause.includes(nk) || SPECIALS.up.includes(nk)) return; // on n'affiche pas dans la grille
+        map[k] = isOn(avancement[k]);
+        order.push(k);
+      }
+    });
+    // ajoute les autres clés non listées dans BASE
+    keys.forEach(k => {
+      const nk = normKey(k);
+      if (SPECIALS.pause.includes(nk) || SPECIALS.up.includes(nk)) return;
+      if (!order.includes(k)) { map[k] = isOn(avancement[k]); order.push(k); }
+    });
+  }
+
+  return { map, order, paused, upToDate };
+}
+
+// Affiche-t-on le bouton ?  (si étapes, ou pause, ou à-jour)
+function shouldShowProgress(seriesData){
+  if (!seriesData || !seriesData.Avancement) return false;
+  const { order, paused, upToDate } = parseProgress(seriesData.Avancement);
+  return paused || upToDate || order.length > 0;
 }

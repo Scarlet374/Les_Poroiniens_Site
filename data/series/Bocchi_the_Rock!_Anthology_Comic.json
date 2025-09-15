@@ -8,6 +8,16 @@
     "magazine": "Book Walker",
 	"release_year": 2022,
 	"tags": ["Comédie", "Musique", "Tranche de vie"],
+	"Avancement": [
+	{"Raw":"O"},
+	{"Traduction":"N"},
+	{"Clean":"N"},
+	{"Relecture":"N"},
+	{"Lettrage":"N"},
+	{"Correction":"N"},
+	{"En pause":"N"}
+	],
+	"pause_reason": "La série n'est pas en pause.",
 	"alternative_titles": ["ぼっち・ざ・ろっく！アンソロジーコミック"],
 	"release_status": "En cours",
 	"covers_gallery": [

@@ -20,6 +20,16 @@
         "Gore",
         "Adaptation"
     ],
+	"Avancement": [
+	{"Raw":"O"},
+	{"Traduction":"O"},
+	{"Clean":"O"},
+	{"Relecture":"N"},
+	{"Lettrage":"O"},
+	{"Correction":"N"},
+	{"En pause":"N"}
+	],
+    "pause_reason": "La série n'est pas en pause.",
     "alternative_titles": [
         "転生荷運び人の異世界攻略法",
         "A Reincarnated Carrier’s Strategy for Another World"

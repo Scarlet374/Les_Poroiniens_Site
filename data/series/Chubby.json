@@ -12,6 +12,16 @@
 		"Romance",
 		"Tranche de vie"
 	],
+	"Avancement": [
+	{"Raw":"O"},
+	{"Traduction":"O"},
+	{"Clean":"O"},
+	{"Relecture":"N"},
+	{"Lettrage":"N"},
+	{"Correction":"N"},
+	{"En pause":"N"}
+	],
+	"pause_reason": "La série n'est pas en pause.",
 	"alternative_titles": [
 		"Ookii Muki Muki Chiisai Muchi Muchi",
 		"Big and Muscular, Small and Chubby"
@@ -26,7 +36,7 @@
 	],
 	"chapters": {
 		"1": {
-			"title": "Le musclé et la potelée.",
+			"title": "",
 			"volume": "",
 			"last_updated": "1757275653",
 			"groups": {
@@ -34,7 +44,7 @@
 			}
 		},
 		"2": {
-			"title": "La machine à obliques et la petite potelée.",
+			"title": "",
 			"volume": "",
 			"last_updated": "1757275653",
 			"groups": {
@@ -42,7 +52,7 @@
 			}
 		},
 		"3": {
-			"title": "Discussion grassouillette",
+			"title": "",
 			"volume": "",
 			"last_updated": "1757275654",
 			"groups": {
@@ -50,7 +60,7 @@
 			}
 		},
 		"4": {
-			"title": "Le musclé et la potelée au konbini",
+			"title": "",
 			"volume": "",
 			"last_updated": "1757275655",
 			"groups": {
@@ -58,7 +68,7 @@
 			}
 		},
 		"5": {
-			"title": "La potelée au bois dormant.",
+			"title": "",
 			"volume": "",
 			"last_updated": "1757275656",
 			"groups": {

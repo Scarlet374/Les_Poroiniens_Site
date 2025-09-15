@@ -13,6 +13,16 @@
 	"covers_gallery": [
 		{ "url_hq": "https://file.garden/aKS5jUD-slfn6iFT/Cover%20dent%20de%20requin%20HD.png", "url_lq": "https://file.garden/aKS5jUD-slfn6iFT/Cover-dent-de-requin-HD.webp", "volume": "1" }
 	],
+	"Avancement": [
+	{"Raw":"O"},
+	{"Traduction":"O"},
+	{"Clean":"O"},
+	{"Relecture":"N"},
+	{"Lettrage":"N"},
+	{"Correction":"N"},
+	{"En pause":"N"}
+	],
+	"pause_reason": "La série n'est pas en pause.",
 	"chapters": {
 		"1": {
 			"title": "Toi et tes dents de requin",

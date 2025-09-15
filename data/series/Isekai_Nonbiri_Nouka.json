@@ -19,6 +19,13 @@
         "Agriculture",
         "Harem"
     ],
+    "Avancement": [
+    {"Raw":"O"},
+    {"Traduction":"N"},
+    {"Relecture":"N"},
+    {"En pause":"N"}
+    ],
+    "pause_reason": "La série n'est pas en pause.",
     "vignette_anime":{
     "color":"#FFD700",
     "text":"Saison 2 d'annoncée !"

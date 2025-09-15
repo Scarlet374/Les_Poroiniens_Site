@@ -483,3 +483,21 @@ html.dark .desktop-nav-sub .more-menu a:hover{
 }
 
 /* ---------- FIN ---------- */
+/* === Search result "selected" – thème-adaptatif === */
+
+/* Palette locale, posée sur le conteneur search */
+.site-search{
+  --search-popover-bg: var(--soft, #fff);
+  --search-hover-bg: color-mix(in oklab, #000 6%, var(--search-popover-bg));
+}
+html.dark .site-search,
+html[data-theme="dark"] .site-search,
+body.dark .site-search{
+  --search-popover-bg: var(--soft, #18191c);
+  --search-hover-bg: color-mix(in oklab, #fff 10%, var(--search-popover-bg));
+}
+.search-popover, .search-suggest{ background: var(--search-popover-bg); }
+.search-list li:hover,
+.search-list li.active,
+.suggest-item.is-active,
+.suggest-item:hover{ background: var(--search-hover-bg); }
