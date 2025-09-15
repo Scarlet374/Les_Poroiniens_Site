@@ -3,7 +3,7 @@
 	"description": "Pas de synopsis.",
 	"artist": "Souseki",
 	"author": "Souseki",
-	"cover": "https://file.garden/aKS5jUD-slfn6iFT/CoverBat.png",
+	"cover": "https://file.garden/aKS5jUD-slfn6iFT/Rendez-vous%20Nocturne%20LQ.jpg",
 	"manga_type": "Pornographique",
 	"magazine": "Comic Kairakuten",
 	"release_year": 2025,
@@ -32,15 +32,15 @@
 	"release_status": "Fini",
 	"doujinshi": true,
 	"covers_gallery": [
-		{ "url_hq": "https://file.garden/aKS5jUD-slfn6iFT/CoverBat.png", "url_lq": "https://file.garden/aKS5jUD-slfn6iFT/CoverBat.png", "volume": "1" }
+		{ "url_hq": "https://file.garden/aKS5jUD-slfn6iFT/Rendez-vous%20Nocturne.png", "url_lq": "https://file.garden/aKS5jUD-slfn6iFT/Rendez-vous%20Nocturne%20LQ.jpg", "volume": "1" }
 	],
 	"chapters": {
 		"0": {
 			"title": "",
 			"volume": "",
-			"last_updated": "11/09/2025",
+			"last_updated": "14/09/2025",
 			"groups": {
-				"LesPoroïniens": "/proxy/api/imgchest/chapter/"
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/dl7p8b8gpyo"
 			}
 		}
 	}
