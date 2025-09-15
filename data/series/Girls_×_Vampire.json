@@ -10,10 +10,10 @@
 	"tags": ["Comédie", "Romance", "Tranche de vie", "Yuri", "Vie scolaire", "Vampires"],
 	"Avancement": [
 	{"Raw":"O"},
-	{"Traduction":"O"},
-	{"Clean":"O"},
-	{"Relecture":"O"},
-	{"Lettrage":"O"},
+	{"Traduction":"N"},
+	{"Clean":"N"},
+	{"Relecture":"N"},
+	{"Lettrage":"N"},
 	{"Correction":"N"},
 	{"En pause":"N"}
 	],
@@ -118,6 +118,14 @@
 			"last_updated": "1757275656",
 			"groups": {
 				"LesPoroïniens": "/proxy/api/imgchest/chapter/agyvrlb2978"
+			}
+		},
+		"13": {
+			"title": "Ruruna est découverte !",
+			"volume": "",
+			"last_updated": "15/09/2025/20h10",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/o24ajlwpw4l"
 			}
 		}
 	}
