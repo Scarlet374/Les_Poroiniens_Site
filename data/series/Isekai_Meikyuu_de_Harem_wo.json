@@ -27,7 +27,7 @@
 	],
 	"Avancement": [
 	{"Raw":"O"},
-	{"Traduction":"O"},
+	{"Traduction":"N"},
 	{"Relecture":"N"},
 	{"En pause":"N"}
 	],
@@ -185,6 +185,12 @@
 			"volume": "1",
 			"last_updated": "09/09/2025/16h28",
 			"file": "https://file.garden/aKS5jUD-slfn6iFT/haremv1c2.txt"
+		},
+		"3": {
+			"title": "Roxanne",
+			"volume": "1",
+			"last_updated": "18/09/2025/14h30",
+			"file": "https://file.garden/aKS5jUD-slfn6iFT/haremv1c3.txt"
 		}
 	}
 }

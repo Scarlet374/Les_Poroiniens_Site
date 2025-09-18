@@ -19,7 +19,7 @@
 	{"Raw":"O"},
 	{"Traduction":"O"},
 	{"Clean":"O"},
-	{"Relecture":"N"},
+	{"Relecture":"O"},
 	{"Lettrage":"N"},
 	{"Correction":"N"},
 	{"En pause":"N"}
