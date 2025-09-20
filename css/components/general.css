@@ -103,3 +103,101 @@
     font-size: 1.1rem;
   }
 }
+
+/* ====== GAME VIEW ====== */
+body.no-scroll { overflow: hidden; }
+
+.gv { display: grid; gap: 16px; }
+
+/* carte principale (comme ta fiche manga : cover à gauche, infos à droite) */
+.gv-card{
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 16px;
+  border: 1px solid rgba(0,0,0,.08);
+  border-radius: 16px;
+  padding: 14px;
+  background: rgba(0,0,0,.03);
+}
+body.dark .gv-card{
+  border-color: rgba(255,255,255,.08);
+  background: rgba(255,255,255,.04);
+}
+
+.gv-cover img{
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 12px;
+  border: 1px solid rgba(0,0,0,.08);
+}
+body.dark .gv-cover img{ border-color: rgba(255,255,255,.08); }
+
+.gv-main{ display:flex; flex-direction:column; gap:10px; }
+.gv-title{ font-size: clamp(1.4rem, 2.2vw, 1.9rem); font-weight: 800; display:flex; gap:8px; align-items:center; }
+.tag-18{ background:#e74c3c; color:#fff; border-radius:10px; padding:2px 8px; font-size:.85rem; font-weight:700; }
+
+.gv-tags{ display:flex; flex-wrap:wrap; gap:6px; }
+
+.gv-actions{ display:flex; flex-wrap:wrap; gap:10px; }
+.gv-action{
+  display:inline-flex; align-items:center; gap:8px;
+  border:1px solid rgba(0,0,0,.12);
+  padding: 10px 14px; border-radius:12px;
+  background: transparent; text-decoration: none; font-weight:700;
+  color: inherit;
+}
+.gv-action.primary{ background:#2ecc71; border-color:#27ae60; color:#0b0d10; }
+body.dark .gv-action{ border-color: rgba(255,255,255,.14); }
+
+.gv-synopsis{ line-height: 1.6; }
+.gv-meta{
+  display:grid; gap:6px;
+  grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
+  border-top: 1px solid rgba(0,0,0,.08); padding-top: 10px;
+}
+body.dark .gv-meta{ border-top-color: rgba(255,255,255,.08); }
+
+/* galerie */
+.gv-subtitle{ font-size: 1.1rem; font-weight: 800; margin-top: 6px; }
+.gv-gallery{
+  display:grid; gap:10px;
+  grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
+}
+.gv-shot{
+  padding:0; border:0; background:transparent; cursor:pointer;
+}
+.gv-shot img{
+  width:100%; height:100%; object-fit:cover;
+  border-radius:12px;
+  border:1px solid rgba(0,0,0,.08);
+}
+body.dark .gv-shot img{ border-color: rgba(255,255,255,.08); }
+
+/* lightbox */
+.gv-lightbox{
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.8);
+  display:flex; align-items:center; justify-content:center;
+  z-index: 10000;
+  backdrop-filter: blur(2px);
+}
+.gv-lb-img{
+  max-width: min(95vw, 1400px);
+  max-height: 90vh;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0,0,0,.5);
+}
+.gv-lb-btn{
+  position: absolute;
+  border: 0; background: rgba(0,0,0,.5); color:#fff;
+  width: 40px; height: 40px; border-radius: 10px; cursor: pointer;
+  display:flex; align-items:center; justify-content:center;
+  font-size: 20px;
+}
+.gv-lb-close{ top: 14px; right: 14px; }
+.gv-lb-prev{ left: 14px; }
+.gv-lb-next{ right: 14px; }
+@media (max-width: 760px){
+  .gv-card{ grid-template-columns: 1fr; }
+}

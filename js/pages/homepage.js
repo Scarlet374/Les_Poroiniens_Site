@@ -26,7 +26,62 @@ function truncateText(text, maxLength) {
   return text;
 }
 
-// Helper pour pagination
+function truthy(v){
+  if (v === true || v === 1) return true;
+  if (v === false || v === 0) return false;
+  const s = String(v ?? "").trim().toLowerCase();
+  return ["1","true","yes","y","o","oui"].includes(s);
+}
+
+function isGame(s){
+  // accepte game: true, "true", 1, etc. (au niveau racine ou s.series)
+  const flag = (s?.series?.game ?? s?.game);
+  return truthy(flag);
+}
+
+
+function firstPreviewImage(s){
+  const p = s?.preview_image;
+  if (!p) return null;
+  if (Array.isArray(p)) return p.find(Boolean) || null;
+  const keys = Object.keys(p).sort((a,b)=>parseInt(a,10)-parseInt(b,10));
+  for (const k of keys) if (p[k]) return p[k];
+  return null;
+}
+
+function renderGameCard(game){
+  if (!game || !game.title) return "";
+  const seriesSlug = slugify(game.title);
+  const detailUrl  = `/${seriesSlug}`;
+  const img  = game.cover || firstPreviewImage(game) || "/img/placeholder_preview.png";
+  const year = game.release_year ? `<strong>Année :</strong> ${game.release_year}` : "";
+  const author = game.author
+      ? `<strong>Auteur :</strong> ${game.author}`
+      : (game.artist ? `<strong>Art :</strong> ${game.artist}` : "");
+  const authorYearLineHtml = (author || year)
+    ? `<div class="meta series-author-year-line">
+         ${author ? `<span class="series-author-info">${author}</span>` : ""}
+         ${(author && year) ? `<span class="meta-separator-card"></span>` : ""}
+         ${year ? `<span class="series-year-info">${year}</span>` : ""}
+       </div>` : "";
+  const tagsHtml = Array.isArray(game.tags) && game.tags.length
+    ? `<div class="tags series-tags">${game.tags.slice(0,3).map(t=>`<span class="tag">${t}</span>`).join("")}</div>`
+    : "";
+  const descHtml = game.description ? `<div class="series-description">${truncateText(game.description, 180)}</div>` : "";
+
+  return `
+    <div class="series-card" data-url="${detailUrl}">
+      <div class="series-cover">
+        <img src="${img}" alt="${game.title}" loading="lazy" onerror="this.src='/img/placeholder_preview.png'">
+      </div>
+      <div class="series-info">
+        <div class="series-title">${game.title}</div>
+        ${authorYearLineHtml}
+        ${tagsHtml}
+        ${descHtml}
+      </div>
+    </div>`;
+}
 
 // ------- Pagination util -------
 // Stocke la page courante par section (onglet) dans sessionStorage
@@ -58,6 +113,7 @@ function renderPagedGrid({ grid, items, renderFn, page, pageSize, pager, section
   const p      = Math.min(Math.max(1, Number(page) || 1), pages);
   const start  = (p - 1) * pageSize;
   const slice  = items.slice(start, start + pageSize);
+
 
   // Reset d'état
   grid.classList.remove("pager-ready");
@@ -465,7 +521,8 @@ function renderAnimeCard(anime) {
 // --- LOGIQUE EXISTANTE POUR LES GRILLES DE SÉRIES ---
 
 function renderSeriesCard(series) {
-  if (!series || !series.chapters || !series.title || !series.cover) return "";
+  // Accepte désormais les fiches sans chapters (ex: jeux vidéo)
+  if (!series || !series.title || !series.cover) return "";
 
   const seriesSlug = slugify(series.title);
 
@@ -474,68 +531,65 @@ function renderSeriesCard(series) {
   let badgeHtml = "";
   if (v && v.text) {
     const color = v.color || "#10e0c1";
-    const rgb = hexToRgb(color); // déjà défini en haut du fichier
+    const rgb = hexToRgb(color);
     badgeHtml = `<span class="series-badge" style="--badge-color:${color};--badge-rgb:${rgb};">${v.text}</span>`;
   }
 
-  const chaptersArray = Object.entries(series.chapters)
-    .map(([chapNum, chapData]) => {
-      const hasManga = !!(chapData?.groups && chapData.groups.LesPoroïniens);
-      const hasLN    = !!chapData?.file;
-      const readable = hasManga || hasLN;
-      return {
-        chapter: chapNum,
-        ...chapData,
-        last_updated_ts: parseDateToTimestamp(chapData?.last_updated || 0),
-        url: readable ? `/${seriesSlug}/${String(chapNum)}` : null,
-      };
-    })
-    .filter(chap => !!chap.url)
-    .sort((a, b) => b.last_updated_ts - a.last_updated_ts);
+  // Chapters -> facultatif
+  const hasChapters = !!(series.chapters && typeof series.chapters === "object");
+  let latestChapterAsButton = "", latestThreeChaptersHtml = "";
 
-  let latestChapterAsButton = "",
-    latestThreeChaptersHtml = "";
-  if (chaptersArray.length > 0) {
-    const latestChap = chaptersArray[0];
-    const chapterTitleMobile = latestChap.title || "Titre inconnu";
-    const truncatedTitleMobile = truncateText(chapterTitleMobile, 25);
+  if (hasChapters) {
+    const chaptersArray = Object.entries(series.chapters)
+      .map(([chapNum, chapData]) => {
+        const hasManga = !!(chapData?.groups && chapData.groups.LesPoroïniens);
+        const hasLN    = !!chapData?.file;
+        const readable = hasManga || hasLN;
+        return {
+          chapter: chapNum,
+          ...chapData,
+          last_updated_ts: parseDateToTimestamp(chapData?.last_updated || 0),
+          url: readable ? `/${seriesSlug}/${String(chapNum)}` : null,
+        };
+      })
+      .filter(chap => !!chap.url)
+      .sort((a, b) => b.last_updated_ts - a.last_updated_ts);
 
-    latestChapterAsButton = `
-      <div class="series-latest-chapters-container-mobile">
-        <a href="${latestChap.url}" class="series-chapter-item">
-          <div class="series-chapter-item-main-info-mobile">
-            <span class="chapter-number-small">Ch. ${latestChap.chapter}</span>
-            <span class="chapter-title-small" title="${chapterTitleMobile}">${truncatedTitleMobile}</span>
-          </div>
-          <span class="chapter-date-small-mobile">${timeAgo(
-            latestChap.last_updated_ts
-          )}</span>
-        </a>
-      </div>`;
+    if (chaptersArray.length > 0) {
+      const latestChap = chaptersArray[0];
+      const chapterTitleMobile = latestChap.title || "Titre inconnu";
+      const truncatedTitleMobile = truncateText(chapterTitleMobile, 25);
 
-    latestThreeChaptersHtml = `
-      <div class="series-latest-chapters-container-desktop">
-        ${chaptersArray
-          .slice(0, 3)
-          .map((chap) => {
+      latestChapterAsButton = `
+        <div class="series-latest-chapters-container-mobile">
+          <a href="${latestChap.url}" class="series-chapter-item">
+            <div class="series-chapter-item-main-info-mobile">
+              <span class="chapter-number-small">Ch. ${latestChap.chapter}</span>
+              <span class="chapter-title-small" title="${chapterTitleMobile}">${truncatedTitleMobile}</span>
+            </div>
+            <span class="chapter-date-small-mobile">${timeAgo(
+              latestChap.last_updated_ts
+            )}</span>
+          </a>
+        </div>`;
+
+      latestThreeChaptersHtml = `
+        <div class="series-latest-chapters-container-desktop">
+          ${chaptersArray.slice(0, 3).map((chap) => {
             const chapterTitleDesktop = chap.title || "Titre inconnu";
             const truncatedTitleDesktop = truncateText(chapterTitleDesktop, 30);
             return `
-            <a href="${chap.url}" class="series-chapter-item-desktop">
-              <span class="chapter-number-desktop">Ch. ${chap.chapter}</span>
-              <span class="chapter-title-desktop" title="${chapterTitleDesktop}">${truncatedTitleDesktop}</span>
-              <span class="chapter-date-desktop">${timeAgo(
-                chap.last_updated_ts
-              )}</span>
-            </a>`;
-          })
-          .join("")}
-      </div>`;
+              <a href="${chap.url}" class="series-chapter-item-desktop">
+                <span class="chapter-number-desktop">Ch. ${chap.chapter}</span>
+                <span class="chapter-title-desktop" title="${chapterTitleDesktop}">${truncatedTitleDesktop}</span>
+                <span class="chapter-date-desktop">${timeAgo(chap.last_updated_ts)}</span>
+              </a>`;
+          }).join("")}
+        </div>`;
+    }
   }
 
-  const descriptionHtml = series.description
-    ? `<div class="series-description">${series.description}</div>`
-    : "";
+  const descriptionHtml = series.description ? `<div class="series-description">${series.description}</div>` : "";
   let authorString = "";
   if (series.author && series.artist && series.author !== series.artist)
     authorString = `<strong>Auteur :</strong> ${series.author} / <strong>Dess. :</strong> ${series.artist}`;
@@ -642,9 +696,18 @@ function getLastUpdateStamp(series) {
   return ts || 0;
 }
 
-// Trie desc. (du plus récent au plus ancien)
-function sortSeriesByNewest(list) {
-  return [...list].sort((a, b) => getLastUpdateStamp(b) - getLastUpdateStamp(a));
+// en haut de homepage.js, après la définition de getLastUpdateStamp
+const __lastUpdateCache = new WeakMap();
+
+function getLastUpdateStampCached(series){
+  if (__lastUpdateCache.has(series)) return __lastUpdateCache.get(series);
+  const ts = getLastUpdateStamp(series);
+  __lastUpdateCache.set(series, ts);
+  return ts;
+}
+
+function sortSeriesByNewest(list){
+  return [...list].sort((a,b) => getLastUpdateStampCached(b) - getLastUpdateStampCached(a));
 }
 
 function isDoujinshi(s)   { return !!(s && s.doujinshi === true); }
@@ -658,7 +721,8 @@ export async function initHomepage() {
   const seriesGridDoujin     = qs(".series-grid.doujinshi");
   const seriesGridPornwha    = qs(".series-grid.pornwha");
   const seriesGridLightNovel = qs(".series-grid.light-novel");
-  const seriesGridAnime      = qs(".series-grid.anime"); // ⬅️ nouveau
+  const seriesGridAnime      = qs(".series-grid.anime");
+  const seriesGridJV         = qs(".series-grid.jv");   
 
   // +18: local flag
   const ADULT_KEY = "adult_on";
@@ -674,8 +738,13 @@ export async function initHomepage() {
     makeSeriesCardsClickable();
   };
 
-  // 2) Carrousel
-  await initHeroCarousel();
+  // 2) Carrousel + datasets en parallèle
+  const heroPromise  = initHeroCarousel();                   // ne pas await ici
+  const animePromise = seriesGridAnime ? fetchAllAnimeData() : Promise.resolve(null);
+  const seriesPromise= fetchAllSeriesData();                 // inclura désormais les JV
+
+  const [animeItems, allSeries] = await Promise.all([animePromise, seriesPromise]);
+  // tu peux éventuellement await heroPromise plus tard si besoin
 
   // 2.5) Monte la grille ANIME (indépendante du reste)
   if (seriesGridAnime) {
@@ -745,11 +814,11 @@ export async function initHomepage() {
       if (pornSec) pornSec.style.display = "none";
     }
 
-    const doujinList     = allSeries.filter(s => isDoujinshi(s));
-    const pornwhaList    = allSeries.filter(s => isPornwha(s)    && !isDoujinshi(s));
-    const lightNovelList = allSeries.filter(s => isLightNovel(s) && !isDoujinshi(s) && !isPornwha(s));
-    const oneShots       = allSeries.filter(s => s && s.os === true  && !isDoujinshi(s) && !isPornwha(s) && !isLightNovel(s));
-    const onGoingSeries  = allSeries.filter(s => s && s.os !== true  && !isDoujinshi(s) && !isPornwha(s) && !isLightNovel(s));
+    const doujinList     = allSeries.filter(s => isDoujinshi(s) && !isGame(s));
+    const pornwhaList    = allSeries.filter(s => isPornwha(s)    && !isDoujinshi(s) && !isGame(s));
+    const lightNovelList = allSeries.filter(s => isLightNovel(s) && !isDoujinshi(s) && !isPornwha(s) && !isGame(s));
+    const oneShots       = allSeries.filter(s => s && s.os === true  && !isDoujinshi(s) && !isPornwha(s) && !isLightNovel(s) && !isGame(s));
+    const onGoingSeries  = allSeries.filter(s => s && s.os !== true  && !isDoujinshi(s) && !isPornwha(s) && !isLightNovel(s) && !isGame(s));
 
     const onGoingSorted    = sortSeriesByNewest(onGoingSeries);
     const oneShotsSorted   = sortSeriesByNewest(oneShots);
@@ -762,6 +831,47 @@ export async function initHomepage() {
     const lightNovelListF = lightNovelSorted.filter(s => showAdult || !isPornographicSeries(s));
 
     const PAGE_SIZE = 5;
+
+    // ---------------- Jeux vidéos (mêmes cartes que les séries) ----------------
+    if (seriesGridJV) {
+
+      // Filtre 18+ OFF -> masque le pornographique
+      const jvAll     = allSeries.filter(isGame);
+      const showAdult = adultEnabled();
+      const jvVisible = showAdult ? jvAll : jvAll.filter(s => !isPornographicSeries(s));
+
+      // Tri (année desc puis titre)
+      const jvSorted = jvVisible.sort((a,b) =>
+        (b.release_year || 0) - (a.release_year || 0) ||
+        String(a.title || "").localeCompare(String(b.title || ""))
+      );
+
+      if (jvSorted.length === 0) {
+        // NE PAS cacher la section : on affiche un état vide compréhensible
+        const hadAdultHidden = !showAdult && jvAll.some(s => isPornographicSeries(s));
+        seriesGridJV.innerHTML = `<p class="empty-note">${
+          hadAdultHidden
+            ? "Activez le 18+ pour voir les jeux disponibles."
+            : "Aucun jeu disponible pour l’instant."
+        }</p>`;
+      } else {
+        // On réutilise exactement la carte standard
+        mountPagedSection({
+          grid: seriesGridJV,
+          items: jvSorted,
+          renderFn: renderSeriesCard, // ← même renderer que tes séries
+          sectionKey: "jv",
+          pageSize: 6,
+          afterRender: (root) => {
+            limitVisibleTags(root.querySelector(".series-tags"), 3, "plusN");
+            makeSeriesCardsClickable();
+          }
+        });
+      }
+
+      // Debug utile si ça reste vide
+      console.debug(`[JV] total:${jvAll.length} visibles:${jvSorted.length} 18+:${showAdult}`);
+    }
 
     if (seriesGridOngoing) {
       mountPagedSection({

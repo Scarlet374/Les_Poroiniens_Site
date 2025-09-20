@@ -1,0 +1,75 @@
+{
+  "title": "Mounting Olympus",
+  "description": "Mounting Olympus est un roman visuel linéaire pour adultes en cours de réalisation qui se déroule dans la Grèce antique ! Partez à l'aventure, rencontrez des déesses et couchez avec elles dans des scènes illustrées à la main avec amour.",
+  "artist": "Ratatooey",
+  "author": "Ratatooey",
+  "cover": "https://file.garden/aKS5jUD-slfn6iFT/Mounting%20Olympus/cover1.png",
+  "manga_type": "Pornographique",
+  "magazine": "itch.io",
+  "release_year": 2025,
+  "game": true,
+
+  "patches": [
+    {
+      "version": "0.2.0",
+      "released": "2025-03-15",
+      "channel": "stable",
+      "notes": "Support de la demo 0.2. Corrections de fautes, retouches UI FR.",
+      "compatibility": { "game": "Demo 0.2", "min": "0.2.0", "max": "0.2.9" },
+      "files": [
+        {
+          "platform": "windows",
+          "format": "zip",
+          "url": "https://drive.google.com/uc?export=download&id=XXXXX",
+          "size_mb": 154
+        },
+        {
+          "platform": "linux",
+          "format": "zip",
+          "url": "https://drive.google.com/uc?export=download&id=YYYYY"
+        },
+        {
+          "platform": "android",
+          "format": "apk",
+          "url": "https://drive.google.com/uc?export=download&id=ZZZZZ"
+        },
+        {
+          "platform": "ios",
+          "format": "zip",
+          "url": "https://drive.google.com/uc?export=download&id=AAAAA"
+        }
+      ]
+    },
+    {
+      "version": "0.1.0",
+      "released": "2024-12-05",
+      "channel": "stable",
+      "notes": "Première release du patch FR.",
+      "files": [
+        { "platform": "windows", "format": "zip", "url": "https://…" },
+        { "platform": "android", "format": "apk", "url": "https://…" }
+      ]
+    }
+  ],
+
+  "install": {
+    "windows": "Dézippez l'archive et copiez le dossier patch dans le répertoire du jeu (écrasez les fichiers si demandé).",
+    "linux":   "Même procédure que Windows (via gestionnaire d'archives).",
+    "android": "Installez l'APK signé sur votre appareil.",
+    "ios":     "Utilisez AltStore/Sideloadly pour sideloader l'IPA, puis lancez le jeu."
+  },
+
+  "author_link": {
+    "Patreon": "https://www.patreon.com/c/ratatooey",
+    "itch.io": "https://ratatooey.itch.io/"
+  },
+
+  "tags": ["Furry", "2DCG", "Ahegao", "Creampie", "Tripotage", "Branlette", "Protagoniste masculin", "Romance", "Sexe vaginal"],
+
+  "preview_image": {
+    "1": "https://file.garden/aKS5jUD-slfn6iFT/Mounting%20Olympus/ss-1.png",
+    "2": "https://file.garden/aKS5jUD-slfn6iFT/Mounting%20Olympus/ss-2.png",
+    "3": "https://file.garden/aKS5jUD-slfn6iFT/Mounting%20Olympus/ss-3.png",
+    "4": "https://file.garden/aKS5jUD-slfn6iFT/Mounting%20Olympus/ss-4.png"
+  }
+}

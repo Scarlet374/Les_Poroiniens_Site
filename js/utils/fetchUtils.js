@@ -241,47 +241,54 @@ export async function fetchSeriesDataBySlug(slug) {
  * Récupère TOUTES les données des séries. Utile pour la page d'accueil.
  * @returns {Promise<Array<object>>} Un tableau d'objets série.
  */
-export async function fetchAllSeriesData() {
+let SERIES_CACHE = null;
+
+export async function fetchAllSeriesData({ force = false, cache = "force-cache" } = {}) {
+  if (!force && SERIES_CACHE) return SERIES_CACHE;
+
   const config = await loadGlobalConfig();
   let seriesPromises = [];
 
   if (config.ENV === "LOCAL_DEV" && Array.isArray(config.LOCAL_SERIES_FILES)) {
     seriesPromises = config.LOCAL_SERIES_FILES.map(async (filename) => {
-      const localSeriesPath = `/data/series/${filename}`;
+      const url = `/data/series/${filename}`;
       try {
-        const serie = await fetchData(localSeriesPath);
+        const serie = await fetchData(url, { cache }); // ⬅ hint cache pour fichiers locaux
         const rawGithubFileUrl = `${config.URL_RAW_JSON_GITHUB}${filename}`;
         const base64Url = serie.cubari_gist_id ? serie.cubari_gist_id : btoa(rawGithubFileUrl);
         return { ...serie, base64Url };
-      } catch (error) {
-        console.error(`Error loading local series file ${localSeriesPath}:`, error);
+      } catch (e) {
+        console.error(`Error loading local series file ${url}:`, e);
         return null;
       }
     });
   } else {
-    // ... (la logique de production reste la même)
     try {
-      const contents = await fetchData(config.URL_GIT_CUBARI);
+      const contents = await fetchData(config.URL_GIT_CUBARI, { cache });
       if (!Array.isArray(contents)) return [];
       seriesPromises = contents
-        .filter(file => file.name.endsWith(".json") && file.type === 'file')
+        .filter(f => f.type === "file" && f.name.endsWith(".json"))
         .map(async (file) => {
           try {
-            const serie = await fetchData(file.download_url);
+            const serie = await fetchData(file.download_url, { cache });
             const rawGithubFileUrl = `${config.URL_RAW_JSON_GITHUB}${file.name}`;
             const base64Url = serie.cubari_gist_id ? serie.cubari_gist_id : btoa(rawGithubFileUrl);
             return { ...serie, base64Url };
-          } catch (error) {
-            console.error(`Error loading series ${file.name}:`, error);
+          } catch (e) {
+            console.error(`Error loading series ${file.name}:`, e);
             return null;
           }
         });
-    } catch (error) {
-      console.error("Error fetching GitHub file list:", error);
+    } catch (e) {
+      console.error("Error fetching GitHub file list:", e);
       return [];
     }
   }
 
-  const allSeriesResults = await Promise.all(seriesPromises);
-  return allSeriesResults.filter(s => s && typeof s === 'object' && s.title && s.chapters);
+  const all = (await Promise.all(seriesPromises))
+    // ⬇️ NE PLUS filtrer par "chapters" -> on garde JV, LN sans chapitres, etc.
+    .filter(s => s && typeof s === "object" && s.title);
+
+  SERIES_CACHE = all;
+  return all;
 }

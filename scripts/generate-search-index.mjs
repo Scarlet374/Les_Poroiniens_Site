@@ -25,6 +25,20 @@ function toSlug(s) {
     .replace(/^_+|_+$/g, "");
 }
 
+/** Détecte un "jeu vidéo" */
+function isGame(json) {
+  if (!json || typeof json !== "object") return false;
+
+  // support booléen, "true"/1, etc.
+  const gv = json.game;
+  if (gv === true || gv === 1 || String(gv).trim().toLowerCase() === "true") return true;
+
+  // fallback via tags (FR + EN + VN)
+  const tags = Array.isArray(json.tags) ? json.tags.map(t => String(t).trim().toLowerCase()) : [];
+  const GAME_TAGS = ["jeu vidéo", "jeux vidéo", "visual novel", "visual-novel", "eroge", "vn"];
+  return tags.some(t => GAME_TAGS.includes(t));
+}
+
 /** On considère que c'est une “série” si: titre + (chapitres) ou (light_novel true) */
 function looksLikeSeries(json) {
   if (!json || typeof json !== "object") return false;
@@ -35,7 +49,7 @@ function looksLikeSeries(json) {
     typeof json.chapters === "object" &&
     Object.keys(json.chapters).length > 0;
 
-  return hasChapters || json.light_novel === true;
+  return hasChapters || json.light_novel === true || isGame(json);
 }
 
 function pick(x, keys) {
@@ -95,8 +109,13 @@ async function run() {
           "pornwha",
           "doujinshi",
           "light_novel",
+          "game",
         ]),
       };
+
+      // robustesse si "game" n'est pas strict booléen dans le JSON
+      doc.game = isGame(json);
+      doc.type = doc.game ? "game" : (json.light_novel === true ? "light_novel" : "series");
 
       doc.isAdult = isAdult(doc);
       out.push(doc);

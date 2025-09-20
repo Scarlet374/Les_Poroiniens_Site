@@ -55,6 +55,7 @@ export const slugToFile = {
   "megumin_et_lentrainement_a_lexplosion_lubrique_": "Kono_Sukebe_na_Bakuretsu_Musume_ni_Tyoukyou _wo_(Doujinshi).json",
   "miku_est_seule_a_noel": "Chri_Bocchi_Miku_(Doujinshi).json",
   "montre-moi_tes_dents_de_requin": "Kimi_no_Gizaba_ga_Mitemitai.json",
+  "mounting_olympus": "MountingOlympus.json",
   "on_est_tes_esclaves_alors_tu_peux_faire_ce_que_tu_veux_diablo_": "Diablo_no_Shoyuubutsu_dakara_Suki_ni_Shite_mo_ii_yo....json",
   "pour_le_bien_de_ses_recherches_mona_sadonne_au_sexe": "Doujinshi_ni_Ireru_Mona_no_Ecchi_na_Manga_(Doujinshi).json",
   "prend_donc_plaisir_ho_aventurier_merveilleux_": "Kono_Subarashii_Boukensha_ni_Kairaku_o_(Doujinshi).json",

@@ -4,19 +4,10 @@ import {
     slugify
 } from "../utils/domUtils.js";
 
-const mainNavLinksConfig = [{
-        text: "Accueil",
-        href: "/",
-        icon: "fas fa-home",
-        id: "home"
-    },
-    {
-        text: "Fan-Arts",
-        href: "/galerie",
-        icon: "fa-solid fa-palette",
-        id: "gallery",
-    },
-    // { text: "À propos", href: "/presentation", icon: "fas fa-user", id: "about" },
+const mainNavLinksConfig = [
+  { text: "Accueil",   href: "/",             icon: "fas fa-home",        id: "home" },
+  { text: "Fan-Arts",  href: "/galerie",      icon: "fa-solid fa-palette",id: "gallery" },
+  // { text: "À propos", href: "/presentation", icon: "fas fa-user", id: "about" },
 ];
 
 const subNavTitlesConfig = {
@@ -34,6 +25,7 @@ homepage: [
   { text: "Pornwha",    href: "#pornwha-section",    id: "pornwha" },
   { text: "Light novel",href: "#lightnovel-section", id: "lightnovel" },
   { text: "Anime",      href: "#anime-section",      id: "anime" }, 
+  { text: "Jeux vidéo", href: "#jv-section",         id: "jv" },
 ],
     galeriepage: [],
     presentationpage: [],
@@ -61,11 +53,11 @@ function getCurrentSeriesSlugFromPath() {
 }
 
 function getCurrentSeriesViewFromPath() {
-    const path = window.location.pathname;
-    if (path.includes("/episodes")) {
-        return "anime";
-    }
-    return "manga";
+  const path = window.location.pathname;
+  if (path.includes("/episodes")) return "anime";
+  // Vue jeu : notre fiche rend <section class="gv">…
+  if (document.querySelector(".gv")) return "game";
+  return "manga";
 }
 
 function renderNavLinks(container, links, isMobile = false) {
@@ -178,33 +170,22 @@ function getSubNavLinksForPage(pageId) {
                 const currentView = getCurrentSeriesViewFromPath();
 
                 if (currentView === "anime") {
-                    baseLinks = [{
-                            text: "Informations",
-                            href: `#series-detail-section`,
-                            id: "series-info"
-                        },
-                        {
-                            text: "Épisodes",
-                            href: `#chapters-list-section`,
-                            id: "series-episodes"
-                        },
+                    baseLinks = [
+                    { text: "Informations", href: `#series-detail-section`, id: "series-info" },
+                    { text: "Épisodes",     href: `#chapters-list-section`, id: "series-episodes" },
+                    ];
+                } else if (currentView === "game") {
+                    // ⬅️ Vue jeu vidéo : pas de “Galerie des Couvertures” ni “Chapitres”
+                    baseLinks = [
+                    { text: "Informations", href: `#series-detail-section`, id: "series-info" },
+                    // (si tu veux un lien vers la galerie JV plus tard, on pourra cibler un id dans gameView)
                     ];
                 } else {
-                    baseLinks = [{
-                            text: "Informations",
-                            href: `#series-detail-section`,
-                            id: "series-info"
-                        },
-                        {
-                            text: "Galerie des Couvertures",
-                            href: `/${seriesSlug}/cover`,
-                            id: "series-covers-gallery"
-                        },
-                        {
-                            text: "Chapitres",
-                            href: `#chapters-list-section`,
-                            id: "series-chapters"
-                        },
+                    // vue manga habituelle
+                    baseLinks = [
+                    { text: "Informations",            href: `#series-detail-section`, id: "series-info" },
+                    { text: "Galerie des Couvertures", href: `/${seriesSlug}/cover`,   id: "series-covers-gallery" },
+                    { text: "Chapitres",               href: `#chapters-list-section`, id: "series-chapters" },
                     ];
                 }
             }
