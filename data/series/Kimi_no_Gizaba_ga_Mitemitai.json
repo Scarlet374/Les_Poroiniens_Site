@@ -20,7 +20,8 @@
 	{"Relecture":"N"},
 	{"Lettrage":"N"},
 	{"Correction":"N"},
-	{"En pause":"N"}
+	{"En pause":"N"},
+	{"A jour":"O"}
 	],
 	"pause_reason": "La série n'est pas en pause.",
 	"chapters": {
@@ -46,6 +47,14 @@
 			"last_updated": "19/09/2025/21h43",
 			"groups": {
 				"LesPoroïniens": "/proxy/api/imgchest/chapter/ljyq23maxy2"
+			}
+		},
+		"4": {
+			"title": "Tout de toi",
+			"volume": "",
+			"last_updated": "21/09/2025/11h15",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/md7o8oq3d4p"
 			}
 		}
 	}

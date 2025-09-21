@@ -128,5 +128,44 @@
         "instagram": null,
         "tiktok": null,
         "reddit": null
+    },
+    {
+        "id": 11,
+        "author_id": "842003392368869376",
+        "series_slug": "montre-moi_tes_dents_de_requin",
+        "series_title": "Montre-moi tes dents de requin",
+        "chapitre": 4,
+        "page": 12,
+        "date": "2025-09-21 00:00:01",
+        "twitter": null,
+        "instagram": null,
+        "tiktok": null,
+        "reddit": null
+    },
+    {
+        "id": 12,
+        "author_id": "842003392368869376",
+        "series_slug": "montre-moi_tes_dents_de_requin",
+        "series_title": "Montre-moi tes dents de requin",
+        "chapitre": 4,
+        "page": 18,
+        "date": "2025-09-21 00:00:02",
+        "twitter": null,
+        "instagram": null,
+        "tiktok": null,
+        "reddit": null
+    },
+    {
+        "id": 13,
+        "author_id": "842003392368869376",
+        "series_slug": "montre-moi_tes_dents_de_requin",
+        "series_title": "Montre-moi tes dents de requin",
+        "chapitre": 4,
+        "page": 20,
+        "date": "2025-09-21 00:00:03",
+        "twitter": null,
+        "instagram": null,
+        "tiktok": null,
+        "reddit": null
     }
 ]
