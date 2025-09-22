@@ -6,7 +6,7 @@ import {
 
 const mainNavLinksConfig = [
   { text: "Accueil",   href: "/",             icon: "fas fa-home",        id: "home" },
-  { text: "Fan-Arts",  href: "/galerie",      icon: "fa-solid fa-palette",id: "gallery" },
+  { text: "Colorisations",  href: "/galerie",      icon: "fa-solid fa-palette",id: "gallery" },
   // { text: "À propos", href: "/presentation", icon: "fas fa-user", id: "about" },
 ];
 
