@@ -66,10 +66,10 @@
 
   "tags": ["Furry", "2DCG", "Ahegao", "Creampie", "Tripotage", "Branlette", "Protagoniste masculin", "Romance", "Sexe vaginal"],
 
-  "preview_image": {
-    "1": "https://file.garden/aKS5jUD-slfn6iFT/Mounting%20Olympus/ss-1.png",
-    "2": "https://file.garden/aKS5jUD-slfn6iFT/Mounting%20Olympus/ss-2.png",
-    "3": "https://file.garden/aKS5jUD-slfn6iFT/Mounting%20Olympus/ss-3.png",
-    "4": "https://file.garden/aKS5jUD-slfn6iFT/Mounting%20Olympus/ss-4.png"
-  }
+  "preview_image": [
+    {"preview":1,"hq_res": "https://file.garden/aKS5jUD-slfn6iFT/Mounting%20Olympus/1.png","lq_res": "https://file.garden/aKS5jUD-slfn6iFT/Mounting%20Olympus/1LO.jpg"},
+    {"preview":2,"hq_res": "https://file.garden/aKS5jUD-slfn6iFT/Mounting%20Olympus/ss-1.png","lq_res": "https://file.garden/aKS5jUD-slfn6iFT/Mounting%20Olympus/2LO.png"},
+    {"preview":3,"hq_res": "https://file.garden/aKS5jUD-slfn6iFT/Mounting%20Olympus/ss-2.png","lq_res": "https://file.garden/aKS5jUD-slfn6iFT/Mounting%20Olympus/3LO.png"},
+    {"preview":4,"hq_res": "https://file.garden/aKS5jUD-slfn6iFT/Mounting%20Olympus/ss-3.png","lq_res": "https://file.garden/aKS5jUD-slfn6iFT/Mounting%20Olympus/4LO.png"}
+  ]
 }

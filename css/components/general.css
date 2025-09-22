@@ -201,3 +201,9 @@ body.dark .gv-shot img{ border-color: rgba(255,255,255,.08); }
 @media (max-width: 760px){
   .gv-card{ grid-template-columns: 1fr; }
 }
+
+/* game view */
+.gv-synopsis{
+  line-height: 1.6;
+  white-space: pre-line; /* respecte les \n */
+}

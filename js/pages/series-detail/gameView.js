@@ -11,23 +11,41 @@ function entries(o) {
   return o && typeof o === "object" ? Object.entries(o) : [];
 }
 
-function previewsArray(preview_image) {
-  // supporte { "1": "url", "2": "url" } ou array
+// Transforme preview_image en [{lq, hq}, ...] trié par "preview"
+function normalizePreviews(preview_image) {
   if (!preview_image) return [];
-  if (Array.isArray(preview_image)) return preview_image.filter(Boolean);
-  return entries(preview_image)
-    .sort(([a], [b]) => parseInt(a, 10) - parseInt(b, 10))
-    .map(([, url]) => url)
-    .filter(Boolean);
+
+  // Array ?
+  if (Array.isArray(preview_image)) {
+    // cas array d'objets {preview, hq_res, lq_res} (nouveau schéma)
+    if (preview_image.length && typeof preview_image[0] === "object") {
+      return preview_image
+        .slice()
+        .sort((a, b) => (a.preview || 0) - (b.preview || 0))
+        .map(p => ({
+          lq: p.lq_res || p.hq_res || p.url_lq || p.url || null,
+          hq: p.hq_res || p.url_hq || p.lq_res || p.url || null,
+        }))
+        .filter(p => p.lq || p.hq);
+    }
+    // cas array de strings
+    return preview_image.map(u => ({ lq: u, hq: u }));
+  }
+
+  // Objet indexé { "1": "url", "2": "url", ... }
+  if (typeof preview_image === "object") {
+    return Object.entries(preview_image)
+      .sort(([a], [b]) => parseInt(a, 10) - parseInt(b, 10))
+      .map(([, u]) => ({ lq: u, hq: u }));
+  }
+
+  return [];
 }
 
 function pickCover(series) {
-  // 1) cover si dispo
-  let u = series?.cover || null;
-  // 2) sinon 1re preview
-  if (!u) u = previewsArray(series?.preview_image)[0] || null;
-  // 3) fallback
-  return u || "/img/placeholder_preview.png";
+  // 1) cover si dispo, sinon première preview (de préférence HQ si tu veux net)
+  const previews = normalizePreviews(series?.preview_image);
+  return series?.cover || previews[0]?.hq || previews[0]?.lq || "/img/placeholder_preview.png";
 }
 
 function icon(name) {
@@ -252,7 +270,7 @@ export function renderGameView(series) {
 
   const adult = isAdult(series);
   const tags = Array.isArray(series.tags) ? series.tags : [];
-  const previews = previewsArray(series.preview_image);
+  const previews = normalizePreviews(series.preview_image);
   const cover = pickCover(series);
 
   const authorBtns = entries(series.author_link).map(
@@ -298,10 +316,14 @@ export function renderGameView(series) {
           ? `
         <h2 class="gv-subtitle">Galerie (${previews.length})</h2>
         <div class="gv-gallery">
-          ${previews.map((src, i) => `
-            <button class="gv-shot" data-idx="${i}" aria-label="Agrandir l'image ${i + 1}">
-              <img src="${esc(src)}" loading="lazy" alt="">
-            </button>`).join("")}
+        ${previews.map((p, i) => `
+          <button class="gv-shot" data-idx="${i}" aria-label="Agrandir l'image ${i + 1}">
+            <img
+              src="${esc(p.lq || p.hq)}"
+              data-hq="${esc(p.hq || p.lq)}"
+              loading="lazy" decoding="async" fetchpriority="low"
+              alt="">
+          </button>`).join("")}
         </div>`
           : ""
       }
@@ -316,10 +338,11 @@ export function renderGameView(series) {
 
   // click -> lightbox + ← →
   if (previews.length) {
+    const hqUrls = previews.map(p => p.hq || p.lq);  // fallback si pas de HQ
     host.querySelectorAll(".gv-shot").forEach((btn) => {
       btn.addEventListener("click", () => {
         const idx = parseInt(btn.getAttribute("data-idx"), 10) || 0;
-        makeLightbox(previews, idx);
+        makeLightbox(hqUrls, idx); // ← on envoie les HQ à la lightbox
       });
     });
   }
