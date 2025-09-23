@@ -682,3 +682,21 @@ html.ln-mode, body.ln-mode {
   font-family: "Comfortaa", cursive !important;
 }
 /* ---------------------- */
+/* --- Couleur de trait adaptée au thème --- */
+:root { --ln-outline: rgba(0,0,0,.16); }
+:root.dark, html.dark, body.dark, [data-theme="dark"] { --ln-outline: rgba(255,255,255,.14); }
+
+/* --- Style du séparateur (ne dépend plus du thème global) --- */
+#ln-article .ln-content hr.ln-divider{
+  border: 0;
+  border-top: 1px solid var(--ln-outline);
+  margin-block: 1.4em;   /* espace voulu des deux côtés */
+  opacity: .85;
+}
+
+/* --- Espace strictement symétrique autour du hr --- */
+/* On annule la marge du paragraphe qui suit/précède pour que seul le hr décide. */
+#ln-article .ln-content hr.ln-divider + p { margin-top: 0 !important; }
+/* :has() est maintenant supporté (Firefox/Chrome/Safari) → on enlève la marge du p avant */
+#ln-article .ln-content p:has(+ hr.ln-divider) { margin-bottom: 0 !important; }
+/* ---------------------- */
