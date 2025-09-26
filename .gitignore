@@ -2,3 +2,4 @@
 /node_modules
 summary.txt
 .dev.vars
+/scripts/clearImgChestCache.js
