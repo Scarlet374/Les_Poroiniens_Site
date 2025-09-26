@@ -90,6 +90,22 @@
             "groups": {
                 "LesPoroïniens": "/proxy/api/imgchest/chapter/9rydrwwd67k"
             }
+        },
+        "5": {
+            "title": "",
+            "volume": "1",
+            "last_updated": "26/09/2025/23h20",
+            "groups": {
+                "LesPoroïniens": "/proxy/api/imgchest/chapter/n87wmkqmb4x"
+            }
+        },
+        "5 (Non censuré)": {
+            "title": "",
+            "volume": "1",
+            "last_updated": "26/09/2025/23h21",
+            "groups": {
+                "LesPoroïniens": "/proxy/api/imgchest/chapter/qe4gwap8o7j"
+            }
         }
     }
 }
