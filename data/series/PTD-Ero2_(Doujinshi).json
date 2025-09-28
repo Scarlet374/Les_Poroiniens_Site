@@ -26,5 +26,15 @@
 	"doujinshi": true,
 	"covers_gallery": [
 		{ "url_hq": "https://file.garden/aKS5jUD-slfn6iFT/Cover%20Ero-2%20PTD.png", "url_lq": "https://file.garden/aKS5jUD-slfn6iFT/Cover%20Ero-2%20PTD%20LO.jpg", "volume": "1" }
-	]
+	],
+	"chapters": {
+		"0": {
+			"title": "",
+			"volume": "",
+			"last_updated": "28/09/2025/11h47",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/wl7loexlx7x"
+			}
+		}
+	}
 }
