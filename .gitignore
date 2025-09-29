@@ -3,3 +3,4 @@
 summary.txt
 .dev.vars
 /scripts/clearImgChestCache.js
+/scripts/kv-dashboard/*

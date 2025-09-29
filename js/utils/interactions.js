@@ -118,6 +118,9 @@ function sendActionQueue() {
 
 window.addEventListener("pagehide", sendActionQueue);
 
+// Envoi automatique de la file d'attente toutes les 10 secondes
+setInterval(sendActionQueue, 10000);
+
 // --- Gestion de l'état local de l'utilisateur (inchangée) ---
 
 export function getLocalInteractionState(key) {

@@ -1,5 +1,5 @@
 {
-  "name": "LesPoroiniensSite",
+  "name": "lesporoinienssite",
   "description": "Le site des Poroïniens pour les sorties des Poroïniens",
   "version": "1.0.0",
   "main": "index.js",
@@ -13,6 +13,8 @@
   "license": "ISC",
   "dependencies": {
     "@resvg/resvg-js": "^2.6.2",
+    "dotenv": "^17.2.2",
+    "express": "^5.1.0",
     "node-fetch": "^3.3.2",
     "satori": "^0.10.14",
     "satori-html": "^0.3.2",
@@ -21,5 +23,13 @@
   "devDependencies": {
     "clean-css-cli": "^5.6.3",
     "tiny-glob": "^0.2.9"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Scarlet374/Les_Poroiniens_Site.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Scarlet374/Les_Poroiniens_Site/issues"
+  },
+  "homepage": "https://github.com/Scarlet374/Les_Poroiniens_Site#readme"
 }
