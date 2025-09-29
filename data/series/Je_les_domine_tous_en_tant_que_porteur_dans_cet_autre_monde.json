@@ -67,8 +67,8 @@
                 "LesPoroïniens": "/proxy/api/imgchest/chapter/bp45qn2jx45"
             }
         },
-        "2.5 (Non censuré)": {
-            "title": "",
+        "2.51": {
+            "title": "(Non censuré)",
             "volume": "1",
             "last_updated": "25/05/2025/22h00",
             "groups": {
@@ -89,6 +89,22 @@
             "last_updated": "22/09/2025/18h05",
             "groups": {
                 "LesPoroïniens": "/proxy/api/imgchest/chapter/9rydrwwd67k"
+            }
+        },
+        "5": {
+            "title": "",
+            "volume": "1",
+            "last_updated": "26/09/2025/23h20",
+            "groups": {
+                "LesPoroïniens": "/proxy/api/imgchest/chapter/n87wmkqmb4x"
+            }
+        },
+        "5.1": {
+            "title": "(Non censuré)",
+            "volume": "1",
+            "last_updated": "26/09/2025/23h21",
+            "groups": {
+                "LesPoroïniens": "/proxy/api/imgchest/chapter/qe4gwap8o7j"
             }
         }
     }
