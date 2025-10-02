@@ -263,7 +263,7 @@ function renderChaptersListForVolume(chaptersToRender, seriesSlug) {
           }
         </div>
         <div class="chapter-side-info">
-          ${likesHtml}${viewsHtml}${collabHtml}
+          ${likesHtml}${commentsHtml}${viewsHtml}${collabHtml}
           <span class="detail-chapter-date">${timeAgo(c.last_updated_ts)}</span>
         </div>
       </a>`;
