@@ -35,6 +35,7 @@ export const slugToFile = {
   "la_luxurieuse_megi_cherie__moi_au_love_hotel_jusquau_petit_matin": "La_luxurieuse_Megi_chérie_&_moi_au_love_hotel_jusqu_au_petit_matin_(Doujinshi).json",
   "la_magie_dagrandissement_du_penis": "Chinchin_ga_Ookiku_Naru_Mahou_(Doujinshi).json",
   "la_nuit_de_la_constellation_ryuukin": "La_nuit_de_la_constellation_Ryuukin_(Doujinshi).json",
+  "la_perverse_du_bureau_da_cote_narrete_pas_de_me_lancer_ce_genre_de_regards": "Perverse.json",
   "la_plus_mignonne_des_filles_a_mes_cotes": "La_plus_mignonne_des_filles_à_mes_côtés.json",
   "la_premiere_nuit_de_bocchi_et_kita": "La_première_nuit_de_Bocchi_et_Kita.json",
   "la_presidente_lalcool_et_les_etoiles": "Shachou_to_Sake_to_Hoshi.json",

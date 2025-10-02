@@ -13,6 +13,40 @@ import {
   setLocalInteractionState,
   queueAction,
 } from "../../utils/interactions.js";
+import { parseChapterKey } from "../../utils/chapters.js";
+
+// --- Helpers Chapitre/Extra ---
+
+function buildDisplayLabelFromKey(key, title) {
+  const tRaw = String(title || "").trim();
+
+  // normalisation (ignore accents) pour détecter Prologue / Épilogue
+  const tNorm = tRaw
+    .normalize("NFD")
+    .replace(/\p{Diacritic}/gu, "")
+    .toLowerCase();
+
+  const isPrologue = /^prologue\b/.test(tNorm);
+  const isEpilogue = /^epilogue\b/.test(tNorm);
+
+  if (isPrologue || isEpilogue) {
+    // Dans ce cas, on n'affiche QUE “Prologue” ou “Épilogue”
+    // et on supprime le sous-titre pour éviter “Titre inconnu”.
+    return { heading: tRaw, title: "", suppressTitle: true };
+  }
+
+  // Gestion Extra via clé "1.1", "2.3", etc.
+  const { maj, min } = parseChapterKey(key);
+  const isExtra = min > 0;
+
+  if (isExtra) {
+    const cleanTitle = tRaw.replace(/^Extra\s*\d+\s*:\s*/i, "").trim();
+    return { heading: `Extra ${min}`, title: cleanTitle };
+  }
+
+  // Chapitre classique
+  return { heading: `Chapitre ${maj}`, title: tRaw };
+}
 
 let currentVolumeSortOrder = "desc";
 let currentSeriesStats = {};
@@ -217,17 +251,22 @@ function renderChaptersListForVolume(chaptersToRender, seriesSlug) {
         ? `<span class="detail-chapter-collab">${c.collab}</span>`
         : "";
 
-      return `<a ${
-        href ? `href="${href}"` : ""
-      } class="${chapterClass}" data-chapter-number="${
-        c.chapter
-      }"><div class="chapter-main-info"><span class="detail-chapter-number">Chapitre ${
-        c.chapter
-      }</span><span class="detail-chapter-title">${
-        c.title || "Titre inconnu"
-      }</span></div><div class="chapter-side-info">${likesHtml}${commentsHtml}${viewsHtml}${collabHtml}<span class="detail-chapter-date">${timeAgo(
-        c.last_updated_ts
-      )}</span></div></a>`;
+      const lbl = buildDisplayLabelFromKey(c.chapter, c.title);
+
+      return `<a ${href ? `href="${href}"` : ""} class="${chapterClass}" data-chapter-number="${c.chapter}">
+        <div class="chapter-main-info">
+          <span class="detail-chapter-number">${lbl.heading}</span>
+          ${
+            lbl.suppressTitle
+              ? ""
+              : `<span class="detail-chapter-title">${lbl.title ? lbl.title : ""}</span>`
+          }
+        </div>
+        <div class="chapter-side-info">
+          ${likesHtml}${viewsHtml}${collabHtml}
+          <span class="detail-chapter-date">${timeAgo(c.last_updated_ts)}</span>
+        </div>
+      </a>`;
     })
     .join("");
 }
@@ -281,15 +320,14 @@ function displayGroupedChapters(seriesData, seriesSlug) {
   });
   for (const [, chapters] of grouped.entries()) {
     chapters.sort((a, b) => {
-      const ta = a.last_updated_ts, tb = b.last_updated_ts;
-      if (!Number.isNaN(ta) && !Number.isNaN(tb) && ta !== tb) {
-        // plus récent d'abord
-        return tb - ta;
+      const A = parseChapterKey(a.chapter);
+      const B = parseChapterKey(b.chapter);
+
+      // tri par numéro principal puis sous-numéro (extras)
+      if (A.maj !== B.maj) {
+        return currentVolumeSortOrder === "desc" ? B.maj - A.maj : A.maj - B.maj;
       }
-      // fallback: numéro de chapitre
-      const chapA = parseFloat(String(a.chapter).replace(",", "."));
-      const chapB = parseFloat(String(b.chapter).replace(",", "."));
-      return currentVolumeSortOrder === "desc" ? chapB - chapA : chapA - chapB;
+      return currentVolumeSortOrder === "desc" ? B.min - A.min : A.min - B.min;
     });
   }
   let sortedVolumeKeys = [...grouped.keys()].sort((a, b) => {

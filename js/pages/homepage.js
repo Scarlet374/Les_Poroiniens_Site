@@ -2,6 +2,41 @@
 import { fetchData, fetchAllSeriesData, fetchAllAnimeData } from "../utils/fetchUtils.js";
 import { slugify, qs, qsa, limitVisibleTags } from "../utils/domUtils.js";
 import { parseDateToTimestamp, timeAgo } from "../utils/dateUtils.js";
+import { formatChapterHeadingAndTitle } from "../utils/chapters.js";
+
+// Sélectionne les K chapitres les plus récents en UNE passe (pas de sort global)
+function pickTopKChapters(chaptersObj, seriesSlug, K = 3) {
+  const top = [];
+  const getTs = (v) => (typeof v === "number" ? v : parseDateToTimestamp(v || 0));
+
+  for (const [chapNum, data] of Object.entries(chaptersObj || {})) {
+    const hasManga = !!(data?.groups && data.groups.LesPoroïniens);
+    const hasLN    = !!data?.file;
+    if (!hasManga && !hasLN) continue; // pas lisible → on ignore
+
+    const ts = getTs(data?.last_updated);
+    const item = {
+      chapter: chapNum,
+      ...data,
+      last_updated_ts: ts,
+      url: `/${seriesSlug}/${String(chapNum)}`
+    };
+
+    // insertion triée (desc) dans un tableau de taille <= K
+    let inserted = false;
+    for (let i = 0; i < top.length; i++) {
+      if (item.last_updated_ts > top[i].last_updated_ts) {
+        top.splice(i, 0, item);
+        inserted = true;
+        break;
+      }
+    }
+    if (!inserted && top.length < K) top.push(item);
+    if (top.length > K) top.length = K; // tronque à K
+  }
+
+  return top; // déjà trié du + récent → + ancien
+}
 
 /**
  * Convertit une couleur HEX en une chaîne de valeurs R, G, B.
@@ -540,48 +575,47 @@ function renderSeriesCard(series) {
   let latestChapterAsButton = "", latestThreeChaptersHtml = "";
 
   if (hasChapters) {
-    const chaptersArray = Object.entries(series.chapters)
-      .map(([chapNum, chapData]) => {
-        const hasManga = !!(chapData?.groups && chapData.groups.LesPoroïniens);
-        const hasLN    = !!chapData?.file;
-        const readable = hasManga || hasLN;
-        return {
-          chapter: chapNum,
-          ...chapData,
-          last_updated_ts: parseDateToTimestamp(chapData?.last_updated || 0),
-          url: readable ? `/${seriesSlug}/${String(chapNum)}` : null,
-        };
-      })
-      .filter(chap => !!chap.url)
-      .sort((a, b) => b.last_updated_ts - a.last_updated_ts);
+    // ⬇️ O(n) au lieu d'un sort global O(n log n)
+    const top3 = pickTopKChapters(series.chapters, seriesSlug, 3);
 
-    if (chaptersArray.length > 0) {
-      const latestChap = chaptersArray[0];
-      const chapterTitleMobile = latestChap.title || "Titre inconnu";
-      const truncatedTitleMobile = truncateText(chapterTitleMobile, 25);
+    if (top3.length > 0) {
+      const latestChap = top3[0];
+
+      // ======= MOBILE (bouton du dernier) =======
+      const lblMobile = formatChapterHeadingAndTitle(latestChap.chapter, latestChap.title);
+      const mobileSubtitleFull = lblMobile.suppressTitle ? "" : (lblMobile.subtitle || "");
+      const truncatedTitleMobile = lblMobile.suppressTitle ? "" : truncateText(mobileSubtitleFull, 25);
 
       latestChapterAsButton = `
         <div class="series-latest-chapters-container-mobile">
           <a href="${latestChap.url}" class="series-chapter-item">
             <div class="series-chapter-item-main-info-mobile">
-              <span class="chapter-number-small">Ch. ${latestChap.chapter}</span>
-              <span class="chapter-title-small" title="${chapterTitleMobile}">${truncatedTitleMobile}</span>
+              <span class="chapter-number-small">${lblMobile.heading}</span>
+              ${
+                lblMobile.suppressTitle
+                  ? ""
+                  : `<span class="chapter-title-small" title="${mobileSubtitleFull}">${truncatedTitleMobile}</span>`
+              }
             </div>
-            <span class="chapter-date-small-mobile">${timeAgo(
-              latestChap.last_updated_ts
-            )}</span>
+            <span class="chapter-date-small-mobile">${timeAgo(latestChap.last_updated_ts)}</span>
           </a>
         </div>`;
 
+      // ======= DESKTOP (Top 3) =======
       latestThreeChaptersHtml = `
         <div class="series-latest-chapters-container-desktop">
-          ${chaptersArray.slice(0, 3).map((chap) => {
-            const chapterTitleDesktop = chap.title || "Titre inconnu";
-            const truncatedTitleDesktop = truncateText(chapterTitleDesktop, 30);
+          ${top3.map((chap) => {
+            const lbl = formatChapterHeadingAndTitle(chap.chapter, chap.title);
+            const desktopSubtitleFull = lbl.suppressTitle ? "" : (lbl.subtitle || "");
+            const truncatedTitleDesktop = lbl.suppressTitle ? "" : truncateText(desktopSubtitleFull, 30);
             return `
               <a href="${chap.url}" class="series-chapter-item-desktop">
-                <span class="chapter-number-desktop">Ch. ${chap.chapter}</span>
-                <span class="chapter-title-desktop" title="${chapterTitleDesktop}">${truncatedTitleDesktop}</span>
+                <span class="chapter-number-desktop">${lbl.heading}</span>
+                ${
+                  lbl.suppressTitle
+                    ? ""
+                    : `<span class="chapter-title-desktop" title="${desktopSubtitleFull}">${truncatedTitleDesktop}</span>`
+                }
                 <span class="chapter-date-desktop">${timeAgo(chap.last_updated_ts)}</span>
               </a>`;
           }).join("")}
@@ -629,12 +663,11 @@ function renderSeriesCard(series) {
       : series.cover
     : "img/placeholder_preview.png";
 
-  // NEW: badgeHtml placé DANS .series-cover, au-dessus de l’image
   return `
     <div class="series-card" data-url="${detailPageUrl}">
       <div class="series-cover">
         ${badgeHtml}
-        <img src="${imageUrl}" alt="${series.title} – Cover" loading="lazy">
+        <img src="${imageUrl}" alt="${series.title} – Cover" loading="lazy" decoding="async" fetchpriority="low">
       </div>
       <div class="series-info">
         <div class="series-title">${series.title}</div>
