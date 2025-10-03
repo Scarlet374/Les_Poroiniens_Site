@@ -1,0 +1,60 @@
+{
+	"title": "Trop honnête pour quelqu’un qui parle Kyoto !",
+	"description": "Pas de synopsis.",
+	"artist": "Takekake Takeya",
+	"author": "Takekake Takeya",
+	"cover": "https://file.garden/aKS5jUD-slfn6iFT/CoverKyotoLQ.webp",
+	"manga_type": "Shonen",
+    "magazine": "Twitter",
+	"release_year": 2024,
+	"tags": ["Romance", "Tranche de vie"],
+	"alternative_titles": ["京都弁なのに正直すぎる女", "A Woman Who Is Too Honest Despite Her Kyoto Dialect"],
+	"release_status": "En cours",
+	"covers_gallery": [
+		{ "url_hq": "https://file.garden/aKS5jUD-slfn6iFT/CoverKyoto.png", "url_lq": "https://file.garden/aKS5jUD-slfn6iFT/CoverKyotoLQ.webp", "volume": "1" }
+	],
+	"Avancement": [
+	{"Raw":"O"},
+	{"Traduction":"O"},
+	{"Clean":"O"},
+	{"Relecture":"O"},
+	{"Lettrage":"N"},
+	{"Correction":"N"},
+	{"En pause":"O"}
+	],
+	"pause_reason": "On attends le calendrier de l'avent pour continuer.",
+	"chapters": {
+		"1": {
+			"title": "",
+			"volume": "",
+			"last_updated": "03/12/2024",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/na7kax3gw48"
+			}
+		},
+		"2": {
+			"title": "",
+			"volume": "",
+			"last_updated": "13/12/2024/20h00",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/wl7laze83yx"
+			}
+		},
+		"3": {
+			"title": "",
+			"volume": "",
+			"last_updated": "13/12/2024/20h01",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/wl7laze8oyx"
+			}
+		},
+		"4": {
+			"title": "",
+			"volume": "",
+			"last_updated": "13/12/2024/20h02",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/ljyqagnbk72"
+			}
+		}
+	}
+}

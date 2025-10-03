@@ -7,6 +7,17 @@
     "manga_type": "",
     "magazine": "",
     "release_year": 2021,
+    "Avancement": [
+	{"Raw":"O"},
+	{"Traduction":"O"},
+	{"Clean":"O"},
+	{"Relecture":"N"},
+	{"Lettrage":"N"},
+	{"Correction":"N"},
+	{"En pause":"N"},
+	{"A jour":"O"}
+	],
+	"pause_reason": "La série n'est pas en pause.",
     "tags": [
         "Romance",
         "Comédie",

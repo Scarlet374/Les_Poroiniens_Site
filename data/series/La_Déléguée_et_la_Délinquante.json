@@ -1,0 +1,36 @@
+{
+	"title": "La Déléguée et la Délinquante",
+	"description": "Pas de synopsis.",
+	"artist": "kunou",
+	"author": "kunou",
+	"cover": "https://file.garden/aKS5jUD-slfn6iFT/D%C3%A9l%C3%A9gu%C3%A9D%C3%A9linquanteLQ.webp",
+	"manga_type": "Shonen",
+    "magazine": "Pixiv",
+	"release_year": 2019,
+	"tags": ["Yuri", "Délinquante", "Scolaire"],
+	"alternative_titles": ["委員長ちゃんと不良ちゃん", "Class Rep and Delinquent"],
+	"release_status": "En cours",
+	"covers_gallery": [
+		{ "url_hq": "https://file.garden/aKS5jUD-slfn6iFT/D%C3%A9l%C3%A9gu%C3%A9D%C3%A9linquante.png", "url_lq": "https://file.garden/aKS5jUD-slfn6iFT/D%C3%A9l%C3%A9gu%C3%A9D%C3%A9linquanteLQ.webp", "volume": "1" }
+	],
+	"Avancement": [
+	{"Raw":"O"},
+	{"Traduction":"O"},
+	{"Clean":"O"},
+	{"Relecture":"O"},
+	{"Lettrage":"N"},
+	{"Correction":"N"},
+	{"En pause":"N"}
+	],
+	"pause_reason": ".",
+	"chapters": {
+		"0": {
+			"title": "",
+			"volume": "",
+			"last_updated": "18/04/2023",
+			"groups": {
+				"LesPoroïniens": "/proxy/api/imgchest/chapter/vj4jedo6378"
+			}
+		}
+	}
+}
