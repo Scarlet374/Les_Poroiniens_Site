@@ -13,7 +13,7 @@ import {
   setLocalInteractionState,
   queueAction,
 } from "../../utils/interactions.js";
-import { parseChapterKey } from "../../utils/chapters.js";
+import { parseChapterKey, compareChapterKeys, formatChapterHeadingAndTitle, makeCompactButtonHeading } from "../../utils/chapters.js";
 
 // --- Helpers Chapitre/Extra ---
 
@@ -119,11 +119,17 @@ function renderReadingActions(seriesData, seriesSlug) {
 
   let buttonsHtml = "";
 
-  // Bouton "Continuer"
+  // On a besoin d'accéder aux data du chapitre pour récupérer title/label
+  const chaptersMap = seriesData?.chapters || {};
+
+  // Continuer
   if (nextChapterUrl) {
+    const nextData = chaptersMap[String(nextChapter)] || {};
+    const continueHeading = makeCompactButtonHeading(nextChapter, nextData);
+
     buttonsHtml += `
       <a href="${nextChapterUrl}" class="reading-action-button continue">
-        <i class="fas fa-play"></i> Continuer (Ch. ${nextChapter})
+        <i class="fas fa-play"></i> Continuer (${continueHeading})
       </a>`;
   } else if (lastReadChapter && lastReadChapter === lastChapter) {
     buttonsHtml += `
@@ -132,11 +138,14 @@ function renderReadingActions(seriesData, seriesSlug) {
       </span>`;
   }
 
-  // Bouton "Dernier Chapitre"
+  // Dernier Chapitre
   if (!lastReadChapter || lastReadChapter !== lastChapter) {
+    const lastData = chaptersMap[String(lastChapter)] || {};
+    const lastHeading = makeCompactButtonHeading(lastChapter, lastData);
+
     buttonsHtml += `
       <a href="${lastChapterUrl}" class="reading-action-button start">
-        <i class="fas fa-fast-forward"></i> Dernier Chapitre (Ch. ${lastChapter})
+        <i class="fas fa-fast-forward"></i> Dernier Chapitre (${lastHeading})
       </a>`;
   }
 
@@ -216,24 +225,21 @@ function renderChaptersListForVolume(chaptersToRender, seriesSlug) {
         comments: [],
       };
 
-      // ↓↓↓ LA CORRECTION EST ICI ↓↓↓
-      // Logique de comptage optimiste au chargement de la liste
+      // Comptage optimiste au chargement de la liste
       let displayLikes = serverStats.likes;
       if (localState.hasLiked) {
-        // Si l'état local dit "liké", on s'assure que le compteur est au moins de 1 de plus
-        // que ce que le serveur dit, s'il n'est pas déjà plus élevé.
-        // (cas où le serveur n'est pas encore à jour).
         displayLikes = Math.max(
           displayLikes,
           (currentSeriesStats[c.chapter]?.likes || 0) + 1
         );
       }
-      // ↑↑↑ FIN DE LA CORRECTION ↑↑↑
 
       const likesHtml = `<span class="detail-chapter-likes ${
         localState.hasLiked ? "liked" : ""
-        }" title="J'aime" data-like-count="${displayLikes}"><i class="fas fa-heart"></i> ${displayLikes}</span>`;
-      const commentsHtml = `<span class="detail-chapter-comments" title="Commentaires" data-comment-count="${serverStats.comments?.length || 0}"><i class="fas fa-comment"></i> ${
+      }" title="J'aime" data-like-count="${displayLikes}"><i class="fas fa-heart"></i> ${displayLikes}</span>`;
+      const commentsHtml = `<span class="detail-chapter-comments" title="Commentaires" data-comment-count="${
+        serverStats.comments?.length || 0
+      }"><i class="fas fa-comment"></i> ${
         serverStats.comments?.length || 0
       }</span>`;
 
@@ -241,25 +247,32 @@ function renderChaptersListForVolume(chaptersToRender, seriesSlug) {
       const isLN = !!c.file;
       if (!isLicensed && ((c.groups && c.groups.LesPoroïniens) || isLN)) {
         href = `/${seriesSlug}/${String(c.chapter)}`;
-        if (c.groups && c.groups.LesPoroïniens && c.groups.LesPoroïniens.includes("/proxy/api/imgchest/chapter/")) {
+        if (
+          c.groups &&
+          c.groups.LesPoroïniens &&
+          c.groups.LesPoroïniens.includes("/proxy/api/imgchest/chapter/")
+        ) {
           const parts = c.groups.LesPoroïniens.split("/");
           const imgchestPostId = parts[parts.length - 1];
           viewsHtml = `<span class="detail-chapter-views" data-imgchest-id="${imgchestPostId}"><i class="fas fa-circle-notch fa-spin"></i></span>`;
         }
       }
+
       const collabHtml = c.collab
         ? `<span class="detail-chapter-collab">${c.collab}</span>`
         : "";
 
-      const lbl = buildDisplayLabelFromKey(c.chapter, c.title);
+      // ✅ Nouveau système : formatChapterHeadingAndTitle avec support du champ label
+      const { heading, subtitle, suppressTitle } =
+        formatChapterHeadingAndTitle(c.chapter, c.title, { label: c.label });
 
       return `<a ${href ? `href="${href}"` : ""} class="${chapterClass}" data-chapter-number="${c.chapter}">
         <div class="chapter-main-info">
-          <span class="detail-chapter-number">${lbl.heading}</span>
+          <span class="detail-chapter-number">${heading}</span>
           ${
-            lbl.suppressTitle
-              ? ""
-              : `<span class="detail-chapter-title">${lbl.title ? lbl.title : ""}</span>`
+            !suppressTitle && subtitle
+              ? `<span class="detail-chapter-title">${subtitle}</span>`
+              : ""
           }
         </div>
         <div class="chapter-side-info">
@@ -274,65 +287,77 @@ function renderChaptersListForVolume(chaptersToRender, seriesSlug) {
 function displayGroupedChapters(seriesData, seriesSlug) {
   const chaptersContainer = qs(".chapters-accordion-container");
   if (!chaptersContainer) return;
-  const currentSeriesAllChaptersRaw = Object.entries(seriesData.chapters || {})
-    .map(([chapNum, chapData]) => {
-      // Cherche la meilleure date disponible
+
+  const currentSeriesAllChaptersRaw = Object.entries(seriesData.chapters || {}).map(
+    ([chapNum, chapData]) => {
+      // Choisir la meilleure date disponible
       const candidates = [
         chapData.last_updated,
         chapData.updated_at,
         chapData.lastUpdate,
         chapData.date,
         chapData.time,
-        chapData.timestamp
+        chapData.timestamp,
       ];
       let ts = NaN;
       for (const v of candidates) {
         const t = parseDateToTimestamp(v);
-        if (!Number.isNaN(t)) { ts = t; break; } // prend le 1er valide
+        if (!Number.isNaN(t)) {
+          ts = t;
+          break; // prend la première valide
+        }
       }
       return {
-        chapter: chapNum,
-        ...chapData,
+        chapter: chapNum,       // l'ID qui pilote le tri/URL
+        ...chapData,            // garde label/title/volume/file/etc.
         last_updated_ts: ts,
       };
-    });
+    }
+  );
+
   if (currentSeriesAllChaptersRaw.length === 0) {
     chaptersContainer.innerHTML = "<p>Aucun chapitre à afficher.</p>";
     return;
   }
-  let grouped = new Map();
-  let volumeLicenseInfo = new Map();
+
+  // Groupement par volume (+ stockage "licenced" si dispo)
+  const grouped = new Map();
+  const volumeLicenseInfo = new Map();
+
   currentSeriesAllChaptersRaw.forEach((chap) => {
     const volKey =
       chap.volume && String(chap.volume).trim() !== ""
         ? String(chap.volume).trim()
         : "hors_serie";
+
     if (!grouped.has(volKey)) grouped.set(volKey, []);
     grouped.get(volKey).push(chap);
+
     if (
       chap.licencied &&
       chap.licencied.length > 0 &&
       (!chap.groups || chap.groups.LesPoroïniens === "")
     ) {
-      if (!volumeLicenseInfo.has(volKey))
+      if (!volumeLicenseInfo.has(volKey)) {
         volumeLicenseInfo.set(volKey, chap.licencied);
+      }
     }
   });
+
+  // Tri interne de chaque volume : UNIQUEMENT par ID (maj.min)
   for (const [, chapters] of grouped.entries()) {
     chapters.sort((a, b) => {
-      const A = parseChapterKey(a.chapter);
-      const B = parseChapterKey(b.chapter);
-
-      // tri par numéro principal puis sous-numéro (extras)
-      if (A.maj !== B.maj) {
-        return currentVolumeSortOrder === "desc" ? B.maj - A.maj : A.maj - B.maj;
-      }
-      return currentVolumeSortOrder === "desc" ? B.min - A.min : A.min - B.min;
+      // compareChapterKeys retourne ordre croissant (a→b)
+      const asc = compareChapterKeys(a.chapter, b.chapter);
+      return currentVolumeSortOrder === "desc" ? -asc : asc;
     });
   }
-  let sortedVolumeKeys = [...grouped.keys()].sort((a, b) => {
+
+  // Tri des volumes (les "hors_serie" sont poussés en bas/en haut selon l'ordre)
+  const sortedVolumeKeys = [...grouped.keys()].sort((a, b) => {
     const isAHorsSerie = a === "hors_serie";
     const isBHorsSerie = b === "hors_serie";
+
     if (isAHorsSerie || isBHorsSerie) {
       if (isAHorsSerie && !isBHorsSerie)
         return currentVolumeSortOrder === "desc" ? -1 : 1;
@@ -340,46 +365,66 @@ function displayGroupedChapters(seriesData, seriesSlug) {
         return currentVolumeSortOrder === "desc" ? 1 : -1;
       return 0;
     }
+
     const numA = parseFloat(String(a).replace(",", "."));
     const numB = parseFloat(String(b).replace(",", "."));
-    return currentVolumeSortOrder === "desc" ? numB - numA : numA - numB;
+    if (Number.isFinite(numA) && Number.isFinite(numB)) {
+      return currentVolumeSortOrder === "desc" ? numB - numA : numA - numB;
+    }
+
+    // fallback alphanum si non numérique
+    const cmp = String(a).localeCompare(String(b), undefined, { numeric: true });
+    return currentVolumeSortOrder === "desc" ? -cmp : cmp;
   });
+
+  // Rendu
   chaptersContainer.innerHTML = sortedVolumeKeys
     .map((volKey) => {
       const volumeDisplayName =
         volKey === "hors_serie" ? "Hors-série" : `Volume ${volKey}`;
+
       const chaptersInVolume = grouped.get(volKey);
       const licenseDetails = volumeLicenseInfo.get(volKey);
       const isActiveByDefault = true;
+
       let volumeHeaderContent = `<h4 class="volume-title-main">${volumeDisplayName}`;
       if (licenseDetails) {
-        volumeHeaderContent += `${licenseDetails[1]
-          ? ` <span class="volume-release-date">(${licenseDetails[1]})</span> `
-          : ""
-          }`
-        volumeHeaderContent += `<span class="volume-license-text">Disponible en papier, commandez-le <a href="${licenseDetails[0]
-          }" target="_blank" rel="noopener noreferrer" class="volume-license-link">ici !</a></span>`;
+        volumeHeaderContent += `${
+          licenseDetails[1]
+            ? ` <span class="volume-release-date">(${licenseDetails[1]})</span> `
+            : ""
+        }`;
+        volumeHeaderContent += `<span class="volume-license-text">Disponible en papier, commandez-le <a href="${
+          licenseDetails[0]
+        }" target="_blank" rel="noopener noreferrer" class="volume-license-link">ici !</a></span>`;
       }
-      volumeHeaderContent += "</h4>"
-      return `<div class="volume-group"><div class="volume-header ${
-        isActiveByDefault ? "active" : ""
-      }" data-volume="${volKey}">${volumeHeaderContent}<i class="fas fa-chevron-down volume-arrow ${
-        isActiveByDefault ? "rotated" : ""
-      }"></i></div><div class="volume-chapters-list">${renderChaptersListForVolume(
-        chaptersInVolume,
-        seriesSlug
-      )}</div></div>`;
+      volumeHeaderContent += "</h4>";
+
+      return `<div class="volume-group">
+        <div class="volume-header ${isActiveByDefault ? "active" : ""}" data-volume="${volKey}">
+          ${volumeHeaderContent}
+          <i class="fas fa-chevron-down volume-arrow ${isActiveByDefault ? "rotated" : ""}"></i>
+        </div>
+        <div class="volume-chapters-list">
+          ${renderChaptersListForVolume(chaptersInVolume, seriesSlug)}
+        </div>
+      </div>`;
     })
     .join("");
+
   updateAllVisibleChapterViews();
+
+  // Accordeon
   qsa(".volume-group", chaptersContainer).forEach((group) => {
     const header = group.querySelector(".volume-header");
     const content = group.querySelector(".volume-chapters-list");
     const arrow = header.querySelector(".volume-arrow");
     if (!header || !content || !arrow) return;
+
     content.style.maxHeight = header.classList.contains("active")
       ? content.scrollHeight + "px"
       : "0px";
+
     header.addEventListener("click", () => {
       header.classList.toggle("active");
       arrow.classList.toggle("rotated");

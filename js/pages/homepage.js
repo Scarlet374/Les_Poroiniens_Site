@@ -2,7 +2,7 @@
 import { fetchData, fetchAllSeriesData, fetchAllAnimeData } from "../utils/fetchUtils.js";
 import { slugify, qs, qsa, limitVisibleTags } from "../utils/domUtils.js";
 import { parseDateToTimestamp, timeAgo } from "../utils/dateUtils.js";
-import { formatChapterHeadingAndTitle } from "../utils/chapters.js";
+import { makeCompactButtonHeading, formatChapterHeadingAndTitle } from "../utils/chapters.js";
 
 // Sélectionne les K chapitres les plus récents en UNE passe (pas de sort global)
 function pickTopKChapters(chaptersObj, seriesSlug, K = 3) {
@@ -269,8 +269,20 @@ function renderHeroSlide(series) {
   // Boutons
   let latestChapterButtonHtml = "";
   if (latestChapter) {
-    latestChapterButtonHtml = `<a href="/${seriesSlug}/${String(latestChapter.chapter)}" class="hero-cta-button">Dernier chapitre (Ch. ${latestChapter.chapter})</a>`;
+    // latestChapter doit contenir title/label si ton pickTopKChapters les propage.
+    // Si ce n'est pas le cas, on récupère la source dans la map:
+    const chData = latestChapter.label || latestChapter.title
+      ? latestChapter
+      : (seriesData.chapters?.[latestChapter.chapter] || {});
+
+    const btnHeading = makeCompactButtonHeading(latestChapter.chapter, chData);
+
+    latestChapterButtonHtml = `
+      <a href="/${seriesSlug}/${String(latestChapter.chapter)}" class="hero-cta-button">
+        Dernier chapitre (${btnHeading})
+      </a>`;
   }
+
   let latestEpisodeButtonHtml = "";
   if (seriesData.episodes && seriesData.episodes.length > 0) {
     const latestEpisode = [...seriesData.episodes].sort(
@@ -582,7 +594,11 @@ function renderSeriesCard(series) {
       const latestChap = top3[0];
 
       // ======= MOBILE (bouton du dernier) =======
-      const lblMobile = formatChapterHeadingAndTitle(latestChap.chapter, latestChap.title);
+      const lblMobile = formatChapterHeadingAndTitle(
+        latestChap.chapter,
+        latestChap.title,
+        { label: latestChap.label }   // ✅ prend le label si présent
+      );
       const mobileSubtitleFull = lblMobile.suppressTitle ? "" : (lblMobile.subtitle || "");
       const truncatedTitleMobile = lblMobile.suppressTitle ? "" : truncateText(mobileSubtitleFull, 25);
 
@@ -605,7 +621,11 @@ function renderSeriesCard(series) {
       latestThreeChaptersHtml = `
         <div class="series-latest-chapters-container-desktop">
           ${top3.map((chap) => {
-            const lbl = formatChapterHeadingAndTitle(chap.chapter, chap.title);
+            const lbl = formatChapterHeadingAndTitle(
+              chap.chapter,
+              chap.title,
+              { label: chap.label }      // ✅ idem pour chaque entrée
+            );
             const desktopSubtitleFull = lbl.suppressTitle ? "" : (lbl.subtitle || "");
             const truncatedTitleDesktop = lbl.suppressTitle ? "" : truncateText(desktopSubtitleFull, 30);
             return `

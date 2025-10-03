@@ -60,6 +60,7 @@
             }
         },
         "2.5": {
+            "label": "Chapitre 2.5",
             "title": "",
             "volume": "1",
             "last_updated": "25/05/2025/21h00",
@@ -68,7 +69,8 @@
             }
         },
         "2.51": {
-            "title": "(Non censuré)",
+            "label": "Chapitre 2.5 (Non censuré)",
+            "title": "",
             "volume": "1",
             "last_updated": "25/05/2025/22h00",
             "groups": {
@@ -92,6 +94,7 @@
             }
         },
         "5": {
+            "label": "Chapitre 5",
             "title": "",
             "volume": "1",
             "last_updated": "26/09/2025/23h20",
@@ -100,7 +103,8 @@
             }
         },
         "5.1": {
-            "title": "(Non censuré)",
+            "label": "Chapitre 5 (Non censuré)",
+            "title": "",
             "volume": "1",
             "last_updated": "26/09/2025/23h21",
             "groups": {
