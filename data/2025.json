@@ -1,0 +1,160 @@
+{
+  "season_id": "awards-2025",
+  "title": "Les Poroïniens Awards 2025",
+  "subtitle": "Célébrons le meilleur de l’année",
+  "description": "Vote pour tes favoris : anime, manga, personnages, OST et plus. [EN CONSTRUCTION]",
+  "banner": "https://file.garden/aKS5jUD-slfn6iFT/awards/2025/hero.jpg",
+  "social_image": "https://file.garden/aKS5jUD-slfn6iFT/awards/2025/og.jpg",
+  "vote": {
+    "open_at": "2025-10-15T18:00:00+02:00",
+    "close_at": "2025-11-01T23:59:59+01:00",
+    "type": "single", 
+    "max_per_category": 1
+  },
+  "categories": [
+    {
+      "id": "anime-of-the-year",
+      "title": "Anime de l’année",
+      "subtitle": "Le coup de cœur absolu",
+      "description": "Sélectionne l’œuvre qui t’a le plus marqué.",
+      "cover": "https://file.garden/aKS5jUD-slfn6iFT/awards/2025/anime_year.jpg",
+      "result": { "winner_id": "frieren" },
+      "nominees": [
+        {
+          "id": "aot-s4p3",
+          "title": "Attack on Titan Final Chapters",
+          "subtitle": "MAPPA",
+          "image": "https://file.garden/aKS5jUD-slfn6iFT/awards/2025/nominees/aot.webp",
+          "link": "/anime/attack-on-titan",
+          "summary": "Tatakae eren.",
+          "year": 2025,
+          "tags": ["action","drame"]
+        },
+        {
+          "id": "frieren",
+          "title": "Frieren",
+          "subtitle": "Madhouse",
+          "image": "https://file.garden/aKS5jUD-slfn6iFT/awards/2025/nominees/frieren.jpg",
+          "link": "/anime/frieren",
+          "summary": "Après la défaite du Roi-Démon, une elfe mage retrace l'héritage de ses compagnons.",
+          "year": 2024,
+          "tags": ["aventure","fantasy"]
+        },
+        {
+          "id": "my-dress-up-darling",
+          "title": "My Dress-Up Darling",
+          "subtitle": "CloverWorks",
+          "image": "https://file.garden/aKS5jUD-slfn6iFT/awards/2025/nominees/darling.webp",
+          "link": "/anime/my-dress-up-darling",
+          "summary": "Un lycéen passionné de couture rencontre une camarade de classe cosplayeuse.",
+          "year": 2022,
+          "tags": ["comédie","romance"]
+        },
+        {
+          "id": "spy-x-family-s2",
+          "title": "Spy x Family Saison 2",
+          "subtitle": "Wit Studio & CloverWorks",
+          "image": "https://file.garden/aKS5jUD-slfn6iFT/awards/2025/nominees/spy.webp",
+          "link": "/anime/spy-x-family",
+          "summary": "Une famille pas comme les autres, entre espionnage et pouvoirs psychiques.",
+          "year": 2023,
+          "tags": ["action","comédie"]
+        },
+        {
+          "id": "takt-op-destiny",
+          "title": "Takt Op. Destiny",
+          "subtitle": "MAPPA & Madhouse",
+          "image": "https://file.garden/aKS5jUD-slfn6iFT/awards/2025/nominees/takt.webp",
+          "link": "/anime/takt-op-destiny",
+          "summary": "Dans un monde où la musique est interdite, une jeune fille et son maestro combattent des créatures.",
+          "year": 2023,
+          "tags": ["action","musical"]
+        },
+        {
+          "id": "the-ancient-magus-bride-s2",
+          "title": "The Ancient Magus' Bride Saison 2",
+          "subtitle": "Wit Studio",
+          "image": "https://file.garden/aKS5jUD-slfn6iFT/awards/2025/nominees/magus.webp",
+          "link": "/anime/the-ancient-magus-bride",
+          "summary": "Chise, une jeune fille humaine, apprend la magie aux côtés d'un mage non-humain.",
+          "year": 2023,
+          "tags": ["fantasy","romance"]
+        }
+      ]
+    },
+    {
+      "id": "best-girl",
+      "title": "Best Girl",
+      "subtitle": "L’héroïne qui a volé nos cœurs",
+      "description": "Charisme, écriture, développement.",
+      "cover": "https://file.garden/aKS5jUD-slfn6iFT/awards/2025/anime_year.jpg",
+      "nominees": [
+        {
+          "id": "marin",
+          "title": "Marin Kitagawa",
+          "subtitle": "My Dress-Up Darling",
+          "cover": "https://file.garden/aKS5jUD-slfn6iFT/awards/2025/nominees/marin.webp",
+          "character": "https://file.garden/aKS5jUD-slfn6iFT/awards/2025/nominees/My_Dress-Up_Darling1.webp",
+          "link": "/anime/my-dress-up-darling"
+        }
+      ]
+    },
+    {
+      "id": "bestanimation",
+      "title": "Meilleure animation",
+      "subtitle": "L’excellence visuelle",
+      "description": "Fluidité, style, direction artistique.",
+      "cover": "https://file.garden/aKS5jUD-slfn6iFT/awards/2025/anime_year.jpg",
+      "nominees": [
+        {
+          "id": "takt-op-destiny",
+          "title": "Takt Op. Destiny",
+          "subtitle": "MAPPA & Madhouse",
+          "image": "https://file.garden/aKS5jUD-slfn6iFT/awards/2025/nominees/takt.webp",
+          "link": "/anime/takt-op-destiny"
+        }
+      ]
+    },
+    {
+      "id": "bestNouveaute",
+      "title": "Meilleure Opening",
+      "subtitle": "L’émerveillement de l’année",
+      "description": "Fluidité, style, direction artistique.",
+      "cover": "https://file.garden/aKS5jUD-slfn6iFT/awards/2025/anime_year.jpg",
+      "nominees": [
+        {
+          "id": "takt-op-destiny",
+          "title": "Takt Op. Destiny",
+          "subtitle": "MAPPA & Madhouse",
+          "image": "https://file.garden/aKS5jUD-slfn6iFT/awards/2025/nominees/takt.webp",
+          "video": "https://www.youtube.com/watch?v=ux3QETpLcPs&list=RDux3QETpLcPs",
+          "link": "/anime/takt-op-destiny"
+        },
+        {
+          "id": "spy-x-family-s2",
+          "title": "Spy x Family Saison 2",
+          "subtitle": "Wit Studio & CloverWorks",
+          "image": "https://file.garden/aKS5jUD-slfn6iFT/awards/2025/nominees/spy.webp",
+          "video": "https://www.youtube.com/watch?v=G4-PnTcz34Y&pp=0gcJCfwJAYcqIYzv",
+          "link": "/anime/spy-x-family"
+        }
+      ]
+    },
+    {
+      "id": "bestmanga",
+      "title": "Meilleure manga",
+      "subtitle": "L’émerveillement de l’année",
+      "description": "Fluidité, style, direction artistique.",
+      "cover": "https://file.garden/aKS5jUD-slfn6iFT/awards/2025/anime_year.jpg",
+      "nominees": [
+        {
+          "id": "takt-op-destiny",
+          "title": "Takt Op. Destiny",
+          "subtitle": "MAPPA & Madhouse",
+          "image": "https://file.garden/aKS5jUD-slfn6iFT/awards/2025/nominees/takt.webp",
+          "link": "/anime/takt-op-destiny"
+        }
+      ]
+    }
+  ]
+}

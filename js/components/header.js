@@ -7,8 +7,11 @@ import {
 const mainNavLinksConfig = [
   { text: "Accueil",   href: "/",             icon: "fas fa-home",        id: "home" },
   { text: "Colorisations",  href: "/galerie",      icon: "fa-solid fa-palette",id: "gallery" },
+//   { text: "Awards",  href: "/awards",      icon: "fa-solid fa-trophy",id: "awards" },
   // { text: "À propos", href: "/presentation", icon: "fas fa-user", id: "about" },
 ];
+
+const MINIMAL_HEADER_PAGES = new Set(["awardspage"]);
 
 const subNavTitlesConfig = {
     homepage: "Sur cette page",
@@ -40,7 +43,7 @@ function updateAllNavigation() {
 }
 
 function getCurrentPageId() {
-    return document.body.id || null;
+  return document.body?.id || null;
 }
 
 function getCurrentSeriesSlugFromPath() {
@@ -143,7 +146,18 @@ function renderSubNavWithMore(container, links, maxVisible = 5) {
   }
 }
 
-function getSubNavLinksForPage(pageId) {
+(function applyMinimalHeaderIfNeeded() {
+  const header = document.querySelector('.header-container');
+  if (!header) return;
+
+  const isAwards =
+    document.body.id === 'awardspage' ||
+    location.pathname.startsWith('/awards');
+
+  header.classList.toggle('minimal', !!isAwards);
+})();
+
+function getSubNavLinksForPage(pageId) {   
     let baseLinks = [...(subNavLinksConfig[pageId] || [])];
 
     // ---- Cas des pages Série / Covers / Reader : on construit les liens contextuels
@@ -209,18 +223,21 @@ function populateDesktopNavigation() {
   const subNavContainer  = qs("#desktop-nav-sub");
   const separator        = qs("#nav-separator");
   const currentPageId    = getCurrentPageId();
+  const isMinimal        = MINIMAL_HEADER_PAGES.has(currentPageId);
 
+  // Toujours rendre la nav principale
   renderNavLinks(mainNavContainer, mainNavLinksConfig, false);
 
-  const subLinksForCurrentPage = getSubNavLinksForPage(currentPageId);
-  // AVANT: renderNavLinks(subNavContainer, subLinksForCurrentPage, false);
-  renderSubNavWithMore(subNavContainer, subLinksForCurrentPage, 5); // ⬅️ nouveau
-
-  if (mainNavContainer && subNavContainer && separator) {
-    if (mainNavContainer.children.length > 0 && subNavContainer.children.length > 0) {
-      separator.style.display = "inline-block";
-    } else {
-      separator.style.display = "none";
+  if (isMinimal) {
+    // Awards (ou autres pages minimal) : pas de sous-nav, pas de séparateur
+    if (subNavContainer) subNavContainer.innerHTML = "";
+    if (separator) separator.style.display = "none";
+  } else {
+    const subLinksForCurrentPage = getSubNavLinksForPage(currentPageId);
+    renderSubNavWithMore(subNavContainer, subLinksForCurrentPage, 5);
+    if (mainNavContainer && subNavContainer && separator) {
+      const showSep = mainNavContainer.children.length > 0 && subNavContainer.children.length > 0;
+      separator.style.display = showSep ? "inline-block" : "none";
     }
   }
 }
@@ -789,6 +806,13 @@ async function initHeaderSearch() {
 }
 
 export function initHeader() {
+    // Applique la variante minimal UNIQUEMENT si la page est dans la liste
+    const pageId = document.body?.id;
+    if (MINIMAL_HEADER_PAGES.has(pageId)) {
+    const headerRoot = document.getElementById("main-header") || document.querySelector("header");
+    headerRoot?.classList.add("header--minimal");
+    }
+
     // initialisations habituelles
     setupThemeToggle();
     populateDesktopNavigation();

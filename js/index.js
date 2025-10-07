@@ -63,6 +63,12 @@ async function initCommonComponents() {
 
 async function routeAndInitPage() {
   const path = window.location.pathname;
+
+  if (path === "/awards" || path === "/awards.html") {
+    // on force l’id pour router sur awards
+    document.body.id = "awardspage";
+  }
+
   const bodyId = document.body.id;
   console.log(`Routing for path: "${path}", bodyId: "${bodyId}"`);
 
@@ -101,59 +107,58 @@ async function routeAndInitPage() {
       await initSeriesDetailPage();
       break;
 
-case "readerpage": {
-  console.log("Initializing Reader page (auto-select LN or Manga).");
-
-  const ph = document.querySelector("#reader-data-placeholder");
-  let readerData = null;
-  try {
-    if (!ph || !ph.textContent || ph.textContent.includes("READER_DATA_PLACEHOLDER")) {
-      throw new Error("Données lecteur absentes ou non injectées.");
-    }
-    readerData = JSON.parse(ph.textContent);
-  } catch (e) {
-    console.error("Impossible de lire #reader-data-placeholder:", e);
-  }
-
-  let isLN = false;
-  if (readerData && readerData.series) {
-    const s = readerData.series;
-    const chap = s.chapters?.[readerData.chapterNumber];
-    if (s.light_novel || s.lightNovel) isLN = true;
-    if (chap && chap.file) isLN = true;   // fallback béton
-  }
-  console.log("LN detection →", isLN, readerData);
-
-  try {
-    if (isLN) {
-      const { initNovelReader } = await import("/js/pages/series-detail/LNReader/reader.js");
-      await initNovelReader();
-    } else {
-      const { initMangaReader } = await import("/js/pages/series-detail/MangaReader/reader.js");
-      await initMangaReader();
-    }
-  } catch (err) {
-    console.error("Erreur initialisation lecteur:", err);
-    // ⚠️ ne JAMAIS retomber sur le lecteur manga si isLN === true
-    if (!isLN) {
-      try {
-        const { initMangaReader } = await import("/js/pages/series-detail/MangaReader/reader.js");
-        await initMangaReader();
-      } catch (e2) {
-        console.error("Fallback Manga reader failed:", e2);
-      }
-    }
-  }
-  break;
-}
-
-    // --- NOUVELLE ROUTE POUR LE DASHBOARD ---
-    case "dashboardpage":
-      console.log("Initializing Admin Dashboard page.");
-      const { initDashboardPage } = await import("./pages/dashboard.js");
-      await initDashboardPage();
-      // L'observer n'est pas nécessaire ici car le contenu est entièrement dynamique et non basé sur le scroll.
+    case "awardspage":
+      console.log("Initializing awards page.");
+      const { initAwardsPage } = await import("./pages/awards.js");
+      await initAwardsPage();
+      initMainScrollObserver();
       break;
+
+    case "readerpage": {
+      console.log("Initializing Reader page (auto-select LN or Manga).");
+
+      const ph = document.querySelector("#reader-data-placeholder");
+      let readerData = null;
+      try {
+        if (!ph || !ph.textContent || ph.textContent.includes("READER_DATA_PLACEHOLDER")) {
+          throw new Error("Données lecteur absentes ou non injectées.");
+        }
+        readerData = JSON.parse(ph.textContent);
+      } catch (e) {
+        console.error("Impossible de lire #reader-data-placeholder:", e);
+      }
+
+      let isLN = false;
+      if (readerData && readerData.series) {
+        const s = readerData.series;
+        const chap = s.chapters?.[readerData.chapterNumber];
+        if (s.light_novel || s.lightNovel) isLN = true;
+        if (chap && chap.file) isLN = true;   // fallback béton
+      }
+      console.log("LN detection →", isLN, readerData);
+
+      try {
+        if (isLN) {
+          const { initNovelReader } = await import("/js/pages/series-detail/LNReader/reader.js");
+          await initNovelReader();
+        } else {
+          const { initMangaReader } = await import("/js/pages/series-detail/MangaReader/reader.js");
+          await initMangaReader();
+        }
+      } catch (err) {
+        console.error("Erreur initialisation lecteur:", err);
+        // ⚠️ ne JAMAIS retomber sur le lecteur manga si isLN === true
+        if (!isLN) {
+          try {
+            const { initMangaReader } = await import("/js/pages/series-detail/MangaReader/reader.js");
+            await initMangaReader();
+          } catch (e2) {
+            console.error("Fallback Manga reader failed:", e2);
+          }
+        }
+      }
+      break;
+    }
 
     default:
       console.log(

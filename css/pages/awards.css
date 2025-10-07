@@ -1,0 +1,215 @@
+/* =========================================================
+   Awards – CSS minimal, mobile-first & responsive
+   Garde les classes attendues par awards.js
+   ========================================================= */
+
+/* ---------- Tokens locaux ---------- */
+:root{
+  --aw-radius: 16px;
+  --aw-gap: clamp(.6rem, 1.2vw, 1.25rem);
+  --aw-gap-s: clamp(.45rem, .8vw, .8rem);
+  --aw-border: 1px solid rgba(var(--clr-text-rgb), .12);
+}
+
+/* ---------- Hero bannière (page Awards) ---------- */
+.awards-hero{
+  position: relative;
+  border-radius: var(--aw-radius);
+  overflow: hidden;
+  margin: 1rem 0 1.25rem;
+  background: var(--clr-bg-card);
+}
+.awards-hero img{
+  width: 100%;
+  height: clamp(180px, 28vw, 380px);
+  object-fit: cover;
+  display: block;
+  filter: brightness(.85);
+}
+.awards-hero-overlay{
+  position:absolute; inset:0;
+  display:flex; flex-direction:column; justify-content:flex-end;
+  padding: clamp(1rem, 3vw, 2rem);
+  background: linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,.45) 100%);
+  color:#fff;
+}
+.awards-hero-overlay h1{
+  font-size: clamp(1.4rem, 3.2vw, 2.6rem);
+  margin: 0 0 .25rem; font-weight:800;
+}
+.awards-subtitle{ opacity:.95; }
+.awards-dates{ opacity:.9; font-weight:600; }
+.awards-desc{ opacity:.9; max-width:70ch; }
+
+/* ---------- Toolbar Catégories ---------- */
+.cat-topbar{
+  position: sticky; top: clamp(8px, 1.2vw, 12px);
+  z-index: 5;
+  display:flex; align-items:center; justify-content:space-between;
+  gap: var(--aw-gap-s);
+  margin: .25rem 0 1rem;
+}
+.cat-switch{ display:flex; align-items:center; gap: var(--aw-gap-s); }
+
+/* boutons (pills) */
+.btn{
+  display:inline-flex; align-items:center; gap:.4rem;
+  font-weight:800; padding:.5rem .85rem; border-radius:999px;
+  border:1px solid transparent; cursor:pointer;
+}
+.btn-ghost{ background: rgba(var(--clr-text-rgb),.06); border-color: rgba(var(--clr-text-rgb),.12); }
+.btn-ghost:hover{ background: rgba(var(--clr-text-rgb),.10); }
+
+.cat-select-wrap{ position:relative; }
+.cat-select-wrap select{
+  appearance:none; -webkit-appearance:none; -moz-appearance:none;
+  font-weight:800; padding:.5rem 2.2rem .5rem .75rem; border-radius:999px;
+  background: rgba(var(--clr-text-rgb),.06); border: var(--aw-border);
+  color: var(--clr-text);
+}
+.cat-select-wrap::after{
+  content:"▾"; position:absolute; right:.6rem; top:50%; transform:translateY(-50%);
+  opacity:.8; font-weight:900; pointer-events:none;
+}
+
+/* ---------- Accueil : grille Catégories (4 → 1) ---------- */
+.categories-grid{
+  display:grid; gap: var(--aw-gap);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+@media (max-width: 1280px){ .categories-grid{ grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 960px){  .categories-grid{ grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px){  .categories-grid{ grid-template-columns: 1fr; } }
+
+.category-card{
+  background: radial-gradient(120% 120% at 0% 0%, #0f1b2a 0%, #201134 60%, #0c141b 100%);
+  border: var(--aw-border); border-radius: 18px;
+  overflow:hidden; padding:.9rem; display:flex; flex-direction:column; min-height: 520px;
+}
+.category-card-cover{ position:relative; border-radius:14px; overflow:hidden; flex:1; }
+.category-card-winner{
+  position:absolute; inset:auto 6% 6% 6%;
+  width:auto; height:78%; object-fit:cover; border-radius:12px;
+  box-shadow: 0 12px 36px rgba(0,0,0,.45);
+}
+.category-card-body{ margin-top:.8rem; color:#fff; display:flex; flex-direction:column; gap:.25rem; }
+.category-card-sub{ text-transform:uppercase; font-weight:800; opacity:.9; font-size:.92rem; }
+.category-card-title{ font-weight:900; font-size:1.15rem; margin:.2rem 0 0; }
+.category-card-open{
+  margin-left:auto; margin-top:.5rem; border:none; border-radius:12px; padding:.55rem .75rem;
+  background: rgba(255,255,255,.12); color:#fff; font-weight:900; cursor:pointer;
+}
+.category-card:hover{ transform: translateY(-2px); transition: transform .12s ease; }
+
+/* ---------- Vue Catégorie ---------- */
+.category-detail{ display:flex; flex-direction:column; gap: var(--aw-gap); }
+
+/* hero : texte + média (image/vidéo) */
+.category-hero{
+  display:grid; gap: var(--aw-gap);
+  grid-template-columns: 1fr minmax(240px, min(48%, 640px));
+  align-items:center;
+}
+@media (max-width: 980px){
+  .category-hero{ grid-template-columns: 1fr; }
+}
+.cat-sub{ color: var(--clr-text-sub); font-weight:700; }
+.cat-title{ margin:.15rem 0; font-size: clamp(1.3rem, 2vw, 1.75rem); font-weight:900; }
+
+.hero-selected{ margin-top:.5rem; }
+.hero-selected-title{ font-weight:900; }
+.hero-selected-sub{ color: var(--clr-text-sub); font-weight:600; }
+.hero-summary{ color: var(--clr-text-sub); margin-top:.35rem; max-width: 70ch; }
+
+.badge-winner{ display:inline-block; margin-left:.5rem; padding:.3rem .6rem; border-radius:999px; font-weight:800;
+  background:linear-gradient(90deg, #ffd76b, #ffad33); color:#1b1306; }
+.badge-winner.small{ padding:.18rem .5rem; font-size:.85rem; }
+
+/* média (image ou iframe youtube) */
+.hero-media{
+  position: relative; width: 100%; aspect-ratio: 16/9;
+  border-radius: 12px; overflow: hidden; background: rgba(0,0,0,.2);
+}
+.hero-media .hero-image{ width:100%; height:100%; object-fit:cover; display:block; }
+.hero-media .hero-video{ position:absolute; inset:0; width:100%; height:100%; border:0; display:none; }
+.hero-media.is-video .hero-image{ display:none; }
+.hero-media.is-video .hero-video{ display:block; }
+
+/* liste nominés (2 → 1) */
+.nominees-rows{
+  display:grid; gap: var(--aw-gap-s) 1rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: .5rem;
+}
+@media (max-width: 980px){ .nominees-rows{ grid-template-columns: 1fr; } }
+
+.nominee-row{
+  display:grid; grid-template-columns: 92px 1fr auto;
+  align-items:center; gap:.8rem;
+  background: var(--clr-bg-elev); border: var(--aw-border);
+  border-radius: 14px; padding: .6rem .75rem;
+  transition: transform .12s ease, border-color .12s ease;
+  cursor: pointer;
+}
+.nominee-row:hover{ transform: translateY(-1px); border-color: rgba(var(--clr-primary-rgb), .35); }
+.nominee-row.active{ border-color: rgba(var(--clr-primary-rgb), .55); box-shadow: 0 0 0 2px rgba(var(--clr-primary-rgb), .25) inset; }
+
+.nominee-row .thumb{
+  width:92px; aspect-ratio: 2/3; object-fit:cover; border-radius:10px;
+}
+.nominee-row .info .title{ font-weight:900; line-height:1.15; font-size: 1.02rem; }
+.nominee-row .info .sub{ color: var(--clr-text-sub); font-weight:600; margin-top:.05rem; }
+
+.nominee-row .right{ display:flex; align-items:center; gap:.5rem; }
+.row-open{
+  width:36px; height:36px; display:grid; place-items:center;
+  border:none; border-radius:50%; background: rgba(var(--clr-text-rgb), .10);
+  color: var(--clr-text); font-weight:900; cursor:pointer;
+}
+.row-open:hover{ background: rgba(var(--clr-text-rgb), .16); }
+
+/* ---------- Accessibilité & motion ---------- */
+:where(.btn, .row-open):focus-visible{
+  outline: 2px solid var(--clr-primary);
+  outline-offset: 2px;
+}
+@media (prefers-reduced-motion: reduce){
+  *{ animation:none !important; transition:none !important; }
+}
+
+/* ---------- Header “minimal awards” (si tu l’utilises) ----------
+   Préfère ajouter la classe .header--awards-min sur le header
+   plutôt que de cibler body#awardspage.
+------------------------------------------------------------------ */
+.header--awards-min .search-actions,
+.header--awards-min .mobile-search-btn,
+.header--awards-min #search-suggest,
+.header--awards-min #adult-toggle,
+.header--awards-min #desktop-nav-sub,
+.header--awards-min #mobile-sub-nav-section,
+.header--awards-min .nav-separator{ display:none !important; }
+.header--awards-min #desktop-nav-main li:not(:has(> a#navlink-home-desktop)),
+.header--awards-min #mobile-nav-main  li:not(:has(> a#navlink-home-mobile)){ display:none !important; }
+
+/* =========================================================
+   Fin Awards CSS
+   ========================================================= */
+
+/* Au lieu d’être absolutisée en bas-gauche, on la centre */
+.category-card-winner{
+  position: relative;         /* <-- plus d'absolu */
+  inset: unset;
+  width: 86%;
+  max-width: 92%;
+  max-height: 80%;
+  height: auto;
+  object-fit: contain;        /* garde le poster entier */
+  border-radius: 12px;
+  box-shadow: 0 12px 36px rgba(0,0,0,.45);
+  margin: 0 auto;             /* sécurité */
+}
+
+/* Un peu plus large sur mobile */
+@media (max-width: 560px){
+  .category-card-winner{ width: 92%; max-height: 82%; }
+}

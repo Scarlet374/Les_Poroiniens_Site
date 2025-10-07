@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <!-- theme-init identique à ta Galerie -->
+  <script>
+    (function () {
+      try {
+        var theme = localStorage.getItem('mv-theme');
+        var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var htmlEl = document.documentElement;
+        if (theme === 'dark' || (!theme && prefersDark)) {
+          htmlEl.classList.add('dark');
+          htmlEl.style.backgroundColor = '#15171a';
+          htmlEl.style.color = '#eceff4';
+        } else {
+          htmlEl.classList.remove('dark');
+          htmlEl.style.backgroundColor = '#f7f8fc';
+          htmlEl.style.color = '#222831';
+        }
+      } catch (e) {}
+    })();
+  </script>
+  <meta charset="UTF-8" />
+
+  <title>Les Poroïniens – Awards</title>
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <!-- DYNAMIC_OG_TAGS_PLACEHOLDER -->
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="/img/icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@300;400;600;800&display=swap" rel="stylesheet"/>
+
+  <!-- Icônes + styles globaux existants -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/layout.css" />
+  <link rel="stylesheet" href="/css/components/header.css" />
+  <link rel="stylesheet" href="/css/components/mobile-menu.css" />
+  <link rel="stylesheet" href="/css/components/general.css" />
+  <link rel="stylesheet" href="/css/components/cards.css" />
+  <link rel="stylesheet" href="/css/pages/awards.css" />
+  <script src="/js/theme-init.js"></script>
+</head>
+
+<body id="awardspage">
+  <header id="main-header"></header>
+  <div class="mobile-menu-overlay" id="main-mobile-menu-overlay"></div>
+
+  <main>
+    <section class="awards-hero">
+      <img id="awards-hero-banner" alt="Bannière Awards" />
+      <div class="awards-hero-overlay">
+        <h1 id="awards-title">Awards</h1>
+        <p id="awards-subtitle"></p>
+        <p id="awards-dates" class="awards-dates"></p>
+        <p id="awards-desc" class="awards-desc"></p>
+      </div>
+    </section>
+
+    <section class="awards-categories" id="awards-categories">
+      <!-- Catégories + Nominés injectés ici -->
+    </section>
+  </main>
+
+  <script type="module" src="/js/index.js"></script>
+  <script type="module" src="/js/pages/awards.js"></script>
+</body>
+</html>
