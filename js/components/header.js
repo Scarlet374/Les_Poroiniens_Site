@@ -7,7 +7,7 @@ import {
 const mainNavLinksConfig = [
   { text: "Accueil",   href: "/",             icon: "fas fa-home",        id: "home" },
   { text: "Colorisations",  href: "/galerie",      icon: "fa-solid fa-palette",id: "gallery" },
-   { text: "Awards",  href: "/awards",      icon: "fa-solid fa-trophy",id: "awards" },
+//    { text: "Awards",  href: "/awards",      icon: "fa-solid fa-trophy",id: "awards" },
   // { text: "À propos", href: "/presentation", icon: "fas fa-user", id: "about" },
 ];
 
