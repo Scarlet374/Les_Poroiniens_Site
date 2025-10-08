@@ -173,23 +173,20 @@ function renderHomeGrid(data) {
 
     const card = el("article", "category-card");
     card.dataset.id = c.id;
+
     card.innerHTML = `
-        <div class="category-card-cover">
-        ${
-            winner
-            ? `
-                <span class="category-card-badge">Vainqueur</span>
-                <img class="category-card-winner" src="${winner.image}" alt="${winner.title}">
-            `
-            : ""
-        }
+        <div class="category-card-cover ${winner ? "" : "is-empty"}">
+        ${winner ? `<img class="category-card-winner" src="${winner.image}" alt="${winner.title}">` : ""}
         </div>
+
         <div class="category-card-body">
+        ${winner ? `<span class="category-card-badge inline">Vainqueur</span>` : ""}
         ${c.subtitle ? `<div class="category-card-sub">${c.subtitle}</div>` : ""}
         <h3 class="category-card-title">${c.title}</h3>
         <button class="category-card-open" aria-label="Ouvrir la catégorie">→</button>
         </div>
     `;
+
     grid.appendChild(card);
     }
 }

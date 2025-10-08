@@ -501,3 +501,29 @@ body.dark .site-search{
 .search-list li.active,
 .suggest-item.is-active,
 .suggest-item:hover{ background: var(--search-hover-bg); }
+/* =========================================================
+   HEADER (version Awards 2025)
+   ========================================================= */
+/* ===== Awards = header vraiment minimal ===== */
+body#awardspage .desktop-nav-sub { display: none !important; }                           /* sous-nav */
+body#awardspage .desktop-navigation-wrapper .nav-separator { display: none !important; } /* séparateur nav */
+
+/* cache entièrement le bloc recherche (desktop + mobile) */
+body#awardspage .header-actions.search-actions { display: none !important; }
+body#awardspage .site-search,
+body#awardspage .mobile-search-btn,
+body#awardspage .search-popover,
+body#awardspage .search-suggest,
+body#awardspage .navlink-awards-desktop,
+body#awardspage .search-backdrop { display: none !important; }  /* sécurité UI */
+ 
+/* cache le toggle 18+ et le séparateur qui est dans les actions */
+body#awardspage #adult-toggle { display: none !important; }
+body#awardspage .header-actions .nav-separator { display: none !important; }
+
+/* Cache la nav principale (desktop) */
+body#awardspage .desktop-nav { display: none !important; }
+
+/* =========================================================
+   FIN DU FICHIER
+   ========================================================= */

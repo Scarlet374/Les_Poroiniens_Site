@@ -191,10 +191,6 @@
 .header--awards-min #desktop-nav-main li:not(:has(> a#navlink-home-desktop)),
 .header--awards-min #mobile-nav-main  li:not(:has(> a#navlink-home-mobile)){ display:none !important; }
 
-/* =========================================================
-   Fin Awards CSS
-   ========================================================= */
-
 /* Au lieu d’être absolutisée en bas-gauche, on la centre */
 .category-card-winner{
   position: relative;         /* <-- plus d'absolu */
@@ -213,3 +209,159 @@
 @media (max-width: 560px){
   .category-card-winner{ width: 92%; max-height: 82%; }
 }
+
+/* badge commun */
+.category-card-badge{
+  padding:.28rem .55rem; border-radius:999px; font-weight:900; font-size:.85rem;
+  background: linear-gradient(90deg, #ffd76b, #ffad33);
+  color:#1b1306;
+}
+
+/* ancien badge overlay (si tu le gardes pour autre chose) */
+.category-card-badge.overlay{
+  position:absolute; top:.6rem; left:.6rem; z-index:2;
+  box-shadow: 0 2px 10px rgba(0,0,0,.25);
+  pointer-events:none;
+}
+
+/* nouveau badge “inline” sous l’image */
+.category-card-badge.inline{
+  position: static;
+  align-self: center;           /* centre dans la colonne */
+  margin: .6rem 0 .35rem;       /* espace avec l’image et le texte */
+  box-shadow: none;
+}
+
+/* ====== COMPACT HOME CARDS (allège la tuile) ====== */
+.categories-grid { gap: clamp(.7rem, 1.2vw, 1rem); }
+
+.category-card{
+  min-height: unset;                 /* plus de 520px forcés */
+  padding: clamp(.5rem, .9vw, .8rem);
+}
+
+.category-card-cover{
+  flex: 0 0 auto;                    /* ne remplit plus toute la hauteur */
+  display: grid; place-items: center;
+  border-radius: 14px; overflow: hidden;
+}
+
+.category-card-winner{
+  position: relative; inset: unset;  /* centré, pas en absolu */
+  width: clamp(70%, 78%, 86%);
+  max-height: clamp(220px, 30vw, 360px);
+  height: auto;
+  object-fit: contain;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0,0,0,.30);
+  margin: 0 auto;
+}
+
+.category-card-body{
+  margin-top: .55rem;
+  display: flex; flex-direction: column;
+  gap: .15rem;
+}
+
+.category-card-badge.inline{
+  align-self: center;
+  margin: .35rem 0 .2rem;            /* badge plus proche de l’image */
+}
+
+.category-card-sub{ font-size: .85rem; }
+.category-card-title{ font-size: 1rem; }
+.category-card-open{
+  margin-top: .35rem;
+  padding: .4rem .6rem;
+}
+
+/* ================================
+   White mode (html:not(.dark))
+   ================================ */
+
+/* Cartes d’accueil : fond clair + texte sombre */
+:root:not(.dark) .category-card{
+  background: radial-gradient(120% 120% at 0% 0%, #f1f4ff 0%, #f7f8fc 60%, #ffffff 100%);
+  border-color: rgba(var(--clr-text-rgb), .10);
+}
+
+:root:not(.dark) .category-card-body{
+  color: var(--clr-text); /* redevient sombre */
+}
+
+/* Bouton "→" plus léger en clair */
+:root:not(.dark) .category-card-open{
+  background: rgba(0,0,0,.06);
+  color: #111;
+  border: 1px solid rgba(0,0,0,.08);
+}
+:root:not(.dark) .category-card-open:hover{
+  background: rgba(0,0,0,.10);
+}
+
+/* Petit ajustement d’ombre sur le poster en clair */
+:root:not(.dark) .category-card-winner{
+  box-shadow: 0 8px 20px rgba(0,0,0,.18);
+}
+
+/* Lignes nominés (déjà variables), on renforce juste le fond en clair */
+:root:not(.dark) .nominee-row{
+  background: #fff;
+  border-color: rgba(0,0,0,.08);
+}
+:root:not(.dark) .row-open{
+  background: rgba(0,0,0,.06);
+  color: #111;
+}
+:root:not(.dark) .row-open:hover{
+  background: rgba(0,0,0,.10);
+}
+
+/* Toolbar : pills plus lisibles en clair */
+:root:not(.dark) .btn-ghost{
+  background: rgba(0,0,0,.05);
+  border-color: rgba(0,0,0,.08);
+  color: #111;
+}
+:root:not(.dark) .btn-ghost:hover{
+  background: rgba(0,0,0,.10);
+}
+:root:not(.dark) .cat-select-wrap select{
+  background: rgba(0,0,0,.04);
+  border-color: rgba(0,0,0,.08);
+  color: #111;
+}
+
+/* Hero media : bord doux en clair */
+:root:not(.dark) .hero-media{
+  background: rgba(0,0,0,.06);
+}
+
+/* ===== No frame around winner poster (dark + light) ===== */
+
+/* Le conteneur de l'image ne doit pas ajouter de halo/fond/padding */
+.category-card-cover{
+  background: transparent !important;
+  padding: 0 !important;
+  display: grid;
+  place-items: center;
+}
+
+/* Le poster occupe toute la largeur de sa zone, sans ombre */
+.category-card-winner{
+  position: relative !important;
+  inset: unset !important;
+  display: block;
+  width: 100% !important;
+  max-width: 100% !important;
+  height: auto;
+  max-height: clamp(220px, 30vw, 360px);
+  object-fit: contain;           /* pas de recadrage */
+  border-radius: 10px;
+  box-shadow: none !important;   /* supprime toute ombre “cadre” */
+  margin: 0;
+}
+
+/* Au cas où une ancienne règle laisse un espace “réservé” */
+.category-card{ min-height: auto !important; }
+

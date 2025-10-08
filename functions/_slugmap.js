@@ -66,6 +66,7 @@ export const slugToFile = {
   "prend_donc_plaisir_ho_aventurier_merveilleux_": "Kono_Subarashii_Boukensha_ni_Kairaku_o_(Doujinshi).json",
   "ptd-ero2": "PTD-Ero2_(Doujinshi).json",
   "redo_of_healer": "Kaifuku_Jutsushi_no_Yarinaoshi.json",
+  "reincarnation_coliseum_the_weakest_skill_conquers_the_strongest_women_and_creates_a_harem": "Coliseum.json",
   "rendez-vous_nocturne": "Rendez-vous_Nocturne_(Doujinshi).json",
   "rentaro_et_maman_hahari_mode_demploi_lubrique_pour_cajoler_son_bebe": "Hahari-mama_to_Icha-babu_Ecchi_suru_Hon _(Doujinshi).json",
   "rin_et_nadeshiko_nuit_au_camping": "Rin_et_Nadeshiko_Nuit_au_Camping_(Doujinshi).json",
